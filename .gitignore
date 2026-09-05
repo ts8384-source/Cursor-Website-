@@ -1,0 +1,12 @@
+node_modules
+dist
+inbox/latest.json
+inbox/latest.png
+inbox/meta.json
+inbox/PENDING
+inbox/message.md
+*.local
+__pycache__/
+*.pyc
+data/index/
+.pytest_cache/

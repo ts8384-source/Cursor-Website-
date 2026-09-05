@@ -1,0 +1,21 @@
+---
+description: Treat the local iPad canvas inbox as the user interface.
+alwaysApply: true
+---
+
+# iPad canvas is the interface
+
+This repo is a fork of iPad Cursor. The input surface is the iPad tldraw canvas, not typed chat. The pad host is `npm run dev` on port 5174.
+
+At the start of a turn, read these files if they exist:
+
+- `inbox/PENDING` — a parked turn is waiting
+- `inbox/message.md` — extracted labels, notes, and shape list
+- `inbox/latest.png` — raster of the drawing (needed for freehand ink)
+- `inbox/meta.json` — timestamps and whether a PNG was written
+
+If `inbox/PENDING` exists, treat `message.md` plus `latest.png` as the user message. Do the requested work, then delete `inbox/PENDING` so the next park is a new turn.
+
+Do not ask the user to retype what is already on the canvas.
+
+UI edits: follow `.cursor/skills/ui-hci/SKILL.md` and retrieve from `refs/ui-rag` before changing chrome.

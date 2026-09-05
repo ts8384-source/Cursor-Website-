@@ -1,0 +1,34 @@
+{
+  "project": "ipad-cursor",
+  "appliesWhen": "UI, chrome, layout, or interaction edits in the IPad-Cursor app (tldraw + Pencil).",
+  "rules": [
+    {
+      "id": "pencil-ipad-first",
+      "text": "Design for Apple Pencil and finger. Keep chrome out of the way of the tldraw drawing surface — do not fight ink, pan, or tool lock."
+    },
+    {
+      "id": "hit-target-44",
+      "text": "HUD, lasso menu, explorer handle, and other tap controls stay at least ~44×44 CSS px."
+    },
+    {
+      "id": "no-scroll-steal",
+      "text": "touch-action must not hijack canvas pan/zoom; only explicit chrome (file list, menus) may scroll."
+    },
+    {
+      "id": "goodnotes-ink",
+      "text": "Draw / lasso / scratch-out stay Pencil strokes on the draw tool — not tldraw’s stock eraser or Alt+select."
+    },
+    {
+      "id": "scratch-home",
+      "text": "Home is a scratch board; do not turn it into a settings dump or steal its ink semantics."
+    },
+    {
+      "id": "dated-handbook",
+      "text": "Ignore Flash / 800×600; keep labeling, grouping, feedback, errors, IA, and testing."
+    }
+  ],
+  "ignoreFromHandbook": [
+    "Flash as a current platform",
+    "800×600 as a current target resolution"
+  ]
+}

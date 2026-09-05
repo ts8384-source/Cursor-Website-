@@ -1,0 +1,177 @@
+{
+  "title": "Hybrid RAG local-site loop",
+  "updatedAt": "",
+  "nodes": [
+    {
+      "id": "papers",
+      "label": "Papers",
+      "group": "in",
+      "x": 8,
+      "y": 18
+    },
+    {
+      "id": "code",
+      "label": "Code / Fetch",
+      "group": "in",
+      "x": 8,
+      "y": 36
+    },
+    {
+      "id": "scribble",
+      "label": "Scribbling (iPad)",
+      "group": "in",
+      "x": 8,
+      "y": 54
+    },
+    {
+      "id": "cursor",
+      "label": "Cursor",
+      "group": "in",
+      "x": 8,
+      "y": 72
+    },
+    {
+      "id": "hybrid",
+      "label": "Hybrid RAG",
+      "group": "core",
+      "x": 36,
+      "y": 45
+    },
+    {
+      "id": "ask",
+      "label": "ask",
+      "group": "core",
+      "x": 56,
+      "y": 28
+    },
+    {
+      "id": "diagram",
+      "label": "Diagram",
+      "group": "core",
+      "x": 56,
+      "y": 48
+    },
+    {
+      "id": "md",
+      "label": "md",
+      "group": "core",
+      "x": 56,
+      "y": 68
+    },
+    {
+      "id": "vdb",
+      "label": "vector DB",
+      "group": "store",
+      "x": 78,
+      "y": 45
+    },
+    {
+      "id": "save",
+      "label": "Save / Book keep",
+      "group": "store",
+      "x": 78,
+      "y": 68
+    },
+    {
+      "id": "wiki",
+      "label": "Wikipedia UI",
+      "group": "site",
+      "x": 36,
+      "y": 88
+    },
+    {
+      "id": "vis",
+      "label": "3b1b visual",
+      "group": "site",
+      "x": 56,
+      "y": 88
+    },
+    {
+      "id": "site",
+      "label": "local website",
+      "group": "site",
+      "x": 76,
+      "y": 88
+    },
+    {
+      "id": "agent",
+      "label": "coding agent",
+      "group": "agent",
+      "x": 92,
+      "y": 28
+    },
+    {
+      "id": "webagent",
+      "label": "web coding agent",
+      "group": "agent",
+      "x": 92,
+      "y": 48
+    }
+  ],
+  "edges": [
+    [
+      "papers",
+      "hybrid"
+    ],
+    [
+      "code",
+      "hybrid"
+    ],
+    [
+      "scribble",
+      "hybrid"
+    ],
+    [
+      "cursor",
+      "hybrid"
+    ],
+    [
+      "hybrid",
+      "ask"
+    ],
+    [
+      "ask",
+      "diagram"
+    ],
+    [
+      "diagram",
+      "md"
+    ],
+    [
+      "md",
+      "vdb"
+    ],
+    [
+      "vdb",
+      "md"
+    ],
+    [
+      "save",
+      "vdb"
+    ],
+    [
+      "md",
+      "wiki"
+    ],
+    [
+      "diagram",
+      "vis"
+    ],
+    [
+      "wiki",
+      "site"
+    ],
+    [
+      "vis",
+      "site"
+    ],
+    [
+      "agent",
+      "code"
+    ],
+    [
+      "webagent",
+      "site"
+    ]
+  ]
+}

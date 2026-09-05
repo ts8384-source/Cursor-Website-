@@ -1,0 +1,169 @@
+{
+  "id": "rsnn-mlp",
+  "title": "RSNN vs MLP",
+  "updatedAt": "2026-09-05T22:04:00.000Z",
+  "source": "iPad board (structured; not OCR)",
+  "nodes": [
+    {
+      "id": "L-onehot",
+      "label": "one-hot",
+      "kind": "data",
+      "cluster": "simple",
+      "detail": "Simple cluster input encoding. The board marks this with a question mark.",
+      "x": 40,
+      "y": 40
+    },
+    {
+      "id": "L-mlp",
+      "label": "MLP",
+      "kind": "model",
+      "cluster": "simple",
+      "detail": "Feed-forward MLP on the simple path.",
+      "x": 40,
+      "y": 180
+    },
+    {
+      "id": "L-sf",
+      "label": "SF",
+      "kind": "model",
+      "cluster": "simple",
+      "detail": "Side branch off the simple MLP.",
+      "x": 200,
+      "y": 180
+    },
+    {
+      "id": "L-loss",
+      "label": "Loss",
+      "kind": "loss",
+      "cluster": "simple",
+      "detail": "Loss under the simple MLP.",
+      "x": 40,
+      "y": 320
+    },
+    {
+      "id": "R-frame",
+      "label": "Frame",
+      "kind": "data",
+      "cluster": "main",
+      "detail": "Input frame for the main path.",
+      "x": 620,
+      "y": 0
+    },
+    {
+      "id": "R-onehot",
+      "label": "one-hot",
+      "kind": "data",
+      "cluster": "main",
+      "detail": "One-hot encoding of the frame. Splits into MLP and two RSNN branches.",
+      "x": 620,
+      "y": 140
+    },
+    {
+      "id": "R-mlp",
+      "label": "MLP",
+      "kind": "model",
+      "cluster": "main",
+      "detail": "MLP branch off the main one-hot, into Final Loss.",
+      "x": 420,
+      "y": 300
+    },
+    {
+      "id": "R-rsnn-a",
+      "label": "RSNN",
+      "kind": "model",
+      "cluster": "main",
+      "detail": "Left recurrent / spiking net. Receives the blue feedback loop.",
+      "x": 620,
+      "y": 300
+    },
+    {
+      "id": "R-rsnn-b",
+      "label": "RSNN",
+      "kind": "model",
+      "cluster": "main",
+      "detail": "Right RSNN. The red stop-gradient path targets this node.",
+      "x": 860,
+      "y": 300
+    },
+    {
+      "id": "R-sf-a",
+      "label": "SF",
+      "kind": "model",
+      "cluster": "main",
+      "detail": "Readout after the left RSNN. The blue loop leaves this path.",
+      "x": 620,
+      "y": 440
+    },
+    {
+      "id": "R-sf-b",
+      "label": "SF",
+      "kind": "model",
+      "cluster": "main",
+      "detail": "Readout after the right RSNN, into Final Loss.",
+      "x": 860,
+      "y": 440
+    },
+    {
+      "id": "R-loss",
+      "label": "Loss",
+      "kind": "loss",
+      "cluster": "main",
+      "detail": "Loss after the left SF path.",
+      "x": 620,
+      "y": 580
+    },
+    {
+      "id": "R-final",
+      "label": "Final Loss",
+      "kind": "loss",
+      "cluster": "main",
+      "detail": "Combined loss from MLP, left Loss, and right SF.",
+      "x": 620,
+      "y": 720
+    },
+    {
+      "id": "R-stop",
+      "label": "stop gradient",
+      "kind": "stop-grad",
+      "cluster": "main",
+      "detail": "Red X on the board: gradients do not flow from Final Loss back into the right RSNN.",
+      "x": 1040,
+      "y": 500
+    }
+  ],
+  "edges": [
+    { "id": "L-onehot-mlp", "source": "L-onehot", "target": "L-mlp", "kind": "data" },
+    { "id": "L-mlp-loss", "source": "L-mlp", "target": "L-loss", "kind": "data" },
+    { "id": "L-mlp-sf", "source": "L-mlp", "target": "L-sf", "kind": "data" },
+    { "id": "R-frame-onehot", "source": "R-frame", "target": "R-onehot", "kind": "data" },
+    { "id": "R-onehot-mlp", "source": "R-onehot", "target": "R-mlp", "kind": "data" },
+    { "id": "R-onehot-rsnn-a", "source": "R-onehot", "target": "R-rsnn-a", "kind": "data" },
+    { "id": "R-onehot-rsnn-b", "source": "R-onehot", "target": "R-rsnn-b", "kind": "data" },
+    { "id": "R-rsnn-a-sf", "source": "R-rsnn-a", "target": "R-sf-a", "kind": "data" },
+    { "id": "R-sf-a-loss", "source": "R-sf-a", "target": "R-loss", "kind": "data" },
+    { "id": "R-loss-final", "source": "R-loss", "target": "R-final", "kind": "data" },
+    { "id": "R-rsnn-b-sf", "source": "R-rsnn-b", "target": "R-sf-b", "kind": "data" },
+    { "id": "R-sf-b-final", "source": "R-sf-b", "target": "R-final", "kind": "data" },
+    { "id": "R-mlp-final", "source": "R-mlp", "target": "R-final", "kind": "data" },
+    {
+      "id": "R-feedback",
+      "source": "R-sf-a",
+      "target": "R-rsnn-a",
+      "kind": "feedback",
+      "label": "loop"
+    },
+    {
+      "id": "R-final-stop",
+      "source": "R-final",
+      "target": "R-stop",
+      "kind": "stop-grad"
+    },
+    {
+      "id": "R-stop-rsnn",
+      "source": "R-stop",
+      "target": "R-rsnn-b",
+      "kind": "stop-grad",
+      "label": "stop gradient"
+    }
+  ]
+}

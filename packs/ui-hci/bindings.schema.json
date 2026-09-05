@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "packs/ui-hci/bindings.schema.json",
+  "title": "ui-hci project bindings",
+  "type": "object",
+  "required": ["project", "rules"],
+  "additionalProperties": true,
+  "properties": {
+    "project": { "type": "string", "description": "Repo or app id (filename should be bindings.<project>.json)." },
+    "appliesWhen": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "text": { "type": "string" }
+        }
+      }
+    },
+    "ignoreFromHandbook": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

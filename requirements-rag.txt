@@ -1,0 +1,6 @@
+# Hybrid RAG extras (same stack as Cursor Co-Assistant retrieve).
+# From repo root:  pip install -r requirements-rag.txt
+# First rebuild downloads BAAI/bge-small-en-v1.5 into the local HF cache.
+chromadb>=0.5.0
+rank-bm25>=0.2.2
+sentence-transformers>=3.0.0

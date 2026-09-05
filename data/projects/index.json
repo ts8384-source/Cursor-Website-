@@ -1,0 +1,10 @@
+{
+  "projects": [
+    {
+      "id": "rsnn-vs-mlp",
+      "title": "RSNN vs MLP",
+      "summary": "Two clusters from the iPad board: a simple one-hot → MLP path, and the main Frame → RSNN / SF / loss graph with a feedback loop and a stop-gradient.",
+      "diagram": "rsnn-mlp"
+    }
+  ]
+}

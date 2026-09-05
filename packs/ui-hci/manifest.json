@@ -1,0 +1,62 @@
+{
+  "name": "ui-hci",
+  "version": "1.0.0",
+  "description": "Handbook-first UI skill + local RAG (HHS/GSA 2006). Copy the listed paths; do not inherit iPad bindings unless you want them.",
+  "license": {
+    "handbook": "U.S. government work, 17 U.S.C. § 105 public domain. Do not reuse HHS/GSA seals or logos.",
+    "sourceTitle": "Research-Based Web Design & Usability Guidelines (2006)",
+    "sourcePdfInThisRepo": "refs/ui-hci-survey.pdf"
+  },
+  "skill": ".cursor/skills/ui-hci/SKILL.md",
+  "rag": "refs/ui-rag/",
+  "retrieve": "python refs/ui-rag/retrieve.py \"<keywords>\"",
+  "pack": "packs/ui-hci/",
+  "bindings": "bindings.ipad-cursor.json",
+  "bindingsDiscovery": [
+    "Read packs/ui-hci/manifest.json and use the `bindings` filename (relative to this pack).",
+    "If `bindings` is missing or empty, use packs/ui-hci/bindings.json if that file exists.",
+    "Do not apply another repo’s overlay (e.g. bindings.ipad-cursor.json) unless this project chose it."
+  ],
+  "files": {
+    "required": [
+      ".cursor/skills/ui-hci/SKILL.md",
+      "refs/ui-rag/index.json",
+      "refs/ui-rag/retrieve.py",
+      "refs/ui-rag/00-how-to-use.md",
+      "refs/ui-rag/ch01-design-process-and-evaluation.md",
+      "refs/ui-rag/ch02-optimizing-the-user-experience.md",
+      "refs/ui-rag/ch03-accessibility.md",
+      "refs/ui-rag/ch04-hardware-and-software.md",
+      "refs/ui-rag/ch05-the-homepage.md",
+      "refs/ui-rag/ch06-page-layout.md",
+      "refs/ui-rag/ch07-navigation.md",
+      "refs/ui-rag/ch08-scrolling-and-paging.md",
+      "refs/ui-rag/ch09-headings-titles-and-labels.md",
+      "refs/ui-rag/ch10-links.md",
+      "refs/ui-rag/ch11-text-appearance.md",
+      "refs/ui-rag/ch12-lists.md",
+      "refs/ui-rag/ch13-screen-based-controls-widgets.md",
+      "refs/ui-rag/ch14-graphics-images-and-multimedia.md",
+      "refs/ui-rag/ch15-writing-web-content.md",
+      "refs/ui-rag/ch16-content-organization.md",
+      "refs/ui-rag/ch17-search.md",
+      "refs/ui-rag/ch18-usability-testing.md",
+      "packs/ui-hci/manifest.json",
+      "packs/ui-hci/README.md",
+      "packs/ui-hci/howto.md",
+      "packs/ui-hci/bindings.schema.json"
+    ],
+    "optional": [
+      "refs/ui-hci-survey.pdf",
+      "refs/ui-rag/README.md",
+      "refs/ui-rag/_build.py",
+      "refs/README.md",
+      "packs/ui-hci/bindings.ipad-cursor.json"
+    ]
+  },
+  "notes": [
+    "Keep the PDF in the source repo; copy it only if you need figures or to rebuild RAG. Prebuilt ui-rag chunks are enough.",
+    "Vite in this repo ignores refs/**. Other tools should ignore refs/ the same way if they watch the tree.",
+    "iPad / Pencil / tldraw rules live only in bindings.ipad-cursor.json, not in the skill core."
+  ]
+}
