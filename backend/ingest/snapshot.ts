@@ -1,6 +1,7 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { bookkeep } from '../persist/bookkeep.ts'
+import { mergeParkMeta, type ParkBoardMeta } from '../persist/boards.ts'
 import { inboxDir } from '../paths.ts'
 import { runAsk } from '../retrieve/hybrid.ts'
 
@@ -18,6 +19,8 @@ export type SnapshotPayload = {
   snapshot?: unknown
   transcript?: string
   pngBase64?: string
+  /** Tie to a site artifact. Autosave may send this; it never applies MD. */
+  meta?: ParkBoardMeta
 }
 
 export async function writeInboxSnapshot(payload: SnapshotPayload, rawBytes: number) {
@@ -25,7 +28,7 @@ export async function writeInboxSnapshot(payload: SnapshotPayload, rawBytes: num
   const incomingShapes = countShapes(payload.snapshot)
   if (!payload.parked && incomingShapes === 0) {
     const existing = join(inboxDir, 'latest.json')
-    if (existsSync(existing)) {
+    if (existsSync(existing) && statSync(existing).size < 400_000) {
       try {
         const prev = JSON.parse(readFileSync(existing, 'utf8')) as { snapshot?: unknown }
         if (countShapes(prev.snapshot) > 0) {
@@ -38,7 +41,7 @@ export async function writeInboxSnapshot(payload: SnapshotPayload, rawBytes: num
   }
 
   const { pngBase64, transcript, ...record } = payload
-  writeFileSync(join(inboxDir, 'latest.json'), `${JSON.stringify(record, null, 2)}\n`, 'utf8')
+  writeFileSync(join(inboxDir, 'latest.json'), `${JSON.stringify(record)}\n`, 'utf8')
   if (typeof transcript === 'string') {
     writeFileSync(join(inboxDir, 'message.md'), `${transcript.trim()}\n`, 'utf8')
   }
@@ -48,12 +51,16 @@ export async function writeInboxSnapshot(payload: SnapshotPayload, rawBytes: num
   writeFileSync(
     join(inboxDir, 'meta.json'),
     `${JSON.stringify(
-      {
-        savedAt: payload.savedAt ?? new Date().toISOString(),
-        parked: Boolean(payload.parked),
-        bytes: rawBytes,
-        hasPng: Boolean(payload.pngBase64),
-      },
+      mergeParkMeta(
+        {
+          savedAt: payload.savedAt ?? new Date().toISOString(),
+          parked: Boolean(payload.parked),
+          bytes: rawBytes,
+          hasPng: Boolean(payload.pngBase64),
+          liveWrite: false,
+        },
+        payload.meta,
+      ),
       null,
       2,
     )}\n`,

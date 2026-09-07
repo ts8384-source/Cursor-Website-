@@ -1,0 +1,135 @@
+{
+  "id": "flagged-schemes-graph",
+  "title": "Jump to the same wiki graph (design)",
+  "updatedAt": "2026-09-06T19:00:00.000Z",
+  "source": "Chat correction 2026-09-06 — shared wiki backbone, not a fourth agent",
+  "animatedEdges": false,
+  "regions": [
+    {
+      "id": "from-page",
+      "label": "From a page or section",
+      "source": "user",
+      "nodeIds": ["section", "jump-btn"]
+    },
+    {
+      "id": "bus",
+      "label": "Metadata bus",
+      "source": "user",
+      "nodeIds": ["meta-id"]
+    },
+    {
+      "id": "one-graph",
+      "label": "One wiki knowledge graph",
+      "source": "user",
+      "nodeIds": ["main-graph", "focus-node", "not-rebuild", "not-agent"]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "section",
+      "label": "Page / section",
+      "group": "in",
+      "x": 14,
+      "y": 28,
+      "meta": {
+        "summaryShort": "Existing wiki heading",
+        "summaryLong": "Any Living Papers page or section already has an id on the meta bus (page slug, heading, related paper). Do not invent a second site tree.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["living-papers-heer-2023", "paper-plain-august-2023"],
+        "related": ["page:wiki-memory"]
+      }
+    },
+    {
+      "id": "jump-btn",
+      "label": "Jump on graph",
+      "group": "in",
+      "x": 14,
+      "y": 62,
+      "meta": {
+        "summaryShort": "Button uses metadata",
+        "summaryLong": "Proposed UX: a control on the page or section uses the record id to navigate to that node on the main graph. Handbook 13: large enough target, 9:1 descriptive label. Not built this turn.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["paper-plain-august-2023"],
+        "related": ["page:metadata"]
+      }
+    },
+    {
+      "id": "meta-id",
+      "label": "GET /api/meta/:id",
+      "group": "core",
+      "x": 46,
+      "y": 44,
+      "meta": {
+        "summaryShort": "Resolve one record",
+        "summaryLong": "The button does not reconstruct a graph. It looks up pageId / node id / related on the existing metadata bus, then focuses that id.",
+        "pageId": "page:metadata",
+        "paperIds": ["gorilla-2023"],
+        "related": ["page:knowledge-graph", "diagram:flagged-schemes-loop"]
+      }
+    },
+    {
+      "id": "main-graph",
+      "label": "Main wiki graph",
+      "group": "site",
+      "x": 78,
+      "y": 16,
+      "meta": {
+        "summaryShort": "One graph for the wiki",
+        "summaryLong": "Built from MD + meta related/citations for the whole wiki. GraphRAG shape, not Microsoft community detection as a product. Must implement first after discussion. Design only this turn.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["graphrag-2024"],
+        "related": ["page:metadata", "page:diagrams"]
+      }
+    },
+    {
+      "id": "focus-node",
+      "label": "Same node focused",
+      "group": "site",
+      "x": 78,
+      "y": 40,
+      "meta": {
+        "summaryShort": "Pan/highlight that id",
+        "summaryLong": "The camera jumps to the existing node for that page or section. Same graph instance. Panel can still show summaryLong.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["graphrag-2024"],
+        "related": ["page:diagrams"]
+      }
+    },
+    {
+      "id": "not-rebuild",
+      "label": "No per-section graph",
+      "group": "out",
+      "x": 78,
+      "y": 64,
+      "meta": {
+        "summaryShort": "Do not rebuild here",
+        "summaryLong": "Forbidden: construct a new GraphRAG (or any) graph from the current section only. Jump is navigation, not a new index.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["graphrag-2024"],
+        "related": ["page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "not-agent",
+      "label": "Not a fourth hat",
+      "group": "out",
+      "x": 78,
+      "y": 86,
+      "meta": {
+        "summaryShort": "Backbone, not an agent",
+        "summaryLong": "The wiki knowledge graph sits on the shared backbone with park-notebook metadata and GET /api/meta. It is not a fourth inference-time role beside coding / generate / fetch.",
+        "pageId": "page:knowledge-graph",
+        "paperIds": ["graphrag-2024"],
+        "related": ["diagram:flagged-schemes-loop", "diagram:flagged-schemes-fetch", "page:control"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "section", "to": "jump-btn", "label": "heading control" },
+    { "from": "jump-btn", "to": "meta-id", "label": "id in YAML / bus" },
+    { "from": "meta-id", "to": "main-graph", "label": "open same graph" },
+    { "from": "main-graph", "to": "focus-node", "label": "highlight node" },
+    { "from": "meta-id", "to": "not-rebuild", "kind": "feedback", "label": "never new graph" },
+    { "from": "main-graph", "to": "not-agent", "kind": "feedback", "label": "shared wiki" }
+  ]
+}

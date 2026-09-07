@@ -164,6 +164,14 @@ class HybridIndex:
         )
         return [i for i, s in ranked[:n] if s > 0]
 
+    # @chunk
+    # id: code:loop.hybrid_search
+    # type: method
+    # implements: page:hybrid-rag
+    # citations: [hm-rag-2025]
+    # tags: [retrieve, rrf]
+    # summary: RRF fuse of BM25 and dense
+    # @end
     def search(
         self,
         query: str,

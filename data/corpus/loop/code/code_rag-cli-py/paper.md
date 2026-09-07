@@ -17,7 +17,8 @@ def main(argv: list[str] | None = None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("seed", help="Ingest architecture + handbook + drop folders")
-    sub.add_parser("rebuild", help="Rebuild isolated indexes")
+    p_r = sub.add_parser("rebuild", help="Rebuild isolated indexes")
+    p_r.add_argument("--grounds", nargs="+", help="Limit to these grounds (default: all)")
     sub.add_parser("site", help="Print latest article + diagram JSON")
 
     p_s = sub.add_parser("search", help="Per-ground retrieve, labeled merge")
@@ -33,7 +34,8 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(ingest_all_local(DOMAIN), indent=2))
         return 0
     if args.cmd == "rebuild":
-        print(json.dumps(rebuild_all_grounds(DOMAIN, GROUNDS), indent=2))
+        grounds = tuple(args.grounds) if args.grounds else GROUNDS
+        print(json.dumps(rebuild_all_grounds(DOMAIN, grounds), indent=2))
         return 0
     if args.cmd == "search":
         print(json.dumps(lookup_idea(args.query, domain=DOMAIN, grounds=GROUNDS, k=args.k), indent=2))

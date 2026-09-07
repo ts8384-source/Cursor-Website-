@@ -1,0 +1,40 @@
+{
+  "returns": [
+    {
+      "id": "condensed-20260907T010429290",
+      "role": "code",
+      "gist": "Wired the packet contract. FadeMem stays an analog.",
+      "ids": [
+        {
+          "id": "page:future",
+          "kind": "page"
+        },
+        {
+          "id": "arxiv-2601-18642",
+          "kind": "paper"
+        }
+      ],
+      "hrefs": [],
+      "citations": [],
+      "createdAt": "2026-09-07T01:04:29.290Z"
+    },
+    {
+      "id": "condensed-20260907T004841083",
+      "role": "code",
+      "gist": "Wired the packet contract. FadeMem stays an analog.",
+      "ids": [
+        {
+          "id": "page:future",
+          "kind": "page"
+        },
+        {
+          "id": "arxiv-2601-18642",
+          "kind": "paper"
+        }
+      ],
+      "hrefs": [],
+      "citations": [],
+      "createdAt": "2026-09-07T00:48:41.083Z"
+    }
+  ]
+}

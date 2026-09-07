@@ -1,0 +1,102 @@
+{
+  "schema": "data/meta/schema.json",
+  "bus": "Same GET /api/meta records; type=code.",
+  "updatedAt": "2026-09-06T22:36:28.369079+00:00",
+  "count": 3,
+  "records": [
+    {
+      "id": "code:loop.chunk_text",
+      "type": "code",
+      "title": "chunk text",
+      "href": "/site/code-meta#code:loop.chunk_text",
+      "summary": {
+        "short": "Heading-aware MD/paper splits; 1200/150 only on unmarked blobs",
+        "long": "Heading-aware MD/paper splits; 1200/150 only on unmarked blobs"
+      },
+      "tags": [
+        "function",
+        "ingest",
+        "chunk"
+      ],
+      "citations": [
+        "arxiv-2410-13070"
+      ],
+      "related": [
+        "page:hybrid-rag"
+      ],
+      "glossary": [],
+      "updated": "2026-09-06",
+      "kind": "function",
+      "implements": [
+        "page:hybrid-rag"
+      ],
+      "derived_from": [],
+      "path": "rag/chunking.py",
+      "pageId": "page:hybrid-rag",
+      "paperIds": [
+        "arxiv-2410-13070"
+      ]
+    },
+    {
+      "id": "code:loop.hybrid_search",
+      "type": "code",
+      "title": "hybrid search",
+      "href": "/site/code-meta#code:loop.hybrid_search",
+      "summary": {
+        "short": "RRF fuse of BM25 and dense",
+        "long": "RRF fuse of BM25 and dense"
+      },
+      "tags": [
+        "method",
+        "retrieve",
+        "rrf"
+      ],
+      "citations": [
+        "hm-rag-2025"
+      ],
+      "related": [
+        "page:hybrid-rag"
+      ],
+      "glossary": [],
+      "updated": "2026-09-06",
+      "kind": "method",
+      "implements": [
+        "page:hybrid-rag"
+      ],
+      "derived_from": [],
+      "path": "rag/retrieve.py",
+      "pageId": "page:hybrid-rag",
+      "paperIds": [
+        "hm-rag-2025"
+      ]
+    },
+    {
+      "id": "code:loop.tokenize",
+      "type": "code",
+      "title": "tokenize",
+      "href": "/site/code-meta#code:loop.tokenize",
+      "summary": {
+        "short": "tokenize",
+        "long": "tokenize"
+      },
+      "tags": [
+        "function",
+        "tokenize"
+      ],
+      "citations": [],
+      "related": [
+        "page:hybrid-rag"
+      ],
+      "glossary": [],
+      "updated": "2026-09-06",
+      "kind": "function",
+      "implements": [
+        "page:hybrid-rag"
+      ],
+      "derived_from": [],
+      "path": "rag/tokenize.py",
+      "pageId": "page:hybrid-rag",
+      "paperIds": []
+    }
+  ]
+}

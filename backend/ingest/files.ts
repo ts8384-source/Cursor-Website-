@@ -9,7 +9,7 @@ export type FileNode = {
   children?: FileNode[]
 }
 
-const SKIP_NAMES = new Set(['node_modules', '.git', 'dist'])
+const SKIP_NAMES = new Set(['node_modules', '.git', 'dist', 'chroma'])
 
 function keepListingName(name: string) {
   if (SKIP_NAMES.has(name)) return false

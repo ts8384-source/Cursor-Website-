@@ -1,0 +1,70 @@
+{
+  "id": "papers-ingest",
+  "title": "Internet to local papers",
+  "updatedAt": "2026-09-07T00:00:00.000Z",
+  "source": "page:papers-ingest recipe",
+  "animatedEdges": false,
+  "nodes": [
+    {
+      "id": "ask",
+      "label": "Need a paper",
+      "group": "agent",
+      "x": 8,
+      "y": 20,
+      "meta": {
+        "summaryShort": "Cite-or-fetch first",
+        "summaryLong": "If the id is missing, say not in DB. Do not invent. OA fetch only.",
+        "pageId": "page:papers-ingest",
+        "paperIds": ["gorilla-2023"],
+        "related": ["page:agents-fetch"]
+      }
+    },
+    {
+      "id": "fetch",
+      "label": "POST fetch",
+      "group": "core",
+      "x": 36,
+      "y": 8,
+      "meta": {
+        "summaryShort": "OA allowlist download",
+        "summaryLong": "POST /api/papers/fetch with arxiv or OA url. SSRF wall. Paywall and blogs refused.",
+        "pageId": "page:papers-ingest",
+        "paperIds": ["gorilla-2023"],
+        "related": ["page:control", "page:papers"]
+      }
+    },
+    {
+      "id": "rebuild",
+      "label": "Seed rebuild",
+      "group": "core",
+      "x": 64,
+      "y": 8,
+      "meta": {
+        "summaryShort": "papers ground only",
+        "summaryLong": "python -m rag.cli seed then rebuild --grounds papers. Isolated. No cross-ground RRF.",
+        "pageId": "page:hybrid-rag",
+        "paperIds": ["colpali-2024"],
+        "related": ["page:papers-ingest"]
+      }
+    },
+    {
+      "id": "use",
+      "label": "Search ask",
+      "group": "site",
+      "x": 64,
+      "y": 42,
+      "meta": {
+        "summaryShort": "Labeled hits",
+        "summaryLong": "GET /api/search and POST /api/ask. Confirm GET /api/papers/db. Graph neighborhood then the real paper.",
+        "pageId": "page:papers",
+        "paperIds": ["paper-plain-august-2023"],
+        "related": ["page:hybrid-rag"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "ask", "to": "fetch", "label": "OA" },
+    { "from": "fetch", "to": "rebuild", "label": "ingest" },
+    { "from": "rebuild", "to": "use", "label": "retrieve" }
+  ]
+}

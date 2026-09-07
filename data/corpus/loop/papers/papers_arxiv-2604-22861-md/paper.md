@@ -1,0 +1,16 @@
+# arxiv-2604-22861.md
+
+# arXiv Query: search_query=&amp;id_list=2604.22861&amp;start=0&amp;max_results=10
+
+- **id:** arxiv-2604-22861
+- **list:** fetched
+- **authors:** Fengbo Ma, Zixin Rao, Xiaoting Li, Zhetao Chen, Hongyue Sun, Yiping Zhao, Xianyan Chen, Zhen Xiang
+- **year:** 2026
+- **venue:** arXiv preprint
+- **oa_url:** https://arxiv.org/abs/2604.22861
+- **arxiv:** 2604.22861
+- **local_pdf:** pdf/arxiv-2604-22861.pdf
+
+## Extracted text (local RAG ingest)
+
+Abstract. Scientific research relies on accurate information retrieval from literature to support analytical decisions. In this work, we introduce a new task, INformation reTRieval through literAture reVIEW (IntraView), which aims to automate fine-grained information retrieval faithfully grounded in the provided content in response to research-driven queries, and propose IntrAgent, an LLM-based agent that addresses this challenging task. In particular, IntrAgent is designed to mimic human behaviors when reading literature for information retrieval -- identifying relevant sections and then iteratively extracting key details to refine the retrieved information. It follows a two-stage pipeline: a Section Ranking stage that prioritizes relevant literature sections through structural-knowledge-enabled reasoning, and an Iterative Reading stage that continuously extracts details and synthesizes them into concise, contextually grounded answers. To support rigorous evaluation, we introduce IntraBench, a new benchmark consisting of 315 test instances built from expert-authored questions paired with literature spanning five STEM domains. Across seven backbone LLMs, IntrAgent achieves on average 13.2% higher cross-domain accuracy than state-of-the-art RAG and research-agent baselines.

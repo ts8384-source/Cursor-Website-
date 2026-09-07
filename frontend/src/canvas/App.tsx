@@ -1,12 +1,15 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
 import { Tldraw, type Editor, type TLShape } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { apiUrl } from '../api'
+import type { ParkBoardMeta, TiedBoard } from '../site/types'
 import { FilesExplorer } from './FilesExplorer'
 import { parkSnapshot } from './inbox'
 import { finishLassoStroke, lassoMenuPoint } from './lasso'
 import { PairingCard } from './PairingCard'
 import { finishInkStroke } from './scratch'
+import { stampBoardImages } from './stampBoard'
+import { TiedBoardDock } from './TiedBoardDock'
 import {
   FIRST_BOARD_ID,
   FIRST_BOARD_KEY,
@@ -15,7 +18,13 @@ import {
   loadActiveId,
   loadWorkspace,
   persistActiveId,
+  persistWorkspace,
+  pruneOtherTiedBoards,
+  upsertTiedBoard,
 } from './workspace'
+
+const TIED_SEEN = 'ipad-tied-seen'
+const PENDING_FRESH_MS = 5 * 60 * 1000
 
 type InkTool = 'draw' | 'lasso' | 'scratch'
 
@@ -64,9 +73,36 @@ export function App() {
   const [lassoMenu, setLassoMenu] = useState<LassoMenu | null>(null)
   const [workspace, setWorkspace] = useState(loadWorkspace)
   const [activeId, setActiveId] = useState(loadActiveId)
+  const [tied, setTied] = useState<TiedBoard | null>(null)
+  const applyingRef = useRef<string | null>(null)
+  const appliedPendingRef = useRef<string | null>(null)
+  const stampRef = useRef<TiedBoard | null>(null)
+  const editorBoardIdRef = useRef<string | null>(null)
 
   const activeFile = findFile(workspace, activeId) ?? firstFile(workspace)
   const canvasKey = activeFile?.persistenceKey ?? FIRST_BOARD_KEY
+  const activeBoardId = activeFile?.id ?? FIRST_BOARD_ID
+  const activeBoardIdRef = useRef(activeBoardId)
+  const canvasKeyRef = useRef(canvasKey)
+  activeBoardIdRef.current = activeBoardId
+  canvasKeyRef.current = canvasKey
+  const parkMeta: ParkBoardMeta | undefined = useMemo(
+    () =>
+      tied && activeFile?.id === tied.id
+        ? {
+            boardId: tied.id,
+            pageId: tied.pageId,
+            paperIds: tied.paperIds,
+            sourceType: tied.sourceType,
+            sourceId: tied.sourceId,
+            sourceSlug: tied.sourceSlug,
+            boardKey: tied.boardKey,
+            surface: tied.surface,
+            assetPath: tied.assetPath,
+          }
+        : undefined,
+    [tied, activeFile?.id],
+  )
 
   const goDraw = useCallback((editor: Editor) => {
     lassoRef.current = false
@@ -91,11 +127,31 @@ export function App() {
     setLassoMenu(null)
   }, [])
 
+  const stampThisEditor = useCallback((editor: Editor, board: TiedBoard | null) => {
+    if (!board) return
+    const activeIdNow = activeBoardIdRef.current
+    if (editorBoardIdRef.current !== board.id) return
+    if (activeIdNow !== board.id) return
+    void stampBoardImages(editor, board, {
+      boardId: board.id,
+      activeBoardId: activeIdNow,
+      persistenceKey: canvasKeyRef.current,
+    })
+  }, [])
+
   const onMount = useCallback(
     (editor: Editor) => {
       editorRef.current = editor
+      editorBoardIdRef.current = activeBoardIdRef.current
       editor.updateInstanceState({ isGridMode: true })
       goDraw(editor)
+      const pending = stampRef.current
+      if (pending?.surface === 'stamped' && pending.id === activeBoardIdRef.current) {
+        window.setTimeout(() => {
+          if (editorRef.current !== editor) return
+          stampThisEditor(editor, pending)
+        }, 80)
+      }
 
       const unsubCreate = editor.sideEffects.registerAfterCreateHandler('shape', (shape) => {
         if (!lassoRef.current) return
@@ -131,29 +187,132 @@ export function App() {
         unsubScribble()
       }
     },
-    [goDraw],
+    [goDraw, stampThisEditor],
   )
+
+  const applyBoard = useCallback((board: TiedBoard) => {
+    const switching = activeBoardIdRef.current !== board.id
+    applyingRef.current = board.id
+    stampRef.current = board.surface === 'stamped' ? board : null
+    if (switching) {
+      editorRef.current = null
+      editorBoardIdRef.current = null
+      setWorkspace((root) => {
+        const next = upsertTiedBoard(root, { id: board.id, title: board.title, boardKey: board.boardKey })
+        persistWorkspace(next.root)
+        persistActiveId(next.node.id)
+        return next.root
+      })
+      persistActiveId(board.id)
+      setActiveId(board.id)
+    }
+    setTied(board)
+    try {
+      sessionStorage.setItem(TIED_SEEN, board.id)
+    } catch {
+      // private mode
+    }
+  }, [])
+
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get('board')
+
+    const loadId = async (id: string) => {
+      const res = await fetch(apiUrl(`/api/boards/${encodeURIComponent(id)}`))
+      if (!res.ok) return
+      const data = (await res.json()) as { board?: TiedBoard }
+      if (data.board) applyBoard(data.board)
+    }
+
+    if (fromUrl) {
+      void loadId(fromUrl)
+    } else {
+      // Home stays today's scratch until a live site click writes ACTIVE.
+      setWorkspace((root) => {
+        const cleaned = pruneOtherTiedBoards(root, '')
+        persistWorkspace(cleaned)
+        return cleaned
+      })
+      if (loadActiveId().startsWith('board:')) {
+        persistActiveId(FIRST_BOARD_ID)
+        setActiveId(FIRST_BOARD_ID)
+        setTied(null)
+      }
+    }
+
+    const receivePending = async () => {
+      try {
+        const res = await fetch(apiUrl('/api/boards/pending'))
+        if (!res.ok) return
+        const data = (await res.json()) as { id?: string | null; board?: TiedBoard | null; updated?: string | null }
+        const board = data.board
+        if (!board) return
+        const stamp = Date.parse(data.updated || board.updated || board.createdAt)
+        if (!Number.isFinite(stamp) || Date.now() - stamp > PENDING_FRESH_MS) {
+          return
+        }
+        if (appliedPendingRef.current === board.id) return
+        appliedPendingRef.current = board.id
+        applyBoard(board)
+      } catch {
+        // Home scratch stays as-is
+      }
+    }
+
+    const beat = async () => {
+      try {
+        await fetch(apiUrl('/api/boards/heartbeat'), { method: 'POST', cache: 'no-store' })
+      } catch {
+        // pending poll still marks the pad seen
+      }
+    }
+
+    void beat()
+    void receivePending()
+    const timer = window.setInterval(() => {
+      void beat()
+      void receivePending()
+    }, 1500)
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [applyBoard])
+
+  useEffect(() => {
+    const board = tied
+    if (!board || board.surface !== 'stamped') return
+    if (activeBoardId !== board.id) return
+    if (canvasKey !== board.persistenceKey && canvasKey !== board.boardKey) return
+    const run = () => {
+      const editor = editorRef.current
+      if (!editor) return
+      stampThisEditor(editor, board)
+    }
+    run()
+    const timer = window.setInterval(run, 1500)
+    return () => window.clearInterval(timer)
+  }, [tied, activeBoardId, canvasKey, stampThisEditor])
 
   useEffect(() => {
     const timer = window.setInterval(async () => {
       const editor = editorRef.current
       if (!editor) return
       try {
-        await parkSnapshot(editor)
+        await parkSnapshot(editor, { meta: parkMeta })
         setStatus((current) => (current === 'offline' ? '' : current))
       } catch {
         setStatus('offline')
       }
     }, 4000)
     return () => window.clearInterval(timer)
-  }, [])
+  }, [parkMeta])
 
   const parkNow = async () => {
     const editor = editorRef.current
     if (!editor) return
     setBusy(true)
     try {
-      await parkSnapshot(editor, { parked: true, includeImage: true })
+      await parkSnapshot(editor, { parked: true, includeImage: true, meta: parkMeta })
       setStatus('asking…')
       const started = Date.now()
       for (let i = 0; i < 45; i += 1) {
@@ -269,6 +428,10 @@ export function App() {
           activeId={activeFile?.id ?? FIRST_BOARD_ID}
           onRootChange={setWorkspace}
           onOpenFile={(id) => {
+            if (id !== activeBoardIdRef.current) {
+              editorRef.current = null
+              editorBoardIdRef.current = null
+            }
             persistActiveId(id)
             setActiveId(id)
             setLassoMenu(null)
@@ -276,6 +439,7 @@ export function App() {
         />
         <div className="canvas-stage">
           <div className="hud">
+            {tied && activeFile?.id === tied.id ? <TiedBoardDock board={tied} /> : null}
             {hudStatus ? (
               <span
                 className={`hud-status${hudStatus === 'failed' || hudStatus === 'offline' ? ' is-error' : ''}`}
@@ -320,7 +484,9 @@ export function App() {
               Site
             </a>
           </div>
-          <Tldraw key={canvasKey} persistenceKey={canvasKey} onMount={onMount} inferDarkMode />
+          <div className="canvas-ink">
+            <Tldraw key={canvasKey} persistenceKey={canvasKey} onMount={onMount} inferDarkMode />
+          </div>
         </div>
       </div>
     </div>

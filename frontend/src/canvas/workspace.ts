@@ -123,6 +123,46 @@ export function addFolder(root: WorkspaceNode, parentId: string): { root: Worksp
   return { root: insertChild(root, targetId, child), id }
 }
 
+function replaceFile(root: WorkspaceNode, id: string, next: WorkspaceNode): WorkspaceNode {
+  if (root.id === id) return next
+  if (!root.children) return root
+  return { ...root, children: root.children.map((node) => replaceFile(node, id, next)) }
+}
+
+function isSiteTiedId(id: string) {
+  return id.startsWith('board:')
+}
+
+export function pruneOtherTiedBoards(root: WorkspaceNode, keepId: string): WorkspaceNode {
+  if (root.type === 'file' && isSiteTiedId(root.id) && root.id !== keepId) {
+    return { ...root, children: undefined }
+  }
+  if (!root.children) return root
+  return {
+    ...root,
+    children: root.children
+      .filter((child) => !(child.type === 'file' && isSiteTiedId(child.id) && child.id !== keepId))
+      .map((child) => pruneOtherTiedBoards(child, keepId)),
+  }
+}
+
+/** One on-demand site board in the tree. Does not preload papers/diagrams. */
+export function upsertTiedBoard(
+  root: WorkspaceNode,
+  board: { id: string; title: string; boardKey: string },
+): { root: WorkspaceNode; node: WorkspaceNode } {
+  const node: WorkspaceNode = {
+    id: board.id,
+    name: board.title,
+    type: 'file',
+    persistenceKey: board.boardKey,
+  }
+  const cleaned = pruneOtherTiedBoards(root, board.id)
+  const existing = findFile(cleaned, board.id)
+  if (existing) return { root: replaceFile(cleaned, board.id, node), node }
+  return { root: insertChild(cleaned, HOME_ID, node), node }
+}
+
 export function addBoard(root: WorkspaceNode, parentId: string): { root: WorkspaceNode; node: WorkspaceNode } {
   const parent = findNode(root, parentId)
   const targetId = parent?.type === 'dir' ? parentId : HOME_ID

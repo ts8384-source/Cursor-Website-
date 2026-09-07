@@ -1,0 +1,238 @@
+{
+  "id": "wiki-memory-compare",
+  "title": "Wiki-memory approaches (temporary)",
+  "updatedAt": "2026-09-06T03:00:00.000Z",
+  "source": "§8 notes + ingested OA papers",
+  "animatedEdges": false,
+  "regions": [
+    {
+      "id": "compiled",
+      "label": "compiled wiki",
+      "source": "user",
+      "nodeIds": ["k-raw", "k-wiki", "k-schema", "k-ops"]
+    },
+    {
+      "id": "spatial",
+      "label": "spatial retrieve",
+      "source": "user",
+      "nodeIds": ["m-wings", "m-rooms", "m-drawers", "m-chroma"]
+    },
+    {
+      "id": "lifecycle",
+      "label": "lifecycle",
+      "source": "user",
+      "nodeIds": ["v-work", "v-episodic", "v-semantic", "v-procedural", "v-decay", "met-ops"]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "k-raw",
+      "label": "Raw sources",
+      "group": "in",
+      "x": 8,
+      "y": 12,
+      "meta": {
+        "summaryShort": "Immutable inputs, LLM reads",
+        "summaryLong": "Karpathy LLM Wiki layer 1: clippings and captures the LLM reads and never rewrites. In this repo the analogue is data/papers plus inbox scribble, not a new raw/ folder.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:papers", "page:inbox"]
+      }
+    },
+    {
+      "id": "k-wiki",
+      "label": "Compiled wiki",
+      "group": "core",
+      "x": 8,
+      "y": 36,
+      "meta": {
+        "summaryShort": "LLM-owned interlinked MD",
+        "summaryLong": "Karpathy layer 2: entity, concept, source, and synthesis pages the LLM maintains. This site already compiles human/agent MD in data/md. We are not shipping a second compiler.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034", "living-papers-heer-2023"],
+        "related": ["page:overview"]
+      }
+    },
+    {
+      "id": "k-schema",
+      "label": "Schema",
+      "group": "core",
+      "x": 8,
+      "y": 60,
+      "meta": {
+        "summaryShort": "Workflows, not a graph DB",
+        "summaryLong": "Karpathy layer 3: CLAUDE.md / AGENTS.md conventions for ingest, query, and lint. Here that file is content/CONTROL.md plus the drawing-loop skill.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "k-ops",
+      "label": "Query Ingest Lint",
+      "group": "agent",
+      "x": 8,
+      "y": 84,
+      "meta": {
+        "summaryShort": "Three agent verbs",
+        "summaryLong": "llm-wiki-memory-template names Query, Ingest, Lint. Not in the paper DB (GitHub wiki, not an OA PDF). Map later onto GET /api/search, park/fetch, and CONTROL lint — do not add new verbs this pass.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:control", "page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "m-wings",
+      "label": "Wings",
+      "group": "in",
+      "x": 38,
+      "y": 12,
+      "meta": {
+        "summaryShort": "Domain rooms at the top",
+        "summaryLong": "MemPalace method-of-loci stack: Wings are domains. Dey & Viradecha (arxiv-2604-21284) argue the palace is metadata filtering on a vector store, not a new retrieve algebra.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-21284", "arxiv-2604-12034"],
+        "related": ["page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "m-rooms",
+      "label": "Rooms",
+      "group": "core",
+      "x": 38,
+      "y": 36,
+      "meta": {
+        "summaryShort": "Topics inside a wing",
+        "summaryLong": "Rooms are topics. Writes are verbatim and deterministic (zero LLM on the write path) according to the OA analysis paper.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-21284"],
+        "related": ["page:memory"]
+      }
+    },
+    {
+      "id": "m-drawers",
+      "label": "Drawers",
+      "group": "store",
+      "x": 38,
+      "y": 60,
+      "meta": {
+        "summaryShort": "Verbatim chunks stored",
+        "summaryLong": "Drawers hold raw conversation or document text. Headline LongMemEval R@5 of 96.6% is retrieval recall on verbatim Chroma, not compiled wiki pages.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-21284"],
+        "related": ["page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "m-chroma",
+      "label": "Chroma retrieve",
+      "group": "store",
+      "x": 38,
+      "y": 84,
+      "meta": {
+        "summaryShort": "Vector search, no compile",
+        "summaryLong": "Read path is nearest-neighbor plus optional palace metadata filters. This repo already uses Chroma inside isolated grounds. Do not add a palace store.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-21284", "hm-rag-2025"],
+        "related": ["page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "v-work",
+      "label": "Working",
+      "group": "in",
+      "x": 68,
+      "y": 8,
+      "meta": {
+        "summaryShort": "Recent unconsolidated notes",
+        "summaryLong": "LLM Wiki v2 (gist, not in paper DB) adds a working tier for fresh observations. Closest local analogue is inbox + architecture.md ask dumps.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:inbox"]
+      }
+    },
+    {
+      "id": "v-episodic",
+      "label": "Episodic",
+      "group": "core",
+      "x": 68,
+      "y": 26,
+      "meta": {
+        "summaryShort": "Session summaries",
+        "summaryLong": "v2 episodic tier compresses a session. Bookkeep log.jsonl is an event log, not this tier.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:memory"]
+      }
+    },
+    {
+      "id": "v-semantic",
+      "label": "Semantic",
+      "group": "core",
+      "x": 68,
+      "y": 44,
+      "meta": {
+        "summaryShort": "Cross-session facts",
+        "summaryLong": "v2 semantic tier is stable facts. This site's data/md articles plus paper DB summaries play that role without promotion jobs.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034", "living-papers-heer-2023"],
+        "related": ["page:summaries"]
+      }
+    },
+    {
+      "id": "v-procedural",
+      "label": "Procedural",
+      "group": "site",
+      "x": 68,
+      "y": 62,
+      "meta": {
+        "summaryShort": "Workflows that persist",
+        "summaryLong": "v2 procedural tier is how-to memory. CONTROL.md and drawing-loop are already that. Not Agent Workflow Memory induction.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["agent-workflow-memory-2024", "swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "v-decay",
+      "label": "Decay",
+      "group": "store",
+      "x": 68,
+      "y": 80,
+      "meta": {
+        "summaryShort": "Ebbinghaus deprioritize",
+        "summaryLong": "v2 fades unused claims instead of deleting them. This repo already decays user/project memory. Papers and site MD do not.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:memory"]
+      }
+    },
+    {
+      "id": "met-ops",
+      "label": "Metabolism ops",
+      "group": "agent",
+      "x": 68,
+      "y": 94,
+      "meta": {
+        "summaryShort": "TRIAGE through AUDIT",
+        "summaryLong": "Memory as Metabolism (arxiv-2604-12034): TRIAGE, DECAY, CONTEXTUALIZE, CONSOLIDATE, AUDIT plus minority-hypothesis retention. Governance for companion wikis, not a compiler to implement now.",
+        "pageId": "page:wiki-memory",
+        "paperIds": ["arxiv-2604-12034"],
+        "related": ["page:memory"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "k-raw", "to": "k-wiki", "label": "compile" },
+    { "from": "k-schema", "to": "k-wiki", "label": "constrain" },
+    { "from": "k-ops", "to": "k-wiki", "label": "read/write" },
+    { "from": "m-wings", "to": "m-rooms" },
+    { "from": "m-rooms", "to": "m-drawers" },
+    { "from": "m-drawers", "to": "m-chroma", "label": "embed" },
+    { "from": "v-work", "to": "v-episodic", "label": "promote" },
+    { "from": "v-episodic", "to": "v-semantic", "label": "promote" },
+    { "from": "v-semantic", "to": "v-procedural", "label": "promote" },
+    { "from": "v-decay", "to": "v-work", "kind": "feedback", "label": "fade" },
+    { "from": "met-ops", "to": "v-semantic", "kind": "feedback", "label": "govern" }
+  ]
+}

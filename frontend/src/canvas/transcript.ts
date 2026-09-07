@@ -1,4 +1,5 @@
 import type { Editor, TLShape } from 'tldraw'
+import type { ParkBoardMeta } from '../site/types'
 
 function plainText(node: unknown): string {
   if (node == null) return ''
@@ -21,15 +22,32 @@ function shapeLine(shape: TLShape) {
   return label ? `- ${kind} ${at}: ${label}` : `- ${kind} ${at}`
 }
 
-export function canvasTranscript(editor: Editor) {
+export function canvasTranscript(editor: Editor, meta?: ParkBoardMeta) {
   const shapes = editor.getCurrentPageShapes()
   const ink = shapes.filter((shape) => shape.type === 'draw' || shape.type === 'highlight').length
   const lines = shapes.map(shapeLine)
+  const tie = meta?.boardId
+    ? [
+        `## Tied board`,
+        ``,
+        `- boardId: ${meta.boardId}`,
+        `- sourceType: ${meta.sourceType ?? ''}`,
+        `- sourceId: ${meta.sourceId ?? ''}`,
+        `- pageId: ${meta.pageId ?? ''}`,
+        `- paperIds: ${(meta.paperIds ?? []).join(', ')}`,
+        `- sourceSlug: ${meta.sourceSlug ?? ''}`,
+        `- boardKey: ${meta.boardKey ?? ''}`,
+        `- surface: ${meta.surface ?? ''}`,
+        `- assetPath: ${meta.assetPath ?? ''}`,
+        ``,
+      ]
+    : []
   return [
     `# iPad canvas`,
     ``,
     `${shapes.length} shapes, ${ink} freehand strokes.`,
     ``,
+    ...tie,
     ...lines,
     ``,
   ].join('\n')

@@ -1,5 +1,6 @@
 import type { Editor } from 'tldraw'
 import { apiUrl } from '../api'
+import type { ParkBoardMeta } from '../site/types'
 import { canvasTranscript } from './transcript'
 
 async function canvasPngBase64(editor: Editor) {
@@ -15,13 +16,16 @@ async function canvasPngBase64(editor: Editor) {
 
 let snapshotInFlight = false
 
-export async function parkSnapshot(editor: Editor, opts: { parked?: boolean; includeImage?: boolean } = {}) {
+export async function parkSnapshot(
+  editor: Editor,
+  opts: { parked?: boolean; includeImage?: boolean; meta?: ParkBoardMeta } = {},
+) {
   const parked = Boolean(opts.parked)
   const shapeCount = editor.getCurrentPageShapeIds().size
   if (!parked && shapeCount === 0) return
   if (snapshotInFlight && !parked) return
 
-  const includeImage = opts.includeImage ?? (parked || shapeCount > 0)
+  const includeImage = opts.includeImage ?? parked
   snapshotInFlight = true
   try {
     const snapshot = editor.getSnapshot()
@@ -29,12 +33,14 @@ export async function parkSnapshot(editor: Editor, opts: { parked?: boolean; inc
     const response = await fetch(apiUrl('/api/snapshot'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(parked ? 20_000 : 8_000),
       body: JSON.stringify({
         savedAt: new Date().toISOString(),
         parked,
         snapshot,
-        transcript: canvasTranscript(editor),
+        transcript: canvasTranscript(editor, opts.meta),
         pngBase64,
+        meta: opts.meta,
       }),
     })
     if (!response.ok) {

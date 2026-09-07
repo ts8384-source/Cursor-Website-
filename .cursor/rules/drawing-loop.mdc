@@ -1,0 +1,12 @@
+---
+description: On iPad park, run the full drawing-loop skill (RAG, MD site, paper DB, maps, memory).
+alwaysApply: true
+---
+
+# Drawing-loop operator
+
+When `inbox/PENDING` exists, or the user parks a canvas idea, follow `.cursor/skills/drawing-loop/SKILL.md` and `content/CONTROL.md` before improvising.
+
+The drawing is the spec. Implement it in the website and the rest of this repo (pages, API tools, RAG ingest). Too much is better. Do not ask the user to retype the board. Delete `inbox/PENDING` after acting.
+
+Two wiki bins: forker pages go to `data/md/` (boot, `/site`). Framework explain goes to `data/docs/` (doc, `/docs`). Lab notes stay in `data/md/sandbox/`. Do not mix. Workbench is removed.

@@ -2,7 +2,7 @@ import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { App } from './canvas/App'
-import { SiteApp, SiteRedirect } from './site/SiteApp'
+import { DocsRedirect, SiteApp, SiteRedirect } from './site/SiteApp'
 import './styles.css'
 import './site/site.css'
 
@@ -18,7 +18,9 @@ function RouteShell() {
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/site" element={<SiteRedirect />} />
-      <Route path="/site/:slug" element={<SiteApp />} />
+      <Route path="/site/:slug" element={<SiteApp bin="boot" />} />
+      <Route path="/docs" element={<DocsRedirect />} />
+      <Route path="/docs/:slug" element={<SiteApp bin="doc" />} />
       <Route path="/demo" element={<Navigate to="/site/overview" replace />} />
       <Route path="/demo/*" element={<Navigate to="/site/overview" replace />} />
       <Route path="/projects" element={<Navigate to="/site/overview" replace />} />

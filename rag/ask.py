@@ -50,9 +50,24 @@ def _article(query: str, retrieved: dict) -> str:
             continue
         for hit in hits[:5]:
             title = hit.get("title") or hit.get("doc_id")
+            hid = hit.get("chunk_id") or hit.get("doc_id")
             snippet = (hit.get("text") or "").replace("\n", " ")[:240]
-            lines.append(f"- **{title}** ({hit.get('score'):.4f}) — {snippet}")
+            lines.append(f"- **[{hid}]** {title} ({hit.get('score'):.4f}) — {snippet}")
         lines.append("")
+    cites = []
+    for ground, hits in (retrieved.get("per_ground") or {}).items():
+        for hit in hits[:5]:
+            hid = hit.get("chunk_id") or hit.get("doc_id")
+            if hid:
+                cites.append(f"{hid} ({ground})")
+    lines.append("## Citations")
+    lines.append("")
+    if cites:
+        for c in cites:
+            lines.append(f"- `{c}`")
+    else:
+        lines.append("_No hits. Not in DB — POST /api/papers/fetch. Do not invent._")
+    lines.append("")
     lines.append("## How the loop is wired")
     lines.append("")
     lines.append(ARCHITECTURE_MD.split("## What goes in", 1)[-1] if "## What goes in" in ARCHITECTURE_MD else "")
@@ -92,11 +107,21 @@ def run_ask(query: str | None = None, *, rebuild: bool = False) -> dict:
     )
     HybridIndex(DOMAIN, "md").rebuild()
 
-    diagram = dict(DIAGRAM)
+    dest = DIAGRAMS / "latest.json"
+    existing: dict = {}
+    if dest.exists():
+        try:
+            loaded = json.loads(dest.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict) and loaded.get("nodes"):
+                existing = loaded
+        except json.JSONDecodeError:
+            existing = {}
+    diagram = dict(existing or DIAGRAM)
+    diagram.setdefault("id", "hybrid-rag-loop")
     diagram["updatedAt"] = datetime.now(timezone.utc).isoformat()
     diagram["query"] = idea
     DIAGRAMS.mkdir(parents=True, exist_ok=True)
-    (DIAGRAMS / "latest.json").write_text(json.dumps(diagram, indent=2), encoding="utf-8")
+    dest.write_text(json.dumps(diagram, indent=2), encoding="utf-8")
 
     hit_n = sum(len(v) for v in retrieved["per_ground"].values())
     _bookkeep(
@@ -110,6 +135,11 @@ def run_ask(query: str | None = None, *, rebuild: bool = False) -> dict:
         "md": "data/md/architecture.md",
         "diagram": "data/diagrams/latest.json",
         "retrieved": retrieved,
+        "citeOrFetch": {
+            "mustCite": True,
+            "notInDb": None if hit_n else "No hits. POST /api/papers/fetch — do not invent.",
+            "fetch": "POST /api/papers/fetch",
+        },
     }
 
 

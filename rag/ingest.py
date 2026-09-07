@@ -135,17 +135,31 @@ def seed_architecture(domain: str = DOMAIN) -> None:
 
 def ingest_all_local(domain: str = DOMAIN) -> dict[str, int]:
     seed_architecture(domain)
-    counts = {
+    from rag.code_meta import ingest_code_chunks
+
+    counts: dict[str, int] = {
         "handbook": ingest_handbook(domain),
         "papers_drop": ingest_drop_folder(PAPERS_DROP, "papers", domain),
         "code_drop": ingest_drop_folder(CODE_DROP, "code", domain),
         "cursor_drop": ingest_drop_folder(CURSOR_DROP, "cursor", domain),
         "md_pages": ingest_drop_folder(MD, "md", domain) + ingest_drop_folder(CONTENT, "md", domain),
     }
+    meta_chunks = ingest_code_chunks(domain)
+    counts["code_meta"] = int(meta_chunks.get("chunks") or 0)
+    counts["code_meta_warnings"] = int(meta_chunks.get("warnings") or 0)
     # A few live source files so the code ground is not only the seed note.
     for rel in (
         "rag/retrieve.py",
         "rag/cli.py",
+        "backend/http/routes.ts",
+        "backend/persist/pages.ts",
+        "backend/persist/paper-db.ts",
+        "backend/persist/memory.ts",
+        "backend/persist/code-map.ts",
+        "backend/persist/tool-catalog.ts",
+        "frontend/src/site/SiteApp.tsx",
+        "frontend/src/site/markdown.ts",
+        "content/CONTROL.md",
         "server/inbox-plugin.ts",
         "server/vector-store.ts",
     ):

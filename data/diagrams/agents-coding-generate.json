@@ -1,0 +1,86 @@
+{
+  "id": "agents-coding-generate",
+  "title": "Code generation (coding nest)",
+  "updatedAt": "2026-09-06T22:10:00.000Z",
+  "source": "Split Coding — generation path",
+  "animatedEdges": false,
+  "nodes": [
+    {
+      "id": "wiki",
+      "label": "Wiki already on page",
+      "group": "site",
+      "x": 14,
+      "y": 24,
+      "meta": {
+        "summaryShort": "Read before you write",
+        "summaryLong": "Generation implements against fetch results already on the page. Cite-or-fetch if a technique is missing. Do not become the fetch hat.",
+        "pageId": "page:agents-coding-generate",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:agents-coding", "page:hybrid-rag"]
+      }
+    },
+    {
+      "id": "tools",
+      "label": "GET /api/tools",
+      "group": "core",
+      "x": 38,
+      "y": 24,
+      "meta": {
+        "summaryShort": "ACI, not DOM scrape",
+        "summaryLong": "Gorilla / SWE-agent catalog. Wiki verb, search, graph neighborhood, sandbox fork. Re-fetch instead of pasting expired dumps.",
+        "pageId": "page:agents-coding-generate",
+        "paperIds": ["gorilla-2023", "swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "lab",
+      "label": "Sandbox fork / lab",
+      "group": "core",
+      "x": 62,
+      "y": 24,
+      "meta": {
+        "summaryShort": "New code off main",
+        "summaryLong": "POST /api/sandbox/fork creates a branch and optional worktree from main. Coding stays in the lab until the operator says send back.",
+        "pageId": "page:workbench-sandbox",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:agents-coding-generate"]
+      }
+    },
+    {
+      "id": "a3",
+      "label": "A3 + A4",
+      "group": "store",
+      "x": 38,
+      "y": 56,
+      "meta": {
+        "summaryShort": "One change-set, our skills",
+        "summaryLong": "A3 turn-control. A4 lazy-loads hand-authored SKILL.md in this repo only. No community skills. No TraceCoder crew.",
+        "pageId": "page:agents-coding-generate",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:agents-coding"]
+      }
+    },
+    {
+      "id": "write",
+      "label": "Write code + MD",
+      "group": "site",
+      "x": 86,
+      "y": 40,
+      "meta": {
+        "summaryShort": "Ship the slice on the lab",
+        "summaryLong": "Edit persist/routes/site on the lab branch. Wiki note if the change needs one. Propose later — this node does not merge.",
+        "pageId": "page:agents-coding-generate",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:implement"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "wiki", "to": "tools", "label": "aim" },
+    { "from": "tools", "to": "lab", "label": "if new" },
+    { "from": "tools", "to": "a3", "label": "diet" },
+    { "from": "lab", "to": "write", "label": "implement" },
+    { "from": "a3", "to": "write", "label": "cap" }
+  ]
+}

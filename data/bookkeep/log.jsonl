@@ -5,3 +5,83 @@
 {"at":"2026-09-05T21:51:24.304Z","kind":"ask","detail":{"via":"park","ok":true,"error":null}}
 {"at": "2026-09-05T22:01:05.440031+00:00", "kind": "ask", "detail": {"query": "RSNN SF MLP one-hot Frame Loss stop gradient parallel architecture from iPad canvas", "hits": 25, "md": "C:\\Users\\alext\\Desktop\\Cursor Meta Projects\\Drawinng-Local-Website-Loop\\data\\md\\architecture.md", "png": "PNG parked: True (2349629 bytes)"}}
 {"at":"2026-09-05T22:28:38.128Z","kind":"fetch","detail":{"ok":true,"skipped":true,"id":"dashboard-design-patterns-2022","title":"Dashboard Design Patterns","path":"data/papers/dashboard-design-patterns-2022.md","pdf":"data/papers/pdf/dashboard-design-patterns-2022.pdf","bytes":0,"source":"https://arxiv.org/pdf/2205.00757.pdf","ingested":true}}
+{"at":"2026-09-05T22:38:27.817Z","kind":"park","detail":{"savedAt":"2026-09-05T22:38:21.317Z","shapes":411}}
+{"at": "2026-09-05T22:38:35.918099+00:00", "kind": "ask", "detail": {"query": "parked canvas architecture", "hits": 25, "md": "C:\\Users\\alext\\Desktop\\Cursor Meta Projects\\Drawinng-Local-Website-Loop\\data\\md\\architecture.md", "png": "PNG parked: True (2916915 bytes)"}}
+{"at":"2026-09-05T22:38:36.712Z","kind":"ask","detail":{"via":"park","ok":true,"error":null}}
+{"at":"2026-09-05T22:54:39.944Z","kind":"map-fetch","detail":{"q":"hybrid","added":11}}
+{"at":"2026-09-05T23:21:26.179Z","kind":"paper-db","detail":{"count":21}}
+{"at":"2026-09-05T23:21:33.956Z","kind":"fetch","detail":{"ok":true,"skipped":true,"id":"holten-directed-edges-2009","title":"A User Study on Visualizing Directed Edges in Graphs","path":"data/papers/holten-directed-edges-2009.md","pdf":null,"bytes":0,"source":"https://www.win.tue.nl/~vanwijk/directed_edges.pdf","ingested":true}}
+{"at":"2026-09-05T23:59:40.014Z","kind":"park","detail":{"savedAt":"2026-09-05T23:59:41.240Z","shapes":287}}
+{"at": "2026-09-05T23:59:52.137707+00:00", "kind": "ask", "detail": {"query": "parked canvas architecture Diagrams ask Diagram Scribbling (iPad)", "hits": 25, "md": "C:\\Users\\alext\\Desktop\\Cursor Meta Projects\\Drawinng-Local-Website-Loop\\data\\md\\architecture.md", "png": "PNG parked: True (944070 bytes)"}}
+{"at":"2026-09-05T23:59:52.988Z","kind":"ask","detail":{"via":"park","ok":true,"error":null}}
+{"at":"2026-09-06T00:05:33.095Z","kind":"board","detail":{"id":"board:page-overview-mtp1w6cl-e9q4","sourceType":"page","sourceId":"page:overview"}}
+{"at":"2026-09-06T01:32:22.488Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp4ztxy-j7y2","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop"}}
+{"at":"2026-09-06T01:32:44.725Z","kind":"board","detail":{"id":"board:page-diagrams-mtp50b3n-odeb","sourceType":"page","sourceId":"page:diagrams"}}
+{"at":"2026-09-06T01:37:49.121Z","kind":"board","detail":{"id":"board:page-overview-mtp56tz2-a67o","sourceType":"page","sourceId":"page:overview","surface":"clean"}}
+{"at":"2026-09-06T01:37:49.321Z","kind":"board","detail":{"id":"board:page-overview-mtp56u1r-chy3","sourceType":"page","sourceId":"page:overview","surface":"stamped"}}
+{"at":"2026-09-06T01:37:50.298Z","kind":"board","detail":{"id":"board:dashboard-design-patterns-2022-mtp56u53-uwpr","sourceType":"paper","sourceId":"dashboard-design-patterns-2022","surface":"stamped"}}
+{"at":"2026-09-06T01:44:09.867Z","kind":"board","detail":{"id":"board:page-overview-mtp5ezrd-8d6g","sourceType":"page","sourceId":"page:overview","surface":"clean","padOnline":true}}
+{"at":"2026-09-06T02:21:03.644Z","kind":"board","detail":{"id":"board:page-overview-mtp6qfx1-dx3p","sourceType":"page","sourceId":"page:overview","surface":"clean","padOnline":true}}
+{"at":"2026-09-06T02:27:45.409Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp6z1x5-47uu","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"clean","padOnline":true}}
+{"at":"2026-09-06T02:32:07.762Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp74ocp-30xr","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:32:19.220Z","kind":"board","detail":{"id":"board:page-overview-mtp74x6y-zxfs","sourceType":"page","sourceId":"page:overview","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:32:19.245Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp74x7q-vqht","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"clean","padOnline":true}}
+{"at":"2026-09-06T02:32:27.034Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp75380-mj0v","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:32:43.223Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp75fpq-tsmm","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:34:07.194Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp778ia-0iru","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:34:39.722Z","kind":"board","detail":{"id":"board:page-diagrams-mtp77xls-ol13","sourceType":"page","sourceId":"page:diagrams","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:39:19.947Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7dxtv-qlsa","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:39:19.982Z","kind":"board","detail":{"id":"board:page-overview-mtp7dxut-htpb","sourceType":"page","sourceId":"page:overview","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:39:20.716Z","kind":"board","detail":{"id":"board:dashboard-design-patterns-2022-mtp7dxvc-qcuv","sourceType":"paper","sourceId":"dashboard-design-patterns-2022","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:39:20.962Z","kind":"board","detail":{"id":"board:page-tied-boards-mtp7dyfs-eo4x","sourceType":"page","sourceId":"page:tied-boards","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:40:03.068Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7ev3o-8f96","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:40:13.923Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7f3h8-rx0j","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:40:33.732Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7firg-ixy1","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:40:53.010Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7fxmy-xr8n","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"clean","padOnline":true}}
+{"at":"2026-09-06T02:41:07.800Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7g91s-stmm","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true}}
+{"at":"2026-09-06T02:45:11.305Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7lgxs-t5ey","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true,"captured":true,"asset":"page-01.jpg","mime":"image/jpeg"}}
+{"at":"2026-09-06T02:46:14.328Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7mtkf-zkgw","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true,"captured":true,"asset":"page-01.jpg","mime":"image/jpeg"}}
+{"at":"2026-09-06T02:46:26.391Z","kind":"board","detail":{"id":"board:diagram-hybrid-rag-loop-mtp7n2vg-1bku","sourceType":"diagram","sourceId":"diagram:hybrid-rag-loop","surface":"stamped","padOnline":true,"captured":true,"asset":"page-01.jpg","mime":"image/jpeg"}}
+{"at":"2026-09-06T03:01:54.859Z","kind":"fetch","detail":{"ok":true,"id":"arxiv-2505-16067","title":"2505.16067","path":"data/papers/arxiv-2505-16067.md","pdf":"data/papers/pdf/arxiv-2505-16067.pdf","bytes":9600578,"source":"https://arxiv.org/abs/2505.16067","ingested":true,"seed":{"handbook":20,"papers_drop":26,"code_drop":0,"cursor_drop":0,"md_pages":14,"code_meta":2,"code_meta_warnings":0,"repo_code":11},"rebuild":{"papers":1951}}}
+{"at":"2026-09-06T03:06:11.580Z","kind":"fetch","detail":{"ok":true,"id":"arxiv-2604-21284","title":"2604.21284","path":"data/papers/arxiv-2604-21284.md","pdf":"data/papers/pdf/arxiv-2604-21284.pdf","bytes":360957,"source":"https://arxiv.org/abs/2604.21284","ingested":true,"seed":{"handbook":20,"papers_drop":39,"code_drop":0,"cursor_drop":0,"md_pages":14,"code_meta":2,"code_meta_warnings":0,"repo_code":11},"rebuild":{"papers":1972}}}
+{"at":"2026-09-06T03:13:49.268Z","kind":"paper-db","detail":{"count":44}}
+{"at":"2026-09-06T03:38:06.148Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtp9hio0","why":"scholar.test AUDIT","related":["user","test","mem-mtp9hinz"],"lane":"user"}}
+{"at":"2026-09-06T03:41:06.642Z","kind":"memory","detail":{"id":"mem-mtp9ldxt","lane":"user"}}
+{"at":"2026-09-06T03:41:06.657Z","kind":"memory","detail":{"id":"mem-mtp9ldy8","lane":"user","supersedes":"mem-mtp9ldxt"}}
+{"at":"2026-09-06T03:41:06.673Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtp9ldy8","why":"api check forget-lane AUDIT","related":["user","test","mem-mtp9ldxt"],"lane":"user"}}
+{"at":"2026-09-06T16:45:17.284Z","kind":"fetch","detail":{"ok":true,"id":"arxiv-2604-20855","title":"arXiv Query: search_query=&amp;id_list=2604.20855&amp;start=0&amp;max_results=10","path":"data/papers/arxiv-2604-20855.md","pdf":"data/papers/pdf/arxiv-2604-20855.pdf","bytes":1196074,"source":"https://arxiv.org/abs/2604.20855","ingested":true,"seed":{"handbook":20,"papers_drop":51,"code_drop":0,"cursor_drop":0,"md_pages":16,"code_meta":3,"code_meta_warnings":0,"repo_code":11},"rebuild":{"papers":2501}}}
+{"at":"2026-09-06T19:50:56.904Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtq88ltv","why":"scholar.test AUDIT","related":["user","test","mem-mtq88ltu"],"lane":"user"}}
+{"at":"2026-09-06T21:19:28.879Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqbegkr","why":"scholar.test AUDIT","related":["user","test","mem-mtqbegkq"],"lane":"user"}}
+{"at":"2026-09-06T21:37:03.102Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqc120q","why":"scholar.test AUDIT","related":["user","test","mem-mtqc120p"],"lane":"user"}}
+{"at":"2026-09-06T21:51:30.722Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqcjnh8","why":"scholar.test AUDIT","related":["user","test","mem-mtqcjnh5"],"lane":"user"}}
+{"at":"2026-09-06T21:52:41.654Z","kind":"implement","detail":{"id":"impl-mtqcl67p-khxg","status":"discuss"}}
+{"at":"2026-09-06T21:52:41.670Z","kind":"implement-complete","detail":{"id":"impl-mtqcl67p-khxg"}}
+{"at":"2026-09-06T22:05:26.674Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqd1ki6","why":"scholar.test AUDIT","related":["user","test","mem-mtqd1ki4"],"lane":"user"}}
+{"at":"2026-09-06T22:05:36.530Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqd1s3y","why":"scholar.test AUDIT","related":["user","test","mem-mtqd1s3w"],"lane":"user"}}
+{"at":"2026-09-06T22:06:01.399Z","kind":"sandbox-fork","detail":{"id":"lab-mtqd2ay4-local-lab","branch":"lab/local-lab","worktree":"(local lab worktree)"}}
+{"at":"2026-09-06T22:06:01.416Z","kind":"sandbox-propose","detail":{"id":"lab-mtqd2ay4-local-lab","status":"human-check-pending"}}
+{"at":"2026-09-06T22:06:01.418Z","kind":"sandbox-lesson","detail":{"id":"lesson-mtqd2bbd-l7du"}}
+{"at": "2026-09-06T22:18:27.442279+00:00", "kind": "ask", "detail": {"query": "hybrid RAG ask diagram md vector DB local website", "hits": 25, "md": "C:\\Users\\alext\\Desktop\\Cursor Meta Projects\\Drawinng-Local-Website-Loop\\data\\md\\architecture.md", "png": "PNG parked: True (1650946 bytes)"}}
+{"at":"2026-09-06T22:24:00.779Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqdpg5j","why":"scholar.test AUDIT","related":["user","test","mem-mtqdpg5i"],"lane":"user"}}
+{"at":"2026-09-06T22:34:07.677Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqe2gft","why":"scholar.test AUDIT","related":["user","test","mem-mtqe2gfr"],"lane":"user"}}
+{"at":"2026-09-06T22:40:58.072Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqeb93n","why":"scholar.test AUDIT","related":["user","test","mem-mtqeb93m"],"lane":"user"}}
+{"at":"2026-09-06T22:54:32.037Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqesp5t","why":"scholar.test AUDIT","related":["user","test","mem-mtqesp5r"],"lane":"user"}}
+{"at":"2026-09-06T22:55:47.415Z","kind":"sandbox-flag","detail":{"slug":"sandbox-memory-scorecard","flagged":true}}
+{"at":"2026-09-06T22:57:21.972Z","kind":"sandbox-flag","detail":{"slug":"sandbox-memory-scorecard","flagged":false}}
+{"at":"2026-09-06T22:58:05.656Z","kind":"sandbox-flag","detail":{"slug":"sandbox-memory-scorecard","flagged":true}}
+{"at":"2026-09-06T23:06:17.077Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqf7t68","why":"scholar.test AUDIT","related":["user","test","mem-mtqf7t67"],"lane":"user"}}
+{"at":"2026-09-06T23:06:27.707Z","kind":"condensed-return","detail":{"id":"condensed-20260906T230627705","nIds":5}}
+{"at":"2026-09-06T23:06:27.731Z","kind":"sandbox-flag","detail":{"slug":"sandbox-memory-ram","flagged":true}}
+{"at":"2026-09-06T23:20:15.407Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqfps17","why":"scholar.test AUDIT","related":["user","test","mem-mtqfps16"],"lane":"user"}}
+{"at":"2026-09-06T23:21:05.113Z","kind":"condensed-return","detail":{"id":"condensed-20260906T232105110","nIds":3}}
+{"at":"2026-09-06T23:21:05.974Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqfqv1r","why":"scholar.test AUDIT","related":["user","test","mem-mtqfqv1p"],"lane":"user"}}
+{"at":"2026-09-06T23:21:41.387Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqfrmdj","why":"scholar.test AUDIT","related":["user","test","mem-mtqfrmdi"],"lane":"user"}}
+{"at":"2026-09-06T23:24:16.270Z","kind":"sandbox-flag","detail":{"slug":"sandbox-how-the-lab-works","flagged":true}}
+{"at":"2026-09-06T23:24:16.296Z","kind":"sandbox-flag","detail":{"slug":"sandbox-product-program","flagged":true}}
+{"at":"2026-09-06T23:24:16.320Z","kind":"sandbox-flag","detail":{"slug":"sandbox-memory","flagged":true}}
+{"at":"2026-09-07T00:02:37.573Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqh89kw","why":"scholar.test AUDIT","related":["user","test","mem-mtqh89ku"],"lane":"user"}}
+{"at":"2026-09-07T00:48:39.869Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqivgzd","why":"scholar.test AUDIT","related":["user","test","mem-mtqivgzc"],"lane":"user"}}
+{"at":"2026-09-07T00:55:23.781Z","kind":"park","detail":{"savedAt":"2026-09-07T00:55:25.843Z","shapes":231}}
+{"at": "2026-09-07T00:55:24.244728+00:00", "kind": "ask", "detail": {"query": "parked canvas architecture Diagrams Working Scribble Wiki writing length", "hits": 24, "md": "C:\\Users\\alext\\Desktop\\Cursor Meta Projects\\Drawinng-Local-Website-Loop\\data\\md\\architecture.md", "png": "PNG parked: True (722289 bytes)"}}
+{"at":"2026-09-07T00:55:24.277Z","kind":"ask","detail":{"via":"park","ok":true,"error":null}}
+{"at":"2026-09-07T01:04:27.905Z","kind":"AUDIT","detail":{"who":"POST /api/memory/forget","what":"mem-mtqjfsho","why":"scholar.test AUDIT","related":["user","test","mem-mtqjfshn"],"lane":"user"}}

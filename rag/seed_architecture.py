@@ -88,8 +88,32 @@ Chunk size 1200 overlap 150. Collection name hybrid_chunks. Embed BAAI/bge-small
 """
 
 DIAGRAM = {
+    "id": "hybrid-rag-loop",
     "title": "Hybrid RAG local-site loop",
     "updatedAt": "",
+    "animatedEdges": False,
+    "regions": [
+        {"id": "ipad", "label": "iPad", "source": "user", "nodeIds": ["scribble"]},
+        {
+            "id": "local-pc",
+            "label": "local PC",
+            "source": "user",
+            "nodeIds": [
+                "papers",
+                "code",
+                "cursor",
+                "hybrid",
+                "ask",
+                "diagram",
+                "md",
+                "vdb",
+                "save",
+                "agent",
+                "webagent",
+            ],
+        },
+        {"id": "website", "label": "website", "source": "user", "nodeIds": ["wiki", "vis", "site"]},
+    ],
     "nodes": [
         {"id": "papers", "label": "Papers", "group": "in", "x": 8, "y": 18},
         {"id": "code", "label": "Code / Fetch", "group": "in", "x": 8, "y": 36},

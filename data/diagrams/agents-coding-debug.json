@@ -1,0 +1,86 @@
+{
+  "id": "agents-coding-debug",
+  "title": "Debugging and collection (coding nest)",
+  "updatedAt": "2026-09-06T22:10:00.000Z",
+  "source": "Split Coding — debug path",
+  "animatedEdges": false,
+  "nodes": [
+    {
+      "id": "lab-tape",
+      "label": "Lab tape",
+      "group": "core",
+      "x": 16,
+      "y": 28,
+      "meta": {
+        "summaryShort": "Tests and notes on the fork",
+        "summaryLong": "Cheap tape: assertion text, stack, lesson rows. Stays on the lab. Do not replay a failed patch as truth.",
+        "pageId": "page:agents-coding-debug",
+        "paperIds": ["arxiv-2505-16067"],
+        "related": ["page:workbench-sandbox"]
+      }
+    },
+    {
+      "id": "lessons",
+      "label": "Lesson lineage",
+      "group": "site",
+      "x": 42,
+      "y": 28,
+      "meta": {
+        "summaryShort": "Compare attempts",
+        "summaryLong": "POST /api/sandbox/lessons or /api/tripwires/lesson with parentId. Stored in data/sandbox/lessons.json. Comparative, not a self-rewrite loop.",
+        "pageId": "page:agents-coding-debug",
+        "paperIds": ["arxiv-2505-16067"],
+        "related": ["page:agents-coding-debug"]
+      }
+    },
+    {
+      "id": "ask",
+      "label": "Ask the operator first",
+      "group": "agent",
+      "x": 68,
+      "y": 28,
+      "meta": {
+        "summaryShort": "Stuck? Ask. Do not auto-arm",
+        "summaryLong": "If the mash is stuck, ask whether to hire MGM. Never silently flip armed. User starts the call.",
+        "pageId": "page:workbench-mgm",
+        "paperIds": ["knowrag-2026"],
+        "related": ["page:agents-coding-debug"]
+      }
+    },
+    {
+      "id": "hire",
+      "label": "Hire MGM",
+      "group": "agent",
+      "x": 68,
+      "y": 58,
+      "meta": {
+        "summaryShort": "Explicit phrase only",
+        "summaryLong": "POST /api/tripwires/hire with hire MGM. Hook is implemented. Not production. No Mendel Gödel Machine evolution.",
+        "pageId": "page:workbench-mgm",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "propose",
+      "label": "Human check",
+      "group": "store",
+      "x": 42,
+      "y": 58,
+      "meta": {
+        "summaryShort": "Propose, do not merge",
+        "summaryLong": "POST /api/sandbox/propose sets human-check-pending. API never auto-merges. Owner of Judgment is the operator.",
+        "pageId": "page:workbench-sandbox",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:implement"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "lab-tape", "to": "lessons", "label": "record" },
+    { "from": "lessons", "to": "ask", "label": "if stuck" },
+    { "from": "ask", "to": "hire", "label": "user says so" },
+    { "from": "lessons", "to": "propose", "label": "ready" },
+    { "from": "hire", "to": "propose", "label": "then check", "kind": "feedback" }
+  ]
+}

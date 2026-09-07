@@ -1,0 +1,170 @@
+{
+  "updatedAt": "2026-09-05T22:54:39.942Z",
+  "edges": [
+    {
+      "id": "fetch-diagram-hybrid-backend/retrieve/hybrid.ts",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "backend/retrieve/hybrid.ts",
+        "label": "backend/retrieve/hybrid.ts"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-backend/persist/code-map.ts",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "backend/persist/code-map.ts",
+        "label": "backend/persist/code-map.ts"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-backend/persist/tool-catalog.ts",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "backend/persist/tool-catalog.ts",
+        "label": "backend/persist/tool-catalog.ts"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-frontend/src/site/SiteApp.tsx",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "frontend/src/site/SiteApp.tsx",
+        "label": "frontend/src/site/SiteApp.tsx"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-rag/retrieve.py",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "rag/retrieve.py",
+        "label": "rag/retrieve.py"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-content/CONTROL.md",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "content/CONTROL.md",
+        "label": "content/CONTROL.md"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-data/diagrams/latest.json",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "data/diagrams/latest.json",
+        "label": "data/diagrams/latest.json"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-RAG-CLI-and-hybrid-index",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "RAG CLI and hybrid index",
+        "label": "RAG CLI and hybrid index"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-server/inbox-plugin.ts",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "server/inbox-plugin.ts",
+        "label": "server/inbox-plugin.ts"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-server/vector-store.ts",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "server/vector-store.ts",
+        "label": "server/vector-store.ts"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    },
+    {
+      "id": "fetch-diagram-hybrid-rag/cli.py",
+      "from": {
+        "kind": "diagram",
+        "id": "hybrid",
+        "label": "hybrid"
+      },
+      "to": {
+        "kind": "code",
+        "id": "rag/cli.py",
+        "label": "rag/cli.py"
+      },
+      "why": "On-demand map from diagram “hybrid” to repo/code ground",
+      "source": "fetch"
+    }
+  ]
+}

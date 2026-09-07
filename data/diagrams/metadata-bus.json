@@ -1,0 +1,85 @@
+{
+  "id": "metadata-bus",
+  "title": "Metadata bus (one index)",
+  "updatedAt": "2026-09-06",
+  "source": "data/meta/schema.json + persist/meta.ts",
+  "animatedEdges": false,
+  "nodes": [
+    {
+      "id": "writers",
+      "label": "Writers",
+      "group": "in",
+      "x": 12,
+      "y": 28,
+      "meta": {
+        "summaryShort": "Frontmatter, DB, nodes, chunks",
+        "summaryLong": "Pages come from MD YAML. Papers from the catalog/DB. Nodes from diagram JSON meta. Boards from Open on iPad. Code from @chunk after seed. Modules are curated rows in persist/meta.ts. Same schema — not a second bus.",
+        "pageId": "page:metadata",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:code-meta", "page:tied-boards", "module:code-meta"]
+      }
+    },
+    {
+      "id": "schema",
+      "label": "schema.json",
+      "group": "core",
+      "x": 38,
+      "y": 18,
+      "meta": {
+        "summaryShort": "id type title summary links",
+        "summaryLong": "data/meta/schema.json: required id, type (page|paper|node|module|diagram|board|code), title, summary.short/long, tags, citations, related, glossary, updated. Optional pageId, paperIds, implements, derived_from, board fields, code kind/path.",
+        "pageId": "page:metadata",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "api",
+      "label": "GET /api/meta",
+      "group": "core",
+      "x": 38,
+      "y": 48,
+      "meta": {
+        "summaryLong": "listMeta assembles all writers. Filters: q, type, tag, citation, related. GET /api/meta/:id loads one record (aliases allowed). GET /api/tools lists these routes.",
+        "summaryShort": "Index, filters, one id",
+        "pageId": "page:metadata",
+        "paperIds": ["gorilla-2023", "swe-agent-2024"],
+        "related": ["page:control", "module:search"]
+      }
+    },
+    {
+      "id": "search",
+      "label": "Search + ask",
+      "group": "out",
+      "x": 68,
+      "y": 22,
+      "meta": {
+        "summaryShort": "Labeled meta hits, title boost",
+        "summaryLong": "metaAsHits prepends ground=meta records. boostByMeta nudges other hits by title/tags. No cross-ground RRF. Ask returns citations plus citeOrFetch (mustCite, notInDb → POST /api/papers/fetch).",
+        "pageId": "page:hybrid-rag",
+        "paperIds": ["gorilla-2023"],
+        "related": ["page:metadata", "module:search"]
+      }
+    },
+    {
+      "id": "panel",
+      "label": "Panel + iPad",
+      "group": "out",
+      "x": 68,
+      "y": 52,
+      "meta": {
+        "summaryShort": "summaryLong and tied ids",
+        "summaryLong": "Node click looks up node:<diagram>:<id> and shows summary.long plus page/paper links. Open on iPad POSTs pageId, paperIds, related, citations onto a clean or stamped board.",
+        "pageId": "page:tied-boards",
+        "paperIds": ["paper-plain-august-2023"],
+        "related": ["page:metadata", "page:diagrams"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "writers", "to": "schema", "label": "same fields" },
+    { "from": "schema", "to": "api", "label": "listMeta" },
+    { "from": "api", "to": "search", "label": "meta hits" },
+    { "from": "api", "to": "panel", "label": "id links" }
+  ]
+}

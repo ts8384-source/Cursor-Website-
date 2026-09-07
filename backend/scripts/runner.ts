@@ -26,9 +26,17 @@ export function runRag(args: string[], timeoutMs = 180_000): Promise<RagResult> 
     return Promise.resolve({ ok: false, error: 'rag/cli.py missing' })
   }
   return new Promise((resolve) => {
+    const wantDense = process.env.RAG_DENSE?.trim() === '1'
     const child = spawn(python, ['-m', 'rag.cli', ...args], {
       cwd: root,
-      env: { ...process.env, PYTHONUNBUFFERED: '1', PYTHONIOENCODING: 'utf-8' },
+      env: {
+        ...process.env,
+        PYTHONUNBUFFERED: '1',
+        PYTHONIOENCODING: 'utf-8',
+        // Search/ask from the API defaults to BM25-only so each spawn does not load
+        // five SentenceTransformer + Chroma copies. Set RAG_DENSE=1 to restore dense.
+        RAG_BM25_ONLY: wantDense ? '' : process.env.RAG_BM25_ONLY?.trim() || '1',
+      },
       windowsHide: true,
     })
     let stdout = ''

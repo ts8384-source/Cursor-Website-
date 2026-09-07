@@ -1,6 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { apiUrl } from '../api'
 import { FetchPaperForm } from './FetchPaperForm'
+import { OpenOnIpad } from './OpenOnIpad'
 import type { PaperRecord, SearchHit } from './types'
 
 const GROUPS = [
@@ -107,6 +108,14 @@ export function PaperCatalog({
                         OA
                       </a>
                     ) : null}
+                    <OpenOnIpad
+                      sourceType="paper"
+                      sourceId={paper.id}
+                      title={paper.title}
+                      paperIds={[paper.id]}
+                      citations={[paper.id]}
+                      gist={`${paper.authors}. ${paper.year}. ${paper.venue}.`}
+                    />
                   </div>
                 </li>
               ))}

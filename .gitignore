@@ -9,4 +9,5 @@ inbox/message.md
 __pycache__/
 *.pyc
 data/index/
+.labs/
 .pytest_cache/

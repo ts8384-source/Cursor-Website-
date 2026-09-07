@@ -1,0 +1,100 @@
+# backend/persist/tool-catalog.ts
+
+export type ToolSpec = {
+  id: string
+  method: 'GET' | 'POST'
+  path: string
+  purpose: string
+}
+
+export const TOOLS: ToolSpec[] = [
+  { id: 'health', method: 'GET', path: '/api/health', purpose: 'Process health and LAN pad URLs' },
+  { id: 'tools', method: 'GET', path: '/api/tools', purpose: 'This catalog (Gorilla / SWE-agent ACI)' },
+  { id: 'meta', method: 'GET', path: '/api/meta', purpose: 'Metadata bus index; filter ?q=&type=&tag=&citation=&related=' },
+  { id: 'meta-one', method: 'GET', path: '/api/meta/:id', purpose: 'One metadata record (page, paper, node, module, diagram, code)' },
+  {
+    id: 'graph',
+    method: 'GET',
+    path: '/api/graph',
+    purpose: 'One wiki knowledge graph from meta links (?focus=&hops=). Same graph always; no invented edges',
+  },
+  {
+    id: 'graph-neighborhood',
+    method: 'GET',
+    path: '/api/graph/neighborhood',
+    purpose: 'BFS neighborhood of one meta id on the same graph (then open real pages/papers)',
+  },
+  {
+    id: 'generate-seed',
+    method: 'POST',
+    path: '/api/generate/seed',
+    purpose: 'Random or chosen in-DB paperId + gist. No crawl. 404 if not in paper DB',
+  },
+  { id: 'tripwires', method: 'GET', path: '/api/tripwires', purpose: 'MGM hire hook + sandbox fork status. armed false until POST /api/tripwires/hire. Never production. No Docker mandate' },
+  { id: 'tripwires-hire', method: 'POST', path: '/api/tripwires/hire', purpose: 'Arm MGM only when the user says hire MGM / arm the bouncer. Do not auto-arm' },
+  { id: 'tripwires-disarm', method: 'POST', path: '/api/tripwires/disarm', purpose: 'Disarm the MGM bouncer after the hire window' },
+  { id: 'tripwires-lesson', method: 'POST', path: '/api/tripwires/lesson', purpose: 'Comparative lineage note across attempts (parentId). Not scaffold rewrite' },
+  { id: 'sandbox', method: 'GET', path: '/api/sandbox', purpose: 'Active labs (branch/worktree) plus lesson records' },
+  { id: 'sandbox-fork', method: 'POST', path: '/api/sandbox/fork', purpose: 'Create a lab branch + optional worktree from main/master. No force-push, no auto-merge' },
+  { id: 'sandbox-propose', method: 'POST', path: '/api/sandbox/propose', purpose: 'Mark a lab human-check-pending. Owner of Judgment. Do not merge' },
+  {
+    id: 'sandbox-promote',
+    method: 'POST',
+    path: '/api/sandbox/promote',
+    purpose: 'Copy sandbox MD to data/md/ only if phrase is promote to main. No git merge. No auto-merge',
+  },
+  { id: 'sandbox-lessons', method: 'POST', path: '/api/sandbox/lessons', purpose: 'Store a lab lesson / comparative note' },
+  { id: 'implement', method: 'GET', path: '/api/implement', purpose: 'To-implement work queue. Default hides implemented. ?done=1 is the archive' },
+  { id: 'implement-add', method: 'POST', path: '/api/implement', purpose: 'Add a discuss or will-implement item; optional supersedes:<old-id>' },
+  { id: 'implement-complete', method: 'POST', path: '/api/implement/complete', purpose: 'Mark an item implemented (audit stays; hidden from default list)' },
+  { id: 'pages', method: 'GET', path: '/api/pages', purpose: 'Living Papers list plus nested IA tree (parent/children)' },
+  { id: 'page', method: 'GET', path: '/api/pages/:slug', purpose: 'One Markdown page plus frontmatter' },
+  { id: 'overview', method: 'GET', path: '/api/overview', purpose: 'Catalog blurb plus live wiki page tree' },
+  { id: 'papers', method: 'GET', path: '/api/papers', purpose: 'OA papers on disk (papers ground catalog)' },
+  { id: 'search', method: 'GET', path: '/api/search?q=', purpose: 'Hybrid retrieve, labeled per ground' },
+  { id: 'ask', method: 'POST', path: '/api/ask', purpose: 'Ingest scribble, retrieve, write latest ask article; hits + citeOrFetch + grounding' },
+  { id: 'scripts', method: 'GET', path: '/api/scripts', purpose: 'Allowlisted rag.cli names' },
+  { id: 'run-script', method: 'POST', path: '/api/scripts', purpose: 'Run seed | rebuild | ask | site' },
+  {
+    id: 'fetch',
+    method: 'POST',
+    path: '/api/fetch',
+    purpose: 'OA paper: arXiv id or PDF/abs URL → data/papers + papers-ground ingest',
+  },
+  {
+    id: 'papers-fetch',
+    method: 'POST',
+    path: '/api/papers/fetch',
+    purpose: 'Same pipeline as POST /api/fetch (alias)',
+  },
+  { id: 'snapshot', method: 'POST', path: '/api/snapshot', purpose: 'Write iPad inbox snapshot (optional tied-board meta; no live MD apply)' },
+  { id: 'boards', method: 'GET', path: '/api/boards', purpose: 'Tied iPad boards (page/paper/diagram/math) plus current' },
+  { id: 'boards-current', method: 'GET', path: '/api/boards/current', purpose: 'The one board from the last Open on iPad click' },
+  { id: 'boards-pending', method: 'GET', path: '/api/boards/pending', purpose: 'Latest ACTIVE board id; also marks the pad seen' },
+  { id: 'boards-heartbeat', method: 'POST', path: '/api/boards/heartbeat', purpose: 'Optional pad pulse; pending poll is enough for presence' },
+  { id: 'board-one', method: 'GET', path: '/api/boards/:id', purpose: 'One tied board record and backdrop gist' },
+  { id: 'boards-create', method: 'POST', path: '/api/boards', purpose: 'ACTIVE + optional imageBase64/pdfBase64; pad applies on next poll' },
+  { id: 'board-asset', method: 'GET', path: '/api/boards/file', purpose: 'JPEG/PNG/PDF stamp; ?id=&name= avoids colon paths on Safari' },
+  { id: 'board-asset-path', method: 'GET', path: '/api/boards/:id/assets/:file', purpose: 'Same asset by path' },
+  { id: 'paper-pdf', method: 'GET', path: '/api/papers/:id/pdf', purpose: 'Local OA PDF for a paper if data/papers/pdf/<id>.pdf exists' },
+  { id: 'papers-db', method: 'GET', path: '/api/papers/db', purpose: 'Permanent paper DB: summaries, figures, math, execution' },
+  { id: 'papers-db-rebuild', method: 'POST', path: '/api/papers/db/rebuild', purpose: 'Rescan data/papers into the permanent DB' },
+  { id: 'paper', method: 'GET', path: '/api/papers/:id', purpose: 'One catalog paper plus permanent DB record' },
+  { id: 'math', method: 'GET', path: '/api/math', purpose: 'Math / term lexicon linked to papers' },
+  { id: 'diagrams', method: 'GET', path: '/api/diagrams', purpose: 'Loop diagram JSON, iPad / local PC / website regions, paper figure notes' },
+  { id: 'execution', method: 'GET', path: '/api/execution', purpose: 'How each paper idea is executed in this repo' },
+  { id: 'maps', method: 'GET', path: '/api/maps', purpose: 'Bidirectional math/diagram ↔ code edges' },
+  { id: 'maps-fetch', method: 'POST', path: '/api/maps/fetch', purpose: 'On-demand code fetch from a math or diagram query' },
+  { id: 'memory', method: 'GET', path: '/api/memory', purpose: 'User/project memory; hides forgotten and superseded unless ?forgotten=1&superseded=1' },
+  { id: 'memory-add', method: 'POST', path: '/api/memory', purpose: 'Append a decaying memory; optional supersedes:<old-id>' },
+  { id: 'memory-touch', method: 'POST', path: '/api/memory/touch', purpose: 'Strengthen a memory (retrieval practice)' },
+  { id: 'memory-forget', method: 'POST', path: '/api/memory/forget', purpose: 'Force strength to zero; writes bookkeep AUDIT (forget-lanes only)' },
+]
+
+export function toolCatalog() {
+  return {
+    aci: 'content/CONTROL.md',
+    rule: 'Call these tools. Do not scrape the site DOM.',
+    tools: TOOLS,
+  }
+}

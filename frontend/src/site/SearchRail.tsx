@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import type { SearchHit } from './types'
 
-const GROUNDS = ['papers', 'code', 'scribble', 'cursor', 'md'] as const
+const GROUNDS = ['meta', 'papers', 'code', 'scribble', 'cursor', 'md'] as const
 
 export function SearchRail({
   query,
@@ -25,7 +25,7 @@ export function SearchRail({
   return (
     <section className="search-rail" aria-label="Index search">
       <h2>Search the index</h2>
-      <p className="rail-note">Overview first. Hits appear only after you search (dashboard detail-on-demand).</p>
+      <p className="rail-note">Overview first. Hits appear only after you search (dashboard detail-on-demand). Not in DB → fetch (`POST /api/papers/fetch`). Do not invent.</p>
       <form className="site-search" onSubmit={onSearch}>
         <label htmlFor="site-q">Query</label>
         <input

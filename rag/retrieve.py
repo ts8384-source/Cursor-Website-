@@ -29,21 +29,27 @@ class HybridIndex:
         self._bm25_path = root / "bm25.json"
         self._col = None
         self._client = None
-        if not BM25_ONLY:
-            import chromadb
-            from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
-
-            self._embed = SentenceTransformerEmbeddingFunction(model_name=EMBED_MODEL)
-            self._client = chromadb.PersistentClient(path=self._chroma_dir)
-            self._col = self._client.get_or_create_collection(
-                name=COLLECTION,
-                embedding_function=self._embed,
-                metadata={"hnsw:space": "cosine"},
-            )
+        self._embed = None
+        self._dense_ready = False
         self._bm25 = None
         self._bm25_ids: list[str] = []
         self._chunk_meta: dict[str, dict[str, Any]] = {}
         self._load_bm25()
+
+    def _ensure_dense(self) -> None:
+        if BM25_ONLY or self._dense_ready:
+            return
+        import chromadb
+        from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+
+        self._embed = SentenceTransformerEmbeddingFunction(model_name=EMBED_MODEL)
+        self._client = chromadb.PersistentClient(path=self._chroma_dir)
+        self._col = self._client.get_or_create_collection(
+            name=COLLECTION,
+            embedding_function=self._embed,
+            metadata={"hnsw:space": "cosine"},
+        )
+        self._dense_ready = True
 
     def empty(self) -> bool:
         return not self._bm25_ids and self._col_count() == 0
@@ -76,6 +82,7 @@ class HybridIndex:
         return CORPUS / self.domain / self.ground
 
     def rebuild(self) -> int:
+        self._ensure_dense()
         from rank_bm25 import BM25Okapi
 
         root = self._corpus_root()
@@ -145,6 +152,9 @@ class HybridIndex:
         return len(chunks)
 
     def _dense_ids(self, query: str, n: int) -> list[str]:
+        if BM25_ONLY:
+            return []
+        self._ensure_dense()
         if self._col is None or self._col_count() == 0:
             return []
         n = min(n, max(self._col_count(), 1))
@@ -162,6 +172,14 @@ class HybridIndex:
         )
         return [i for i, s in ranked[:n] if s > 0]
 
+    # @chunk
+    # id: code:loop.hybrid_search
+    # type: method
+    # implements: page:hybrid-rag
+    # citations: [hm-rag-2025]
+    # tags: [retrieve, rrf]
+    # summary: RRF fuse of BM25 and dense
+    # @end
     def search(
         self,
         query: str,

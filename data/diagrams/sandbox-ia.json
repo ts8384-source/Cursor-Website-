@@ -1,0 +1,70 @@
+{
+  "id": "sandbox-ia",
+  "title": "Lab bench under Overview",
+  "updatedAt": "2026-09-07T00:00:00.000Z",
+  "source": "page:sandbox Lab bench plus how-to and lane children",
+  "animatedEdges": false,
+  "nodes": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "group": "site",
+      "x": 8,
+      "y": 8,
+      "meta": {
+        "summaryShort": "Cream Start map",
+        "summaryLong": "Live wiki map. highlight start. Lab bench sits immediately after this node in the TOC.",
+        "pageId": "page:overview",
+        "paperIds": ["dashboard-design-patterns-2022", "treereader-2025"],
+        "related": ["page:sandbox"]
+      }
+    },
+    {
+      "id": "sandbox",
+      "label": "Lab bench",
+      "group": "site",
+      "x": 36,
+      "y": 8,
+      "meta": {
+        "summaryShort": "Olive Lab nest",
+        "summaryLong": "Working parent. highlight lab. Children are written here until promote to main. How-to is a separate child.",
+        "pageId": "page:sandbox",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:overview", "page:sandbox-how-the-lab-works", "page:sandbox-trash-bin"]
+      }
+    },
+    {
+      "id": "lanes",
+      "label": "Lanes",
+      "group": "site",
+      "x": 20,
+      "y": 42,
+      "meta": {
+        "summaryShort": "Idea code research",
+        "summaryLong": "Ideas / Code / Research lanes. How the lab works is not a lane. Olive block on articles is only a pointer.",
+        "pageId": "page:sandbox-idea",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["page:sandbox-code", "page:sandbox-research"]
+      }
+    },
+    {
+      "id": "memory",
+      "label": "Memory opt",
+      "group": "store",
+      "x": 52,
+      "y": 42,
+      "meta": {
+        "summaryShort": "This exploration",
+        "summaryLong": "sandbox-memory: paste, fetch hat, generate hat. Lab exploration, not encyclopedia.",
+        "pageId": "page:sandbox-memory",
+        "paperIds": ["arxiv-2601-18642"],
+        "related": ["page:papers-ingest", "page:sandbox"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "overview", "to": "sandbox", "label": "then" },
+    { "from": "sandbox", "to": "lanes", "label": "child" },
+    { "from": "sandbox", "to": "memory", "label": "explore" }
+  ]
+}

@@ -1,0 +1,16 @@
+# arxiv-2602-06875.md
+
+# TraceCoder: A Trace-Driven Multi-Agent Framework for Automated Debugging of LLM-Generated Code
+
+- **id:** arxiv-2602-06875
+- **list:** fetched
+- **authors:** See arXiv 2602.06875
+- **year:** 2026
+- **venue:** arXiv preprint
+- **oa_url:** https://arxiv.org/abs/2602.06875
+- **arxiv:** 2602.06875
+- **local_pdf:** pdf/arxiv-2602-06875.pdf
+
+## Extracted text (local RAG ingest)
+
+Abstract. Self-debugging that relies on binary pass/fail is stateless and repeats mistakes. TraceCoder instruments code for fine-grained runtime traces, does causal analysis, and uses a Historical Lesson Learning Mechanism from prior failed repairs, plus rollback so each iteration is a strict improvement. Up to 34.43% relative Pass@1 gain. ICSE 2026.

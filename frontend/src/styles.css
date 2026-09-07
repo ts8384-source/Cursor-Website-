@@ -30,7 +30,38 @@ body,
   flex: 1;
   min-width: 0;
   height: 100%;
+  display: flex;
+  flex-direction: row;
 }
+
+.canvas-ink {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.canvas-ink .tldraw,
+.canvas-ink .tl-container {
+  height: 100%;
+}
+
+.tied-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  max-width: min(42vw, 280px);
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid #8a8a8a;
+  color: #f4f4f4;
+  font: 13px/1.2 system-ui, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
 
 .files-panel {
   display: flex;
@@ -293,7 +324,7 @@ body,
   right: max(12px, env(safe-area-inset-right));
   bottom: max(12px, env(safe-area-inset-bottom));
   z-index: 45;
-  width: min(240px, calc(100vw - 24px));
+  width: min(280px, calc(100vw - 24px));
   padding: 10px 12px;
   border-radius: 16px;
   background: rgba(17, 17, 17, 0.88);
@@ -303,13 +334,34 @@ body,
   pointer-events: auto;
 }
 
+.pairing-label {
+  display: block;
+  margin: 8px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.pairing-label-pad {
+  opacity: 1;
+  font-weight: 650;
+}
+
 .pairing code {
   display: block;
-  margin: 8px 0;
+  margin: 4px 0 0;
   padding: 8px;
   border-radius: 8px;
   background: #2a2a2a;
   word-break: break-all;
+  opacity: 1;
+  color: #f4f4f4;
+}
+
+.pairing-pad-url {
+  font-size: 15px;
+  line-height: 1.35;
+  background: #111 !important;
+  border: 1px solid #f4f4f4;
 }
 
 .pairing-hint {

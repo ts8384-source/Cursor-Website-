@@ -1,0 +1,21 @@
+{
+  "roles": {
+    "start": {
+      "badge": "Start",
+      "hint": "cream map — the live page tree"
+    },
+    "queue": {
+      "badge": "Queue",
+      "hint": "slate tickets — not the family tree"
+    },
+    "lab": {
+      "badge": "Lab",
+      "hint": "Lab bench — agents write children here, not the encyclopedia"
+    }
+  },
+  "bySlug": {
+    "overview": "start",
+    "implement": "queue",
+    "sandbox": "lab"
+  }
+}

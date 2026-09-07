@@ -1,0 +1,223 @@
+{
+  "items": [
+    {
+      "id": "impl-mgm-ondemand",
+      "title": "MGM on-demand bouncer",
+      "note": "Hire hook shipped: POST /api/tripwires/hire. User starts the call; ask the operator if stuck. No Mendel Gödel Machine evolution. Never production.",
+      "status": "implemented",
+      "related": [
+        "page:workbench-mgm",
+        "page:agents-coding-debug",
+        "page:workbench-round3"
+      ],
+      "createdAt": "2026-09-06T21:50:00.000Z",
+      "updatedAt": "2026-09-06T22:15:00.000Z",
+      "implementedAt": "2026-09-06T22:15:00.000Z"
+    },
+    {
+      "id": "impl-sandbox-fork-lab",
+      "title": "Sandbox as fork / lab",
+      "note": "Shipped: POST /api/sandbox/fork + GET /api/sandbox + propose (human check, no auto-merge). Worktree/branch from main. No Docker headline.",
+      "status": "implemented",
+      "related": [
+        "page:workbench-sandbox",
+        "page:agents-coding-generate",
+        "page:workbench-round3"
+      ],
+      "createdAt": "2026-09-06T21:50:00.000Z",
+      "updatedAt": "2026-09-06T22:15:00.000Z",
+      "implementedAt": "2026-09-06T22:15:00.000Z"
+    },
+    {
+      "id": "impl-tracecoder-understand",
+      "title": "TraceCoder — abandoned",
+      "note": "We looked (arxiv-2602-06875). We dropped it. Not a method we use. Do not stand up their multi-agent runtime.",
+      "status": "implemented",
+      "related": [
+        "page:workbench-runtimes",
+        "arxiv-2602-06875"
+      ],
+      "createdAt": "2026-09-06T21:50:00.000Z",
+      "updatedAt": "2026-09-06T22:05:00.000Z",
+      "implementedAt": "2026-09-06T22:05:00.000Z"
+    },
+    {
+      "id": "impl-mtqcjo9t-bg36",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T21:51:31.744Z",
+      "updatedAt": "2026-09-06T21:51:31.746Z",
+      "implementedAt": "2026-09-06T21:51:31.746Z"
+    },
+    {
+      "id": "impl-mtqcl67p-khxg",
+      "title": "browser-sub verify row",
+      "note": "temporary verify",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T21:52:41.653Z",
+      "updatedAt": "2026-09-06T21:52:41.669Z",
+      "implementedAt": "2026-09-06T21:52:41.669Z"
+    },
+    {
+      "id": "impl-mtqd1lby-5szt",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T22:05:27.742Z",
+      "updatedAt": "2026-09-06T22:05:27.743Z",
+      "implementedAt": "2026-09-06T22:05:27.743Z"
+    },
+    {
+      "id": "impl-mtqd1sxm-ouzt",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T22:05:37.593Z",
+      "updatedAt": "2026-09-06T22:05:37.595Z",
+      "implementedAt": "2026-09-06T22:05:37.595Z"
+    },
+    {
+      "id": "impl-sandbox-site-lanes",
+      "title": "Website sandbox lanes (first slice)",
+      "note": "Shipped: data/md/sandbox/ idea|code|research, Sandbox block on /site, POST /api/sandbox/promote copies MD after “promote to main”. Git lab merge still not built.",
+      "status": "implemented",
+      "related": [
+        "page:workbench-sandbox",
+        "page:wiki-writing",
+        "page:sandbox"
+      ],
+      "createdAt": "2026-09-06T22:24:01.857Z",
+      "updatedAt": "2026-09-06T22:24:01.857Z",
+      "implementedAt": "2026-09-06T22:24:01.857Z"
+    },
+    {
+      "id": "impl-sandbox-git-merge",
+      "title": "Git lab merge into main",
+      "note": "Discuss. POST /api/sandbox/propose still does not merge. Promote copies wiki MD only. Do not add auto-merge. Owner of Judgment.",
+      "status": "discuss",
+      "related": [
+        "page:workbench-sandbox",
+        "page:implement"
+      ],
+      "createdAt": "2026-09-06T22:24:01.857Z",
+      "updatedAt": "2026-09-06T22:24:01.857Z"
+    },
+    {
+      "id": "impl-mtqdpgzn-hvwl",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T22:24:01.859Z",
+      "updatedAt": "2026-09-06T22:24:01.861Z",
+      "implementedAt": "2026-09-06T22:24:01.861Z"
+    },
+    {
+      "id": "impl-context-editing",
+      "title": "Context editing + memory tool",
+      "note": "Discuss. Anthropic-style context editing named on the memory/token paste. Not decided — do not mark will-implement.",
+      "status": "discuss",
+      "related": [
+        "page:future",
+        "page:memory"
+      ],
+      "createdAt": "2026-09-06T22:34:08.871Z",
+      "updatedAt": "2026-09-06T22:34:08.871Z"
+    },
+    {
+      "id": "impl-mtqeb9yp-4gzf",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T22:40:59.185Z",
+      "updatedAt": "2026-09-06T22:40:59.186Z",
+      "implementedAt": "2026-09-06T22:40:59.186Z"
+    },
+    {
+      "id": "impl-mtqesq0g-2sjs",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T22:54:33.136Z",
+      "updatedAt": "2026-09-06T22:54:33.137Z",
+      "implementedAt": "2026-09-06T22:54:33.137Z"
+    },
+    {
+      "id": "impl-mtqf7u25-ho80",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T23:06:18.220Z",
+      "updatedAt": "2026-09-06T23:06:18.222Z",
+      "implementedAt": "2026-09-06T23:06:18.222Z"
+    },
+    {
+      "id": "impl-mtqfpt06-q1e4",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T23:20:16.662Z",
+      "updatedAt": "2026-09-06T23:20:16.664Z",
+      "implementedAt": "2026-09-06T23:20:16.664Z"
+    },
+    {
+      "id": "impl-mtqfqw9u-317o",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T23:21:07.554Z",
+      "updatedAt": "2026-09-06T23:21:07.555Z",
+      "implementedAt": "2026-09-06T23:21:07.555Z"
+    },
+    {
+      "id": "impl-mtqfrnbr-eerq",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-06T23:21:42.615Z",
+      "updatedAt": "2026-09-06T23:21:42.617Z",
+      "implementedAt": "2026-09-06T23:21:42.617Z"
+    },
+    {
+      "id": "impl-mtqh8avb-1ocb",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-07T00:02:39.239Z",
+      "updatedAt": "2026-09-07T00:02:39.240Z",
+      "implementedAt": "2026-09-07T00:02:39.240Z"
+    },
+    {
+      "id": "impl-mtqivhx3-04v7",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-07T00:48:41.079Z",
+      "updatedAt": "2026-09-07T00:48:41.080Z",
+      "implementedAt": "2026-09-07T00:48:41.080Z"
+    },
+    {
+      "id": "impl-mtqjftk7-xh17",
+      "title": "test queue row",
+      "note": "scholar test",
+      "status": "implemented",
+      "related": [],
+      "createdAt": "2026-09-07T01:04:29.287Z",
+      "updatedAt": "2026-09-07T01:04:29.288Z",
+      "implementedAt": "2026-09-07T01:04:29.288Z"
+    }
+  ]
+}

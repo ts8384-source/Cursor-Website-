@@ -20,6 +20,7 @@ STOP = frozenset(
 TOKEN = re.compile(r"[a-z][a-z0-9\-]{2,}")
 
 
+# @chunk id=code:loop.tokenize type=function tags=[tokenize] implements=page:hybrid-rag
 def tokenize(text: str, *, drop_stop: bool = False) -> list[str]:
     toks = TOKEN.findall(text.lower())
     if not drop_stop:

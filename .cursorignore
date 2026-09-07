@@ -1,0 +1,9 @@
+﻿# Process RAM: do not let Cursor / tsserver index giant rasters or vector files.
+# Wiki MD and paper extracts stay searchable.
+data/boards/**
+data/papers/pdf/**
+data/index/**
+inbox/latest.png
+inbox/latest.json
+inbox/PENDING
+*.labs/

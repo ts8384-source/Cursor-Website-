@@ -1,0 +1,16 @@
+# arxiv-2602-05965.md
+
+# Learning to Share: Selective Memory for Efficient Parallel Agentic Systems
+
+- **id:** arxiv-2602-05965
+- **list:** fetched
+- **authors:** Joseph Fioresi, Parth Parag Kulkarni, Ashmal Vayani, Song Wang, Mubarak Shah
+- **year:** 2026
+- **venue:** arXiv preprint
+- **oa_url:** https://arxiv.org/abs/2602.05965
+- **arxiv:** 2602.05965
+- **local_pdf:** pdf/arxiv-2602-05965.pdf
+
+## Extracted text (local RAG ingest)
+
+Abstract. Agentic systems solve complex tasks by coordinating multiple agents that iteratively reason, invoke tools, and exchange intermediate results. To improve robustness and solution quality, recent approaches deploy multiple agent teams running in parallel to explore diverse reasoning trajectories. However, parallel execution comes at a significant computational cost: when different teams independently reason about similar sub-problems or execute analogous steps, they repeatedly perform substantial overlapping computation. To address these limitations, in this paper, we propose Learning to Share (LTS), a learned shared-memory mechanism for parallel agentic frameworks that enables selective cross-team information reuse while controlling context growth. LTS introduces a global memory bank accessible to all teams and a lightweight controller that decides whether intermediate agent steps should be added to memory or not. The controller is trained using stepwise reinforcement learning with usage-aware credit assignment, allowing it to identify information that is globally useful across parallel executions. Experiments on the AssistantBench and GAIA benchmarks show that LTS significantly reduces overall runtime while matching or improving task performance compared to memory-free parallel baselines, demonstrating that learned memory admission is an effective strategy for improving the efficiency of parallel agentic systems. Project page: https://joefioresi718.github.io/LTS_webpage/

@@ -8,6 +8,7 @@ export const FETCH_TIMEOUT_MS = 20_000
 const BLOCKED_HOST =
   /^(localhost|metadata\.google\.internal|metadata\.goog|.*\.internal|.*\.local)$/i
 
+/** Outbound OA fetch only. Incoming pad heartbeat / pair / pending never call this. */
 export function isBlockedIp(ip: string): boolean {
   const raw = ip.trim().toLowerCase().replace(/^\[|\]$/g, '')
   if (raw === '::1' || raw === '0:0:0:0:0:0:0:1') return true

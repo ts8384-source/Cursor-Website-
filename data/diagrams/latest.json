@@ -1,6 +1,46 @@
 {
+  "id": "hybrid-rag-loop",
   "title": "Hybrid RAG local-site loop",
-  "updatedAt": "",
+  "updatedAt": "2026-09-07T00:55:24.243753+00:00",
+  "animatedEdges": false,
+  "regions": [
+    {
+      "id": "ipad",
+      "label": "iPad",
+      "source": "user",
+      "nodeIds": [
+        "scribble"
+      ]
+    },
+    {
+      "id": "local-pc",
+      "label": "local PC",
+      "source": "user",
+      "nodeIds": [
+        "papers",
+        "code",
+        "cursor",
+        "hybrid",
+        "ask",
+        "diagram",
+        "md",
+        "vdb",
+        "save",
+        "agent",
+        "webagent"
+      ]
+    },
+    {
+      "id": "website",
+      "label": "website",
+      "source": "user",
+      "nodeIds": [
+        "wiki",
+        "vis",
+        "site"
+      ]
+    }
+  ],
   "nodes": [
     {
       "id": "papers",
@@ -35,7 +75,20 @@
       "label": "Hybrid RAG",
       "group": "core",
       "x": 36,
-      "y": 45
+      "y": 45,
+      "meta": {
+        "summaryShort": "Isolated grounds, labeled merge",
+        "summaryLong": "Hybrid retrieve keeps grounds isolated. Dense and BM25 fuse only inside a ground. No cross-ground RRF.",
+        "pageId": "page:hybrid-rag",
+        "paperIds": [
+          "hm-rag-2025",
+          "colpali-2024"
+        ],
+        "related": [
+          "page:hybrid-rag",
+          "module:search"
+        ]
+      }
     },
     {
       "id": "ask",
@@ -173,5 +226,6 @@
       "webagent",
       "site"
     ]
-  ]
+  ],
+  "query": "parked canvas architecture Diagrams Working Scribble Wiki writing length"
 }

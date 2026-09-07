@@ -14,7 +14,7 @@ At the start of a turn, read these files if they exist:
 - `inbox/latest.png` — raster of the drawing (needed for freehand ink)
 - `inbox/meta.json` — timestamps and whether a PNG was written
 
-If `inbox/PENDING` exists, treat `message.md` plus `latest.png` as the user message. Do the requested work, then delete `inbox/PENDING` so the next park is a new turn.
+If `inbox/PENDING` exists, treat `message.md` plus `latest.png` as the user message. Run the full loop in `.cursor/skills/drawing-loop/SKILL.md` (hybrid RAG, MD pages, paper fetch, CONTROL). Do the requested work, then delete `inbox/PENDING` so the next park is a new turn.
 
 Do not ask the user to retype what is already on the canvas.
 

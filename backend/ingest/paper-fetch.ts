@@ -45,11 +45,12 @@ function xmlText(xml: string, tag: string) {
 }
 
 function parseArxivAtom(xml: string) {
-  const title = xmlText(xml, 'title')
-  const summary = xmlText(xml, 'summary')
-  const published = xmlText(xml, 'published')
+  const entry = /<entry[\s\S]*?<\/entry>/i.exec(xml)?.[0] ?? xml
+  const title = xmlText(entry, 'title')
+  const summary = xmlText(entry, 'summary')
+  const published = xmlText(entry, 'published')
   const year = published.slice(0, 4)
-  const authors = [...xml.matchAll(/<name>([^<]+)<\/name>/gi)].map((m) => m[1].trim()).join(', ')
+  const authors = [...entry.matchAll(/<name>([^<]+)<\/name>/gi)].map((m) => m[1].trim()).join(', ')
   return { title: title.replace(/^arxiv:\S+\s*/i, '').trim(), summary, year, authors }
 }
 

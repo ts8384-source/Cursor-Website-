@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.drawing-loop/meta/schema.json",
+  "title": "Drawing-loop metadata record",
+  "description": "Shared information bus for pages, papers, diagram nodes, diagrams, modules, and code chunks. Living Papers extraction + Paper Plain citations + Gorilla/SWE-agent tool fetch.",
+  "type": "object",
+  "required": ["id", "type", "title", "summary", "tags", "citations", "related", "glossary", "updated"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable id. Pages: page:<slug>. Papers: catalog id. Nodes: node:<diagramId>:<nodeId>. Diagrams: diagram:<id>. Modules: module:<name>. Code: code:<domain>.<symbol>."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["page", "paper", "node", "module", "diagram", "board", "code"]
+    },
+    "title": { "type": "string" },
+    "slug": { "type": "string", "description": "URL slug for pages; optional elsewhere." },
+    "href": { "type": "string", "description": "Site path or hash, e.g. /site/hybrid-rag or /site/papers#colpali-2024." },
+    "summary": {
+      "type": "object",
+      "required": ["short", "long"],
+      "additionalProperties": false,
+      "properties": {
+        "short": { "type": "string", "description": "4–8 words for a one-line canvas expand." },
+        "long": { "type": "string", "description": "Full prose for the panel and agent fetch." }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "citations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paper catalog ids."
+    },
+    "related": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Other metadata ids (pages, papers, nodes, modules)."
+    },
+    "glossary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term", "def"],
+        "additionalProperties": false,
+        "properties": {
+          "term": { "type": "string" },
+          "def": { "type": "string" }
+        }
+      }
+    },
+    "updated": { "type": "string" },
+    "pageId": { "type": "string", "description": "For nodes: linked page id (page:<slug>)." },
+    "paperIds": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "For nodes and boards: linked paper ids (same as citations)."
+    },
+    "boardKey": {
+      "type": "string",
+      "description": "tldraw persistenceKey for a tied iPad board."
+    },
+    "sourceSlug": {
+      "type": "string",
+      "description": "Page slug the board was opened from."
+    },
+    "sourceType": {
+      "type": "string",
+      "description": "page | paper | diagram | math | node — what the pad is scribbling on."
+    },
+    "surface": {
+      "type": "string",
+      "description": "clean (empty pad + metadata) or stamped (artifact images on tldraw)."
+    },
+    "assetPath": {
+      "type": "string",
+      "description": "Folder under data/boards/ for stamped PNG/PDF assets."
+    },
+    "kind": {
+      "type": "string",
+      "description": "For type=code: function | class | module | block | const | type | method. Bus type stays code."
+    },
+    "implements": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Meta ids this record implements (pages, papers, nodes)."
+    },
+    "derived_from": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Upstream meta ids this record was derived from."
+    },
+    "supersedes": {
+      "type": "string",
+      "description": "Id this record replaces. Memory corrections use the same field on GET /api/memory items."
+    },
+    "path": {
+      "type": "string",
+      "description": "Repo-relative source path for type=code or type=page."
+    },
+    "parent": {
+      "type": "string",
+      "description": "Parent meta id (pages: page:<slug>). Empty if root."
+    },
+    "children": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Child page ids derived from parent frontmatter."
+    },
+    "sandbox": {
+      "type": "boolean",
+      "description": "True when the page lives under the Lab bench nest (data/md/sandbox/)."
+    },
+    "sandboxLane": {
+      "type": "string",
+      "description": "idea | code | research. Empty for explain pages and encyclopedia."
+    },
+    "nest": {
+      "type": "string",
+      "enum": ["encyclopedia", "sandbox", "hidden", "corpus"],
+      "description": "Where the record sits: main wiki, lab nest, hidden, or paper corpus."
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hidden": { "type": "boolean" },
+        "flagged": { "type": "boolean", "description": "Sandbox interesting-come-back. Not will-implement." },
+        "highlight": { "type": "string", "description": "start | queue | lab | empty." }
+      }
+    },
+    "graphDegree": {
+      "type": "integer",
+      "description": "Undirected count of wiki-graph edges that touch this id. Computed, not invented."
+    },
+    "citationCount": { "type": "integer" },
+    "relatedCount": { "type": "integer" }
+  }
+}

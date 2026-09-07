@@ -8,8 +8,13 @@ function escapeHtml(text: string) {
 }
 
 function cite(id: string) {
-  const href = `/site/papers#${encodeURIComponent(id)}`
+  const href = `/docs/papers#${encodeURIComponent(id)}`
   return `<a class="cite-chip" href="${href}">${escapeHtml(id)}</a>`
+}
+
+function mathHref(term: string) {
+  const slug = term.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  return `/site/maps#math-${encodeURIComponent(slug || 'term')}`
 }
 
 function gloss(html: string, glossary: GlossaryEntry[]) {
@@ -32,6 +37,9 @@ function gloss(html: string, glossary: GlossaryEntry[]) {
 function inline(text: string, glossary: GlossaryEntry[]) {
   let html = escapeHtml(text)
     .replace(/\[@([a-z0-9-]+)\]/gi, (_, id: string) => cite(id))
+    .replace(/\$([^$]{1,80})\$/g, (_, tex: string) => {
+      return `<a class="math-term" href="${mathHref(tex)}"><code>${tex}</code></a>`
+    })
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt: string, src: string) => {

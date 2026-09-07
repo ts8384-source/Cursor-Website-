@@ -1,0 +1,135 @@
+{
+  "id": "flagged-schemes-coding",
+  "title": "Coding agent (isolated)",
+  "updatedAt": "2026-09-06T19:20:00.000Z",
+  "source": "Chat correction 2026-09-06 — coding agent alone; MGM hired IFF",
+  "animatedEdges": false,
+  "regions": [
+    {
+      "id": "implement",
+      "label": "Everyday implement (no MGM)",
+      "source": "user",
+      "nodeIds": ["wiki-on-page", "implement", "write-repo"]
+    },
+    {
+      "id": "skills-diet",
+      "label": "Coding PED + shared skills",
+      "source": "user",
+      "nodeIds": ["a3-ped", "a4-skills"]
+    },
+    {
+      "id": "hire-only",
+      "label": "Hire only if stuck",
+      "source": "user",
+      "nodeIds": ["tripwire", "mgm-bouncer"]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "wiki-on-page",
+      "label": "Wiki already on the page",
+      "group": "site",
+      "x": 16,
+      "y": 22,
+      "meta": {
+        "summaryShort": "Read fetch results here",
+        "summaryLong": "Default coding path implements against the wiki. Read fetch results already written on the page (MD + citations). Do not become the fetch agent. Lantern + cite-or-fetch stay on the fetch board.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["living-papers-heer-2023"],
+        "related": ["diagram:flagged-schemes-fetch", "page:wiki-memory"]
+      }
+    },
+    {
+      "id": "implement",
+      "label": "Implement / test / edit",
+      "group": "core",
+      "x": 44,
+      "y": 22,
+      "meta": {
+        "summaryShort": "Everyday coding path",
+        "summaryLong": "One coding agent: implement, test, edit the repo against the wiki. Everyday path does not go through MGM. If the mash is working, do not hire the bouncer.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["swe-agent-2024", "gorilla-2023"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "write-repo",
+      "label": "Write code + MD",
+      "group": "site",
+      "x": 72,
+      "y": 22,
+      "meta": {
+        "summaryShort": "Ship the change",
+        "summaryLong": "Write the implementation and any needed wiki note. Cite-or-fetch honesty still applies to claims, but this agent does not run the fetch mash.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["living-papers-heer-2023", "swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "a3-ped",
+      "label": "A3 turn-control PED",
+      "group": "core",
+      "x": 30,
+      "y": 52,
+      "meta": {
+        "summaryShort": "Actual coding performance drug",
+        "summaryLong": "A3 is the coding PED: fixed or dynamic turn caps and strip expired trajectory (do not paste dead tool dumps). Not Paper Lantern. Reflection rewriter stays out of the everyday mash until a park asks.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    },
+    {
+      "id": "a4-skills",
+      "label": "A4 lazy skills",
+      "group": "in",
+      "x": 58,
+      "y": 52,
+      "meta": {
+        "summaryShort": "Shared mechanism, both walls",
+        "summaryLong": "SemaClaw-style lazy load of hand-authored skills. Works on coding and fetch (and generate if needed). Registry → selected skill → needed subtree. Not a third hat. No community packs (A7).",
+        "pageId": "page:agents-coding",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["diagram:flagged-schemes-fetch", "page:control"]
+      }
+    },
+    {
+      "id": "tripwire",
+      "label": "Stuck / hard tripwire",
+      "group": "out",
+      "x": 30,
+      "y": 80,
+      "meta": {
+        "summaryShort": "Hire only when hard",
+        "summaryLong": "Optional iteration or difficulty tripwire: stuck in one run, or stuck across multiple runs, or an explicit hard-problem flag. Same spirit as hierarchy-only-if-bottleneck. If the coding mash is working, skip this node.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["gorilla-2023"],
+        "related": ["page:control", "diagram:flagged-schemes-loop"]
+      }
+    },
+    {
+      "id": "mgm-bouncer",
+      "label": "Hire MGM bouncer",
+      "group": "out",
+      "x": 62,
+      "y": 80,
+      "meta": {
+        "summaryShort": "On-demand policeman only",
+        "summaryLong": "Mendel Gödel Machine as a comparative-lineage bouncer, called IFF the tripwire fires. Not in the default coding mash. Design only — do not implement. Author-only Polyglot 50.8%→93.3%; no oracle on wiki prose. Do not quote as our eval.",
+        "pageId": "page:agents-coding",
+        "paperIds": ["swe-agent-2024"],
+        "related": ["page:control"]
+      }
+    }
+  ],
+  "edges": [
+    { "from": "wiki-on-page", "to": "implement", "label": "code against wiki" },
+    { "from": "implement", "to": "write-repo", "label": "everyday path" },
+    { "from": "a3-ped", "to": "implement", "label": "PED" },
+    { "from": "a4-skills", "to": "implement", "label": "lazy skill" },
+    { "from": "implement", "to": "tripwire", "kind": "feedback", "label": "only if stuck" },
+    { "from": "tripwire", "to": "mgm-bouncer", "kind": "feedback", "label": "hire IFF" }
+  ]
+}

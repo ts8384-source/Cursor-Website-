@@ -50,9 +50,9 @@ Park or `/api/ask` runs:
 
 ## Local website
 
-`/site` is Wikipedia-like on the left (TOC + article) and a dark 3Blue1Brown-style
-diagram on the right. Search talks to the hybrid index. HUD **Local site** on the
-canvas opens this page. Home stays available from every site page.
+`/site` is a Living Papers–style Markdown reader (left TOC, article, Paper Plain
+rail). Search talks to the hybrid index. Canvas HUD **Site** opens it. `/` stays
+the scratch pad.
 
 ## Agents (thin, work-ish)
 

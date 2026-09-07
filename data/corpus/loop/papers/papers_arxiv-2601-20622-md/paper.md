@@ -1,0 +1,16 @@
+# arxiv-2601-20622.md
+
+# CHI 2026 sketch-intent (free-form sketch as dynamic intent to a VLM)
+
+- **id:** arxiv-2601-20622
+- **list:** fetched
+- **authors:** See arXiv 2601.20622
+- **year:** 2026
+- **venue:** arXiv preprint
+- **oa_url:** https://arxiv.org/abs/2601.20622
+- **arxiv:** 2601.20622
+- **local_pdf:** pdf/arxiv-2601-20622.pdf
+
+## Extracted text (local RAG ingest)
+
+Abstract. Conditionally accepted CHI 2026 study of free-form sketching as a channel for conveying dynamic intent to a vision-language model (24-participant sketch-to-motion-graphics workflow). Sketch ambiguity is a feature: it keeps the human in the loop for clarification and lets ideas be expressed with less committed structure than prose.
