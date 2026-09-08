@@ -86,6 +86,7 @@ function paperMarkdown(rec: {
 
 - **id:** ${rec.id}
 - **list:** fetched
+- **collection:** project
 - **authors:** ${rec.authors || 'unknown'}
 - **year:** ${rec.year || ''}
 - **venue:** ${rec.venue}

@@ -91,6 +91,10 @@ export const TOOLS: ToolSpec[] = [
   { id: 'page', method: 'GET', path: '/api/pages/:slug', purpose: 'One Markdown page plus frontmatter (bin + href)' },
   { id: 'overview', method: 'GET', path: '/api/overview', purpose: 'Boot wiki catalog + tree. ?bin=doc for the framework docs site' },
   { id: 'bins', method: 'GET', path: '/api/bins', purpose: 'Which wiki bins exist. doc is false when data/docs is missing' },
+  { id: 'past-works', method: 'GET', path: '/api/past-works', purpose: 'Sibling archive catalog (thesis, handoffs, literature MD)' },
+  { id: 'past-works-facts', method: 'GET', path: '/api/past-works/facts', purpose: 'Fact layer extracted from past-works MD' },
+  { id: 'past-works-dialect-tree', method: 'GET', path: '/api/past-works/dialect-tree', purpose: 'Analog/dialect paper tree + local PDF pointers' },
+  { id: 'past-works-file', method: 'GET', path: '/api/past-works/file?path=', purpose: 'One archived MD/JSON under data/past-works (path-jailed)' },
   {
     id: 'docs-remove',
     method: 'POST',

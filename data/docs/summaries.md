@@ -18,6 +18,8 @@ citations:
   - paper-plain-august-2023
   - semantic-reader-project-2023
   - agent-workflow-memory-2024
+embeds:
+  - summaries
 ---
 
 # Paper summaries

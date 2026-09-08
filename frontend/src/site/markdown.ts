@@ -1,4 +1,5 @@
 import type { GlossaryEntry } from './types'
+import { renderKatex, unicodeMathToTex } from './katexRender'
 
 function escapeHtml(text: string) {
   return text
@@ -8,7 +9,7 @@ function escapeHtml(text: string) {
 }
 
 function cite(id: string) {
-  const href = `/docs/papers#${encodeURIComponent(id)}`
+  const href = `/site/papers#${encodeURIComponent(id)}`
   return `<a class="cite-chip" href="${href}">${escapeHtml(id)}</a>`
 }
 
@@ -34,18 +35,29 @@ function gloss(html: string, glossary: GlossaryEntry[]) {
   return out
 }
 
+function inlineMath(tex: string) {
+  const { html, ok } = renderKatex(tex, false)
+  const body = ok ? html : `<code>${escapeHtml(tex)}</code>`
+  return `<a class="math-term" href="${mathHref(tex)}" title="Open in math map">${body}</a>`
+}
+
 function inline(text: string, glossary: GlossaryEntry[]) {
-  let html = escapeHtml(text)
-    .replace(/\[@([a-z0-9-]+)\]/gi, (_, id: string) => cite(id))
-    .replace(/\$([^$]{1,80})\$/g, (_, tex: string) => {
-      return `<a class="math-term" href="${mathHref(tex)}"><code>${tex}</code></a>`
+  // Pull math out before HTML escape so TeX is not entity-mangled.
+  const chunks = text.split(/(\$[^$]{1,120}\$)/g)
+  const html = chunks
+    .map((chunk) => {
+      const m = /^\$([^$]{1,120})\$$/.exec(chunk)
+      if (m) return inlineMath(m[1])
+      return escapeHtml(chunk)
+        .replace(/\[@([a-z0-9-]+)\]/gi, (_, id: string) => cite(id))
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt: string, src: string) => {
+          return `<figure><img src="${src}" alt="${alt}" /><figcaption>${alt}</figcaption></figure>`
+        })
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
     })
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt: string, src: string) => {
-      return `<figure><img src="${src}" alt="${alt}" /><figcaption>${alt}</figcaption></figure>`
-    })
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .join('')
   return gloss(html, glossary)
 }
 
@@ -57,25 +69,73 @@ function gistFrom(text: string) {
   return `${plain.slice(0, 217).trim()}…`
 }
 
+function renderEqBlock(raw: string) {
+  const lines = raw.split('\n').map((l) => l.trim()).filter(Boolean)
+  if (!lines.length) return ''
+  const formula = lines[0]
+  const terms = lines
+    .slice(1)
+    .map((line) => {
+      const cut = line.indexOf('|')
+      if (cut < 0) return null
+      return { term: line.slice(0, cut).trim(), def: line.slice(cut + 1).trim() }
+    })
+    .filter((row): row is { term: string; def: string } => Boolean(row?.term))
+
+  // Prefer KaTeX for the formula (framework default). Keep callouts under it.
+  const texSource = /\\[a-zA-Z]/.test(formula) ? formula : unicodeMathToTex(formula)
+  const { html: katexHtml, ok } = renderKatex(texSource, true)
+  const formulaHtml = ok
+    ? katexHtml
+    : `<span class="eq-plain">${escapeHtml(formula)}</span>`
+
+  const callouts = terms
+    .map((t) => {
+      const termHtml = renderKatex(t.term, false)
+      const label = termHtml.ok ? termHtml.html : escapeHtml(t.term)
+      return `<li class="eq-callout"><strong class="eq-callout-term">${label}</strong><span>${escapeHtml(t.def)}</span></li>`
+    })
+    .join('')
+
+  return `<figure class="eq-annotate"><div class="eq-formula" role="img" aria-label="${escapeHtml(formula)}">${formulaHtml}</div>${
+    callouts ? `<ol class="eq-callouts">${callouts}</ol>` : ''
+  }</figure>`
+}
+
 function closeSection(out: string[], open: boolean) {
   if (open) out.push('</section>')
   return false
 }
 
+/** Anchors are slug-derived so a link survives edits above it. idPrefix keeps merged topic sections unique. */
 export function renderMarkdown(
   md: string,
   glossary: GlossaryEntry[] = [],
+  idPrefix = '',
+  levelShift = 0,
 ): { html: string; toc: TocItem[] } {
   const toc: TocItem[] = []
   const lines = md.replaceAll('\r\n', '\n').split('\n')
   const out: string[] = []
+  const used = new Map<string, number>()
+  const headingId = (text: string) => {
+    const base =
+      text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 48) || 'section'
+    const key = idPrefix ? `${idPrefix}--${base}` : base
+    const n = (used.get(key) ?? 0) + 1
+    used.set(key, n)
+    return n === 1 ? key : `${key}-${n}`
+  }
   let i = 0
-  let slugN = 0
   let sectionOpen = false
   while (i < lines.length) {
     const line = lines[i]
     if (line.startsWith('```')) {
-      const lang = escapeHtml(line.slice(3).trim())
+      const lang = line.slice(3).trim()
       const buf: string[] = []
       i += 1
       while (i < lines.length && !lines[i].startsWith('```')) {
@@ -83,14 +143,18 @@ export function renderMarkdown(
         i += 1
       }
       if (i < lines.length) i += 1
-      out.push(`<pre><code class="lang-${lang}">${escapeHtml(buf.join('\n'))}</code></pre>`)
+      if (lang === 'eq') {
+        out.push(renderEqBlock(buf.join('\n')))
+        continue
+      }
+      out.push(`<pre><code class="lang-${escapeHtml(lang)}">${escapeHtml(buf.join('\n'))}</code></pre>`)
       continue
     }
     const heading = /^(#{1,3})\s+(.+)$/.exec(line)
     if (heading) {
-      const level = heading[1].length
+      const level = Math.min(heading[1].length + levelShift, 4)
       const text = heading[2].trim()
-      const id = `h-${++slugN}-${text.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 48)}`
+      const id = headingId(text)
       toc.push({ id, text, level })
       if (level >= 2) {
         sectionOpen = closeSection(out, sectionOpen)

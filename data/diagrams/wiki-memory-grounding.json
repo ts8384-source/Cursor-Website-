@@ -1,6 +1,7 @@
 {
   "id": "wiki-memory-grounding",
   "title": "Grounding basis on this fork (temporary)",
+  "note": "GET /api/diagrams and GET /api/meta. Wiki-memory think-through graphs. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.",
   "updatedAt": "2026-09-06T03:00:00.000Z",
   "source": "Drawing-Loop mapping of §8 layers",
   "animatedEdges": false,
@@ -9,19 +10,29 @@
       "id": "ipad",
       "label": "iPad",
       "source": "user",
-      "nodeIds": ["scribble"]
+      "nodeIds": [
+        "scribble"
+      ]
     },
     {
       "id": "local-pc",
       "label": "local PC",
       "source": "user",
-      "nodeIds": ["raw", "rag", "schema", "decay"]
+      "nodeIds": [
+        "raw",
+        "rag",
+        "schema",
+        "decay"
+      ]
     },
     {
       "id": "website",
       "label": "website",
       "source": "user",
-      "nodeIds": ["compiled", "meta"]
+      "nodeIds": [
+        "compiled",
+        "meta"
+      ]
     }
   ],
   "nodes": [
@@ -35,8 +46,14 @@
         "summaryShort": "Papers, code, cursor notes",
         "summaryLong": "Karpathy raw layer here is data/papers (permanent), code with @chunk comments, and cursor notes. Agents fetch OA into the paper DB. They do not rewrite those files as wiki pages.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["arxiv-2604-12034", "living-papers-heer-2023"],
-        "related": ["page:papers", "page:code-meta"]
+        "paperIds": [
+          "arxiv-2604-12034",
+          "living-papers-heer-2023"
+        ],
+        "related": [
+          "page:papers",
+          "page:code-meta"
+        ]
       }
     },
     {
@@ -49,8 +66,13 @@
         "summaryShort": "Park sets focus and intent",
         "summaryLong": "A parked pad is the human half of the same MD. Autosave is not a wiki write. Only PENDING retrieves related pages and edits those files with the agent.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["living-papers-heer-2023"],
-        "related": ["page:inbox", "page:tied-boards"]
+        "paperIds": [
+          "living-papers-heer-2023"
+        ],
+        "related": [
+          "page:inbox",
+          "page:tied-boards"
+        ]
       }
     },
     {
@@ -63,8 +85,13 @@
         "summaryShort": "Shared MD, no article decay",
         "summaryLong": "Grounding basis: Living Papers MD plus the meta bus. Human and agent edit the same files. The wiki can grow. Articles and papers do not decay. Do not add an LLM-owned wiki/ tree or a second compiler.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["living-papers-heer-2023", "treereader-2025"],
-        "related": ["page:overview"]
+        "paperIds": [
+          "living-papers-heer-2023",
+          "treereader-2025"
+        ],
+        "related": [
+          "page:overview"
+        ]
       }
     },
     {
@@ -77,8 +104,13 @@
         "summaryShort": "Same ids across artifacts",
         "summaryLong": "GET /api/meta links pages, papers, nodes, and @chunk records. That is the graph, without GraphRAG community summaries.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["graphrag-2024"],
-        "related": ["page:code-meta", "page:diagrams"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "page:code-meta",
+          "page:diagrams"
+        ]
       }
     },
     {
@@ -91,8 +123,13 @@
         "summaryShort": "Retrieve the focused pages",
         "summaryLong": "Isolated grounds, labeled merge, no cross-ground RRF. When focused, retrieve pages for the current park or task. Cite-or-fetch. Do not rewrite the whole wiki.",
         "pageId": "page:hybrid-rag",
-        "paperIds": ["hm-rag-2025", "heta-rag-2025"],
-        "related": ["page:wiki-memory"]
+        "paperIds": [
+          "hm-rag-2025",
+          "heta-rag-2025"
+        ],
+        "related": [
+          "page:wiki-memory"
+        ]
       }
     },
     {
@@ -105,8 +142,13 @@
         "summaryShort": "ACI and park workflows",
         "summaryLong": "Schema layer is CONTROL plus drawing-loop. Later hats (coding-scheme, research-assistant) stay unplugged.",
         "pageId": "page:control",
-        "paperIds": ["swe-agent-2024", "gorilla-2023"],
-        "related": ["page:wiki-memory"]
+        "paperIds": [
+          "swe-agent-2024",
+          "gorilla-2023"
+        ],
+        "related": [
+          "page:wiki-memory"
+        ]
       }
     },
     {
@@ -119,19 +161,58 @@
         "summaryShort": "Forget user and project only",
         "summaryLong": "v2/Metabolism decay applies here, not to papers or site articles. Touch strengthens. This is the only forget path.",
         "pageId": "page:memory",
-        "paperIds": ["arxiv-2604-12034", "agent-workflow-memory-2024"],
-        "related": ["page:wiki-memory"]
+        "paperIds": [
+          "arxiv-2604-12034",
+          "agent-workflow-memory-2024"
+        ],
+        "related": [
+          "page:wiki-memory"
+        ]
       }
     }
   ],
   "edges": [
-    { "from": "raw", "to": "compiled", "label": "cite / write pages" },
-    { "from": "scribble", "to": "compiled", "label": "focus then same MD" },
-    { "from": "compiled", "to": "meta", "label": "same ids" },
-    { "from": "raw", "to": "rag", "label": "index" },
-    { "from": "compiled", "to": "rag", "label": "md ground" },
-    { "from": "schema", "to": "compiled", "label": "workflows" },
-    { "from": "decay", "to": "compiled", "kind": "feedback", "label": "does not rot pages" },
-    { "from": "rag", "to": "compiled", "kind": "feedback", "label": "cite-or-fetch" }
+    {
+      "from": "raw",
+      "to": "compiled",
+      "label": "cite / write pages"
+    },
+    {
+      "from": "scribble",
+      "to": "compiled",
+      "label": "focus then same MD"
+    },
+    {
+      "from": "compiled",
+      "to": "meta",
+      "label": "same ids"
+    },
+    {
+      "from": "raw",
+      "to": "rag",
+      "label": "index"
+    },
+    {
+      "from": "compiled",
+      "to": "rag",
+      "label": "md ground"
+    },
+    {
+      "from": "schema",
+      "to": "compiled",
+      "label": "workflows"
+    },
+    {
+      "from": "decay",
+      "to": "compiled",
+      "kind": "feedback",
+      "label": "does not rot pages"
+    },
+    {
+      "from": "rag",
+      "to": "compiled",
+      "kind": "feedback",
+      "label": "cite-or-fetch"
+    }
   ]
 }

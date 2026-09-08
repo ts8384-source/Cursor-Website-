@@ -24,6 +24,8 @@ glossary:
 citations:
   - agent-workflow-memory-2024
   - swe-agent-2024
+embeds:
+  - memory
 ---
 
 # Long-term memory and forgetting

@@ -19,6 +19,8 @@ glossary:
 citations:
   - living-papers-heer-2023
   - gorilla-2023
+embeds:
+  - page-structure
 ---
 
 # Framework docs

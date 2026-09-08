@@ -1,6 +1,7 @@
 {
   "id": "flagged-schemes-generate",
   "title": "Generate agent (isolated)",
+  "note": "GET /api/diagrams and GET /api/meta. Three isolated agent boards (fetch, coding, generate) plus an index and the jump-to-graph design. Regions here are per-agent (wiki / retrieve / write-cite, and so on) — not the hybrid-loop iPad / local PC / website split. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.",
   "updatedAt": "2026-09-06T19:20:00.000Z",
   "source": "Chat correction 2026-09-06 — generate agent alone; no Caesar crawl",
   "animatedEdges": false,
@@ -9,19 +10,27 @@
       "id": "seed",
       "label": "In-DB remote seed",
       "source": "user",
-      "nodeIds": ["clarify-gate", "in-db-id"]
+      "nodeIds": [
+        "clarify-gate",
+        "in-db-id"
+      ]
     },
     {
       "id": "draft",
       "label": "Draft to MD",
       "source": "user",
-      "nodeIds": ["combine", "draft-md"]
+      "nodeIds": [
+        "combine",
+        "draft-md"
+      ]
     },
     {
       "id": "judge",
       "label": "Different judge",
       "source": "user",
-      "nodeIds": ["other-judge"]
+      "nodeIds": [
+        "other-judge"
+      ]
     }
   ],
   "nodes": [
@@ -35,8 +44,13 @@
         "summaryShort": "Generate vs fetch first",
         "summaryLong": "If the user said do the research, this agent is entered only after clarify: generate vs fetch. Coding is a third wall and is not chosen by that phrase. This board is generate alone.",
         "pageId": "page:agents-generate",
-        "paperIds": ["arxiv-2605-18661"],
-        "related": ["page:control", "diagram:flagged-schemes-fetch"]
+        "paperIds": [
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "page:control",
+          "diagram:flagged-schemes-fetch"
+        ]
       }
     },
     {
@@ -49,8 +63,12 @@
         "summaryShort": "Remote combo, catalog only",
         "summaryLong": "Serendipity-by-Design / combinatorial creativity: inject a remote paperId that is already in this paper DB. Do not ask the model to be analogical. If the id is not in DB, that is inventing a technique — refuse.",
         "pageId": "page:agents-generate",
-        "paperIds": ["arxiv-2605-18661"],
-        "related": ["page:hybrid-rag"]
+        "paperIds": [
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "page:hybrid-rag"
+        ]
       }
     },
     {
@@ -63,8 +81,12 @@
         "summaryShort": "Recombine, do not crawl",
         "summaryLong": "Structured recombination from the forced in-DB id plus the current page. Please-be-novel prompting is out. Caesar Phase-1 open-web crawl is refused (SSRF + cite-or-fetch). No cite invention — drafts may mark claims as ungrounded.",
         "pageId": "page:agents-generate",
-        "paperIds": ["arxiv-2605-18661"],
-        "related": ["page:agents-generate"]
+        "paperIds": [
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "page:agents-generate"
+        ]
       }
     },
     {
@@ -77,8 +99,13 @@
         "summaryShort": "Write a draft, not cites",
         "summaryLong": "Write the ideation draft into Living Papers MD. Do not mint citation ids. If the draft later needs grounding, that is a later-turn fetch after clarify — not this agent becoming fetch.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["living-papers-heer-2023", "arxiv-2605-18661"],
-        "related": ["page:agents-generate"]
+        "paperIds": [
+          "living-papers-heer-2023",
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "page:agents-generate"
+        ]
       }
     },
     {
@@ -91,15 +118,35 @@
         "summaryShort": "Not same-model self-review",
         "summaryLong": "Generate ≠ judge. Steal the role split (CycleResearcher / CycleReviewer moral), not Review-5k training. Same-model self-review is rejected on this fork. Creation-phase split is in DB as novelty vs corpus-grounded refinement.",
         "pageId": "page:agents-generate",
-        "paperIds": ["arxiv-2605-18661"],
-        "related": ["page:control"]
+        "paperIds": [
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "page:control"
+        ]
       }
     }
   ],
   "edges": [
-    { "from": "clarify-gate", "to": "in-db-id", "label": "entered generate" },
-    { "from": "in-db-id", "to": "combine", "label": "inject id" },
-    { "from": "combine", "to": "draft-md", "label": "write draft" },
-    { "from": "draft-md", "to": "other-judge", "label": "other model / role" }
+    {
+      "from": "clarify-gate",
+      "to": "in-db-id",
+      "label": "entered generate"
+    },
+    {
+      "from": "in-db-id",
+      "to": "combine",
+      "label": "inject id"
+    },
+    {
+      "from": "combine",
+      "to": "draft-md",
+      "label": "write draft"
+    },
+    {
+      "from": "draft-md",
+      "to": "other-judge",
+      "label": "other model / role"
+    }
   ]
 }

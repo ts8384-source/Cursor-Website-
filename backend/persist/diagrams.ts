@@ -29,6 +29,7 @@ export type DiagramEdge = {
   direction?: string
   reversed?: boolean
   animated?: boolean
+  learnable?: boolean
 }
 export type DiagramRegion = {
   id: string
@@ -41,6 +42,8 @@ export type DiagramGraph = {
   title: string
   updatedAt: string
   source?: string
+  /** Caption shown under the board. Absent = the generic hybrid-loop wording. */
+  note?: string
   animatedEdges?: boolean
   nodes: DiagramNode[]
   edges: DiagramEdge[]
@@ -69,6 +72,7 @@ export function asEdges(raw: unknown): DiagramEdge[] {
       direction: row.direction != null ? String(row.direction) : undefined,
       reversed: row.reversed === true,
       animated: row.animated === true,
+      learnable: row.learnable === true,
     })
   }
   return out
@@ -130,6 +134,7 @@ function graphFromFile(file: string, raw: Record<string, unknown>): DiagramGraph
     title: raw.title != null ? String(raw.title) : stem,
     updatedAt: raw.updatedAt != null ? String(raw.updatedAt) : '',
     source: raw.source != null ? String(raw.source) : undefined,
+    note: raw.note != null ? String(raw.note) : undefined,
     animatedEdges: raw.animatedEdges === true,
     nodes: asNodes(raw.nodes),
     edges: asEdges(raw.edges),

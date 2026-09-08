@@ -58,6 +58,8 @@ citations:
   - gorilla-2023
   - agent-workflow-memory-2024
   - paper-plain-august-2023
+embeds:
+  - diagrams:wiki-memory
 ---
 
 # Wiki-based LLM memory

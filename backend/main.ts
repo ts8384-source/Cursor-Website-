@@ -3,7 +3,7 @@ import { mkdirSync } from 'node:fs'
 import { applyCors, json } from './http/io.ts'
 import { handleApi } from './http/routes.ts'
 import { startWatchdog } from './http/watchdog.ts'
-import { backendPort, ensureDataDirs, inboxDir } from './paths.ts'
+import { backendPort, ensureDataDirs, inboxDir, padPort } from './paths.ts'
 
 ensureDataDirs()
 mkdirSync(inboxDir, { recursive: true })
@@ -37,12 +37,12 @@ server.keepAliveTimeout = 1_000
 
 server.on('error', (err: NodeJS.ErrnoException) => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`backend port ${backendPort} already in use — refuse a second API. Keep one :5175.`)
+    console.error(`backend port ${backendPort} already in use — refuse a second API on this port.`)
     process.exit(1)
   }
   throw err
 })
 
 server.listen(backendPort, '0.0.0.0', () => {
-  console.log(`backend http://127.0.0.1:${backendPort}  (pad proxy: Vite :5174 /api)`)
+  console.log(`backend http://127.0.0.1:${backendPort}  (pad proxy: Vite :${padPort} /api)`)
 })

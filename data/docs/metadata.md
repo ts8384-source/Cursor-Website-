@@ -60,6 +60,8 @@ citations:
   - arxiv-2601-18642
   - arxiv-2305-10250
   - arxiv-2604-12034
+embeds:
+  - diagrams:metadata
 ---
 
 # Metadata bus

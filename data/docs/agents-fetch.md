@@ -37,6 +37,8 @@ citations:
   - living-papers-heer-2023
   - graphrag-2024
   - paper-plain-august-2023
+embeds:
+  - diagrams:flagged-schemes-fetch
 ---
 
 # Fetching agent

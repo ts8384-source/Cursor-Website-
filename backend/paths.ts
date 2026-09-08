@@ -19,12 +19,13 @@ export const implementDir = join(dataDir, 'implement')
 export const sandboxDir = join(dataDir, 'sandbox')
 export const mapsDir = join(dataDir, 'maps')
 export const boardsDir = join(dataDir, 'boards')
+export const pastWorksDir = join(dataDir, 'past-works')
 
 export const backendPort = Number(process.env.BACKEND_PORT ?? 5175)
 export const padPort = Number(process.env.PAD_PORT ?? 5174)
 
 export function ensureDataDirs() {
-  for (const dir of [inboxDir, mdDir, bookkeepDir, diagramsDir, papersDir, codeDir, cursorDir, memoryDir, implementDir, sandboxDir, mapsDir, boardsDir]) {
+  for (const dir of [inboxDir, mdDir, bookkeepDir, diagramsDir, papersDir, codeDir, cursorDir, memoryDir, implementDir, sandboxDir, mapsDir, boardsDir, pastWorksDir]) {
     mkdirSync(dir, { recursive: true })
   }
 }

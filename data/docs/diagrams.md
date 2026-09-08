@@ -34,6 +34,8 @@ citations:
   - scrollyvis-2023
   - living-papers-heer-2023
   - holten-directed-edges-2009
+embeds:
+  - diagrams
 ---
 
 # Paper diagrams and visualizations

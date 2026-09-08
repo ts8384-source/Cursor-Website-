@@ -42,6 +42,7 @@ export function WikiPageTree({ tree, slug, variant = 'nav' }: Props) {
           node={node}
           slug={slug}
           variant={variant}
+          depth={0}
           openIds={open}
           flagged={flagged}
           onToggle={toggle}
@@ -56,6 +57,7 @@ function TreeItem({
   node,
   slug,
   variant,
+  depth,
   openIds,
   flagged,
   onToggle,
@@ -64,6 +66,7 @@ function TreeItem({
   node: PageTreeNode
   slug: string
   variant: 'nav' | 'map'
+  depth: number
   openIds: Set<string>
   flagged: string[]
   onToggle: (id: string) => void
@@ -77,7 +80,9 @@ function TreeItem({
 
   return (
     <li>
-      <div className={`wiki-row wiki-row-${variant}${current ? ' is-current' : ''}`}>
+      <div
+        className={`wiki-row wiki-row-${variant}${current ? ' is-current' : ''}${depth > 0 ? ' is-sub' : ' is-page'}`}
+      >
         {variant === 'nav' && hasKids ? (
           <button
             type="button"
@@ -101,9 +106,18 @@ function TreeItem({
           }}
         >
           <span className="wiki-nav-label">
-            {node.nav}
+            <span className="wiki-nav-text">{node.nav}</span>
+            {/* Nav rail: only role badges. Page/Sub chips clutter scanning (handbook 12:3 / 16:2). */}
+            {variant === 'map' && depth === 0 && hasKids ? (
+              <span className="wiki-badge wiki-badge-page">Page</span>
+            ) : null}
+            {variant === 'map' && depth > 0 ? <span className="wiki-badge wiki-badge-sub">Sub</span> : null}
             <HighlightBadge role={node.highlight} />
-            {flagged.includes(node.slug) ? <span className="wiki-badge wiki-badge-flagged">Flagged</span> : null}
+            {flagged.includes(node.slug) ? (
+              <span className="wiki-badge wiki-badge-flagged" title="Flagged in lab">
+                ·
+              </span>
+            ) : null}
           </span>
           {variant === 'map' && node.gist ? <span className="wiki-map-gist">{node.gist}</span> : null}
         </Link>
@@ -116,6 +130,7 @@ function TreeItem({
               node={child}
               slug={slug}
               variant={variant}
+              depth={depth + 1}
               openIds={openIds}
               flagged={flagged}
               onToggle={onToggle}

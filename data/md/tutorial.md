@@ -98,6 +98,37 @@ Graph neighborhood: `GET /api/graph/neighborhood?id=page:tutorial` then open the
 
 Forker pages go in **boot** (`data/md/`). Framework explain edits go in **doc** (`data/docs/`). Do not mix.
 
+## How — categorize with metadata
+
+**Standing law: every grouping on this site is a field on the object, read at runtime.** There is no
+hand-kept list of ids in a component anywhere, and you should not add one. Full reference:
+[Metadata is the index](/docs/metadata-law).
+
+The reason is that a list in code is a second source of truth. Add a paper without editing it and the
+paper vanishes from its category; an agent asking `GET /api/papers` never learns the list exists at
+all.
+
+**Where it lives.** Pages carry YAML frontmatter (`data/md/`, `data/docs/`). Papers carry a bullet
+header in `data/papers/<id>.md`. Code carries `# @chunk` comment fences. Diagrams carry JSON. All four
+come back out of `GET /api/*`.
+
+**When you need a new category**, add a field, give it a default that classifies what is already on
+disk, parse it into the record so the API serves it, then group by reading it.
+
+| Field | Object | Effect |
+| --- | --- | --- |
+| `parent` | page | Nests the page. The child declares it; parents never list children. |
+| `subpage: true` | page | Keeps a child on its own route instead of folding into the parent topic. Listed under **Deep dives**. |
+| `embeds` | page | Live widgets the page mounts, by name — `diagrams:<prefix>`, `papers`, `math-compare`. Never decided by the page's slug. |
+| `collection` | paper | `framework` (built the tool) or `project` (fetched while using it). Shelves the papers page. |
+| `list` | paper | `frontend` / `backend` / `fetched`. Subdivides a shelf, and supplies `collection` when it is absent. |
+| `sandboxLane` | page | `idea` / `code` / `research` lane on the Lab bench. |
+| `highlight` | page | `start` / `lab` / `queue` board chrome. |
+
+A paper with no `collection:` line still lands on a shelf, because `frontend` and `backend` derive to
+framework and everything else derives to project. Write the line only to overrule that.
+
+
 ## How — dump the doc wiki later
 
 When the project is heavy enough without a manual:

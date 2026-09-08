@@ -38,6 +38,7 @@ export type EdgeFlow = 'forward' | 'feedback'
 export type DirectedEdgeData = {
   route?: Route
   flow?: EdgeFlow
+  learnable?: boolean
 }
 
 const FEEDBACK_KINDS = new Set([
@@ -150,8 +151,12 @@ export function DirectedEdge({
   )
   const chevrons = useMemo(() => sampleChevrons(d), [d])
   const animate = useContext(EdgeFlowAnimateContext)
-  const base = data?.flow === 'feedback' ? FEEDBACK_INK : FORWARD_INK
+  const marked = data?.learnable
+  const learnable = marked === true
+  const fixed = marked === false
+  const base = fixed ? '#8a8478' : data?.flow === 'feedback' ? FEEDBACK_INK : FORWARD_INK
   const flash = flashFromBase(base)
+  const shownChevrons = fixed ? [] : chevrons
 
   return (
     <>
@@ -163,13 +168,14 @@ export function DirectedEdge({
       <path
         d={d}
         fill="none"
-        className="rf-edge-stroke"
+        className={`rf-edge-stroke${learnable ? ' is-learnable' : ''}${fixed ? ' is-fixed' : ''}`}
         style={{
           stroke: base,
-          strokeWidth: STROKE,
+          strokeWidth: learnable ? 2.15 : STROKE,
+          strokeDasharray: fixed ? '5 4' : undefined,
         }}
       />
-      {animate ? (
+      {animate && !fixed ? (
         <path
           d={d}
           fill="none"
@@ -177,7 +183,7 @@ export function DirectedEdge({
           style={{ stroke: flash }}
         />
       ) : null}
-      {chevrons.map((ch, i) => (
+      {shownChevrons.map((ch, i) => (
         <path
           key={`${id}-ch-${i}`}
           d={chevronD(ch.x, ch.y, ch.ang)}

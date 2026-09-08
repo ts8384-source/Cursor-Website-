@@ -37,6 +37,9 @@ citations:
   - hm-rag-2025
   - paper-plain-august-2023
   - gorilla-2023
+embeds:
+  - knowledge-graph
+  - diagrams:flagged-schemes-graph
 ---
 
 # Wiki knowledge graph

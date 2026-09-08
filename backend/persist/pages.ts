@@ -31,6 +31,11 @@ export type PageMeta = {
   citations: string[]
   tags: string[]
   related: string[]
+  /**
+   * Live widgets this page mounts, by registry name (`diagrams:wiki-memory`, `papers`).
+   * The page declares what it shows; the frontend registry only knows how to draw each one.
+   */
+  embeds: string[]
   summaryShort: string
   summaryLong: string
   /** Authoring length. Missing YAML defaults to standard — not a rewrite of old pages. */
@@ -48,6 +53,12 @@ export type PageMeta = {
   hidden: boolean
   /** Page id of the parent (`page:agents`). Empty string = root. */
   parent: string
+  /**
+   * Keep this child on its own route instead of folding it into the parent topic page.
+   * For appendix-style material — a single-paper study, an experiment log — that would
+   * bloat the topic. Default false: children read as sections of their topic.
+   */
+  subpage: boolean
   /** Child page ids, derived from `parent` (hidden children omitted). */
   children: string[]
   /** Fork-ready chrome: start = Overview map, queue = To-implement, lab = Sandbox nest. */
@@ -188,6 +199,7 @@ function toMeta(rel: string, data: Fm, bin: PageBin): PageMeta {
     citations: asStringList(data.citations),
     tags: asStringList(data.tags),
     related: asStringList(data.related),
+    embeds: asStringList(data.embeds),
     summaryShort: String(data.summaryShort ?? ''),
     summaryLong: String(data.summaryLong ?? ''),
     depth: asDepth(data.depth),
@@ -200,6 +212,7 @@ function toMeta(rel: string, data: Fm, bin: PageBin): PageMeta {
     scrolly: data.scrolly === true,
     hidden: data.hidden === true || data.nav === false,
     parent: data.parent != null && data.parent !== '' ? String(data.parent) : '',
+    subpage: data.subpage === true,
     children: [],
     highlight: resolveHighlight(slug, data.highlight),
     project: data.project != null && data.project !== '' ? String(data.project).replace(/^project:/, '') : '',

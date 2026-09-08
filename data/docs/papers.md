@@ -23,6 +23,8 @@ citations:
   - paper-plain-august-2023
   - semantic-reader-project-2023
   - colpali-2024
+embeds:
+  - papers
 ---
 
 # Papers corpus

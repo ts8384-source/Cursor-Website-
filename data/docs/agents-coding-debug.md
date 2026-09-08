@@ -35,6 +35,8 @@ citations:
   - swe-agent-2024
   - knowrag-2026
   - arxiv-2505-16067
+embeds:
+  - diagrams:agents-coding-debug
 ---
 
 # Debugging and code collection

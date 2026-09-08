@@ -1,6 +1,7 @@
 {
   "id": "flagged-schemes-fetch",
   "title": "Fetch agent (isolated)",
+  "note": "GET /api/diagrams and GET /api/meta. Three isolated agent boards (fetch, coding, generate) plus an index and the jump-to-graph design. Regions here are per-agent (wiki / retrieve / write-cite, and so on) — not the hybrid-loop iPad / local PC / website split. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.",
   "updatedAt": "2026-09-06T19:20:00.000Z",
   "source": "Chat correction 2026-09-06 — fetch agent alone; no park",
   "animatedEdges": false,
@@ -9,19 +10,32 @@
       "id": "wiki",
       "label": "Wiki (MD + meta + one graph)",
       "source": "user",
-      "nodeIds": ["wiki-md", "meta-bus", "wiki-kg"]
+      "nodeIds": [
+        "wiki-md",
+        "meta-bus",
+        "wiki-kg"
+      ]
     },
     {
       "id": "retrieve",
       "label": "Retrieve (faithful fetch)",
       "source": "user",
-      "nodeIds": ["a4-skills", "lantern-verb", "cite-or-fetch", "isolated-grounds", "intragent"]
+      "nodeIds": [
+        "a4-skills",
+        "lantern-verb",
+        "cite-or-fetch",
+        "isolated-grounds",
+        "intragent"
+      ]
     },
     {
       "id": "write-cite",
       "label": "Write and cite (session only)",
       "source": "user",
-      "nodeIds": ["ra-fsm", "write-grounded"]
+      "nodeIds": [
+        "ra-fsm",
+        "write-grounded"
+      ]
     }
   ],
   "nodes": [
@@ -35,8 +49,14 @@
         "summaryShort": "Wiki source, no decay",
         "summaryLong": "Fetch reads and writes the same Living Papers MD. Articles and papers do not decay. This board is the fetch agent only — not coding or generate.",
         "pageId": "page:wiki-memory",
-        "paperIds": ["living-papers-heer-2023", "paper-plain-august-2023"],
-        "related": ["page:agents-fetch", "page:overview"]
+        "paperIds": [
+          "living-papers-heer-2023",
+          "paper-plain-august-2023"
+        ],
+        "related": [
+          "page:agents-fetch",
+          "page:overview"
+        ]
       }
     },
     {
@@ -49,8 +69,14 @@
         "summaryShort": "Same ids as the wiki",
         "summaryLong": "Metadata bus for pages, papers, nodes, boards, and @chunk. Fetch lists then fetches records instead of inventing a sidecar catalog.",
         "pageId": "page:metadata",
-        "paperIds": ["gorilla-2023", "living-papers-heer-2023"],
-        "related": ["page:agents-fetch", "diagram:flagged-schemes-graph"]
+        "paperIds": [
+          "gorilla-2023",
+          "living-papers-heer-2023"
+        ],
+        "related": [
+          "page:agents-fetch",
+          "diagram:flagged-schemes-graph"
+        ]
       }
     },
     {
@@ -63,8 +89,13 @@
         "summaryShort": "related + citations only",
         "summaryLong": "One graph for the wiki built from existing MD + meta related/citations. GraphRAG moral, not Microsoft community detection. Not a fourth agent. Design: diagram:flagged-schemes-graph.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["graphrag-2024"],
-        "related": ["page:metadata", "diagram:flagged-schemes-graph"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "page:metadata",
+          "diagram:flagged-schemes-graph"
+        ]
       }
     },
     {
@@ -77,8 +108,13 @@
         "summaryShort": "Shared injector, not a hat",
         "summaryLong": "SemaClaw-style lazy load of hand-authored skills. Same mechanism as coding (and generate if needed). Injects into this fetch agent. Not a third hat. SAGE-RL and community skills stay out.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["swe-agent-2024"],
-        "related": ["diagram:flagged-schemes-coding", "page:control"]
+        "paperIds": [
+          "swe-agent-2024"
+        ],
+        "related": [
+          "diagram:flagged-schemes-coding",
+          "page:control"
+        ]
       }
     },
     {
@@ -91,8 +127,14 @@
         "summaryShort": "Fetch backbone, not MCP",
         "summaryLong": "Paper Lantern as a wiki verb on MD/meta: retrieve techniques, adapt to local constraints, write grounded notes. explore_approaches → search/ask; deep_dive → GET /api/papers/:id. MCP sidecar and a second corpus are out. This is fetching, not the coding PED.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["hm-rag-2025", "gorilla-2023"],
-        "related": ["page:hybrid-rag", "page:wiki-memory"]
+        "paperIds": [
+          "hm-rag-2025",
+          "gorilla-2023"
+        ],
+        "related": [
+          "page:hybrid-rag",
+          "page:wiki-memory"
+        ]
       }
     },
     {
@@ -105,8 +147,14 @@
         "summaryShort": "Definitely fetch",
         "summaryLong": "Retrieve first, then cite a hit id. Missing → say not in DB and offer OA POST /api/papers/fetch. Do not invent. This lock is the fetching side of the backbone with Lantern-as-wiki-verb.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["swe-agent-2024", "hm-rag-2025"],
-        "related": ["page:hybrid-rag", "page:control"]
+        "paperIds": [
+          "swe-agent-2024",
+          "hm-rag-2025"
+        ],
+        "related": [
+          "page:hybrid-rag",
+          "page:control"
+        ]
       }
     },
     {
@@ -119,8 +167,12 @@
         "summaryShort": "No cross-ground RRF",
         "summaryLong": "Papers, md, code, scribble, cursor, and labeled meta stay labeled. Merge labels only. Do not fuse ranks across libraries.",
         "pageId": "page:hybrid-rag",
-        "paperIds": ["hm-rag-2025"],
-        "related": ["page:agents-fetch"]
+        "paperIds": [
+          "hm-rag-2025"
+        ],
+        "related": [
+          "page:agents-fetch"
+        ]
       }
     },
     {
@@ -133,8 +185,12 @@
         "summaryShort": "Read until enough",
         "summaryLong": "IntrAgent-shaped sufficiency: rank sections, iterative read, check enough, then stop. Stay fetch — synthesize from those spans. Do not stand up IntrAgent or minerU IntraBench.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["hm-rag-2025"],
-        "related": ["page:hybrid-rag"]
+        "paperIds": [
+          "hm-rag-2025"
+        ],
+        "related": [
+          "page:hybrid-rag"
+        ]
       }
     },
     {
@@ -147,8 +203,12 @@
         "summaryShort": "Only session hit ids",
         "summaryLong": "Citations must be ids retrieved in this session. Stricter than a sufficiency LLM. Already this fork’s cite-or-fetch moral.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["swe-agent-2024"],
-        "related": ["page:hybrid-rag"]
+        "paperIds": [
+          "swe-agent-2024"
+        ],
+        "related": [
+          "page:hybrid-rag"
+        ]
       }
     },
     {
@@ -161,22 +221,73 @@
         "summaryShort": "Cite hits, no invention",
         "summaryLong": "Write back to MD with named hit ids. No coding PED. No MGM. No generate / MOOSE-Chem compose. HetaRAG and HM-RAG stay cited cousins, not extra runtimes.",
         "pageId": "page:agents-fetch",
-        "paperIds": ["living-papers-heer-2023", "hm-rag-2025", "heta-rag-2025"],
-        "related": ["page:wiki-memory"]
+        "paperIds": [
+          "living-papers-heer-2023",
+          "hm-rag-2025",
+          "heta-rag-2025"
+        ],
+        "related": [
+          "page:wiki-memory"
+        ]
       }
     }
   ],
   "edges": [
-    { "from": "wiki-md", "to": "meta-bus", "label": "same ids" },
-    { "from": "meta-bus", "to": "wiki-kg", "label": "related / citations" },
-    { "from": "a4-skills", "to": "lantern-verb", "label": "inject" },
-    { "from": "wiki-md", "to": "lantern-verb", "label": "wiki verb" },
-    { "from": "wiki-kg", "to": "lantern-verb", "label": "same graph" },
-    { "from": "lantern-verb", "to": "cite-or-fetch", "label": "retrieve" },
-    { "from": "cite-or-fetch", "to": "isolated-grounds", "label": "labeled hits" },
-    { "from": "isolated-grounds", "to": "intragent", "label": "read spans" },
-    { "from": "intragent", "to": "ra-fsm", "label": "enough" },
-    { "from": "ra-fsm", "to": "write-grounded", "label": "session ids only" },
-    { "from": "write-grounded", "to": "wiki-md", "kind": "feedback", "label": "write MD" }
+    {
+      "from": "wiki-md",
+      "to": "meta-bus",
+      "label": "same ids"
+    },
+    {
+      "from": "meta-bus",
+      "to": "wiki-kg",
+      "label": "related / citations"
+    },
+    {
+      "from": "a4-skills",
+      "to": "lantern-verb",
+      "label": "inject"
+    },
+    {
+      "from": "wiki-md",
+      "to": "lantern-verb",
+      "label": "wiki verb"
+    },
+    {
+      "from": "wiki-kg",
+      "to": "lantern-verb",
+      "label": "same graph"
+    },
+    {
+      "from": "lantern-verb",
+      "to": "cite-or-fetch",
+      "label": "retrieve"
+    },
+    {
+      "from": "cite-or-fetch",
+      "to": "isolated-grounds",
+      "label": "labeled hits"
+    },
+    {
+      "from": "isolated-grounds",
+      "to": "intragent",
+      "label": "read spans"
+    },
+    {
+      "from": "intragent",
+      "to": "ra-fsm",
+      "label": "enough"
+    },
+    {
+      "from": "ra-fsm",
+      "to": "write-grounded",
+      "label": "session ids only"
+    },
+    {
+      "from": "write-grounded",
+      "to": "wiki-md",
+      "kind": "feedback",
+      "label": "write MD"
+    }
   ]
 }

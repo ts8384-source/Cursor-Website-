@@ -1,6 +1,7 @@
 {
   "id": "flagged-schemes-graph",
   "title": "Jump to the same wiki graph (design)",
+  "note": "GET /api/diagrams and GET /api/meta. Three isolated agent boards (fetch, coding, generate) plus an index and the jump-to-graph design. Regions here are per-agent (wiki / retrieve / write-cite, and so on) — not the hybrid-loop iPad / local PC / website split. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.",
   "updatedAt": "2026-09-06T19:00:00.000Z",
   "source": "Chat correction 2026-09-06 — shared wiki backbone, not a fourth agent",
   "animatedEdges": false,
@@ -9,19 +10,29 @@
       "id": "from-page",
       "label": "From a page or section",
       "source": "user",
-      "nodeIds": ["section", "jump-btn"]
+      "nodeIds": [
+        "section",
+        "jump-btn"
+      ]
     },
     {
       "id": "bus",
       "label": "Metadata bus",
       "source": "user",
-      "nodeIds": ["meta-id"]
+      "nodeIds": [
+        "meta-id"
+      ]
     },
     {
       "id": "one-graph",
       "label": "One wiki knowledge graph",
       "source": "user",
-      "nodeIds": ["main-graph", "focus-node", "not-rebuild", "not-agent"]
+      "nodeIds": [
+        "main-graph",
+        "focus-node",
+        "not-rebuild",
+        "not-agent"
+      ]
     }
   ],
   "nodes": [
@@ -35,8 +46,13 @@
         "summaryShort": "Existing wiki heading",
         "summaryLong": "Any Living Papers page or section already has an id on the meta bus (page slug, heading, related paper). Do not invent a second site tree.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["living-papers-heer-2023", "paper-plain-august-2023"],
-        "related": ["page:wiki-memory"]
+        "paperIds": [
+          "living-papers-heer-2023",
+          "paper-plain-august-2023"
+        ],
+        "related": [
+          "page:wiki-memory"
+        ]
       }
     },
     {
@@ -49,8 +65,12 @@
         "summaryShort": "Button uses metadata",
         "summaryLong": "Proposed UX: a control on the page or section uses the record id to navigate to that node on the main graph. Handbook 13: large enough target, 9:1 descriptive label. Not built this turn.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["paper-plain-august-2023"],
-        "related": ["page:metadata"]
+        "paperIds": [
+          "paper-plain-august-2023"
+        ],
+        "related": [
+          "page:metadata"
+        ]
       }
     },
     {
@@ -63,8 +83,13 @@
         "summaryShort": "Resolve one record",
         "summaryLong": "The button does not reconstruct a graph. It looks up pageId / node id / related on the existing metadata bus, then focuses that id.",
         "pageId": "page:metadata",
-        "paperIds": ["gorilla-2023"],
-        "related": ["page:knowledge-graph", "diagram:flagged-schemes-loop"]
+        "paperIds": [
+          "gorilla-2023"
+        ],
+        "related": [
+          "page:knowledge-graph",
+          "diagram:flagged-schemes-loop"
+        ]
       }
     },
     {
@@ -77,8 +102,13 @@
         "summaryShort": "One graph for the wiki",
         "summaryLong": "Built from MD + meta related/citations for the whole wiki. GraphRAG shape, not Microsoft community detection as a product. Must implement first after discussion. Design only this turn.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["graphrag-2024"],
-        "related": ["page:metadata", "page:diagrams"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "page:metadata",
+          "page:diagrams"
+        ]
       }
     },
     {
@@ -91,8 +121,12 @@
         "summaryShort": "Pan/highlight that id",
         "summaryLong": "The camera jumps to the existing node for that page or section. Same graph instance. Panel can still show summaryLong.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["graphrag-2024"],
-        "related": ["page:diagrams"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "page:diagrams"
+        ]
       }
     },
     {
@@ -105,8 +139,12 @@
         "summaryShort": "Do not rebuild here",
         "summaryLong": "Forbidden: construct a new GraphRAG (or any) graph from the current section only. Jump is navigation, not a new index.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["graphrag-2024"],
-        "related": ["page:hybrid-rag"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "page:hybrid-rag"
+        ]
       }
     },
     {
@@ -119,17 +157,49 @@
         "summaryShort": "Backbone, not an agent",
         "summaryLong": "The wiki knowledge graph sits on the shared backbone with park-notebook metadata and GET /api/meta. It is not a fourth inference-time role beside coding / generate / fetch.",
         "pageId": "page:knowledge-graph",
-        "paperIds": ["graphrag-2024"],
-        "related": ["diagram:flagged-schemes-loop", "diagram:flagged-schemes-fetch", "page:control"]
+        "paperIds": [
+          "graphrag-2024"
+        ],
+        "related": [
+          "diagram:flagged-schemes-loop",
+          "diagram:flagged-schemes-fetch",
+          "page:control"
+        ]
       }
     }
   ],
   "edges": [
-    { "from": "section", "to": "jump-btn", "label": "heading control" },
-    { "from": "jump-btn", "to": "meta-id", "label": "id in YAML / bus" },
-    { "from": "meta-id", "to": "main-graph", "label": "open same graph" },
-    { "from": "main-graph", "to": "focus-node", "label": "highlight node" },
-    { "from": "meta-id", "to": "not-rebuild", "kind": "feedback", "label": "never new graph" },
-    { "from": "main-graph", "to": "not-agent", "kind": "feedback", "label": "shared wiki" }
+    {
+      "from": "section",
+      "to": "jump-btn",
+      "label": "heading control"
+    },
+    {
+      "from": "jump-btn",
+      "to": "meta-id",
+      "label": "id in YAML / bus"
+    },
+    {
+      "from": "meta-id",
+      "to": "main-graph",
+      "label": "open same graph"
+    },
+    {
+      "from": "main-graph",
+      "to": "focus-node",
+      "label": "highlight node"
+    },
+    {
+      "from": "meta-id",
+      "to": "not-rebuild",
+      "kind": "feedback",
+      "label": "never new graph"
+    },
+    {
+      "from": "main-graph",
+      "to": "not-agent",
+      "kind": "feedback",
+      "label": "shared wiki"
+    }
   ]
 }

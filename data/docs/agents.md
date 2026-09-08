@@ -45,6 +45,8 @@ citations:
   - hm-rag-2025
   - graphrag-2024
   - arxiv-2605-18661
+embeds:
+  - diagrams:flagged-schemes-loop
 ---
 
 # Isolated agents

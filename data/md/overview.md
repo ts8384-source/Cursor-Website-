@@ -21,6 +21,9 @@ glossary:
 citations:
   - living-papers-heer-2023
   - dashboard-design-patterns-2022
+embeds:
+  - page-structure
+  - diagrams-compact
 ---
 
 # Overview

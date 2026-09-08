@@ -41,6 +41,8 @@ citations:
   - gorilla-2023
   - living-papers-heer-2023
   - hm-rag-2025
+embeds:
+  - diagrams:agents-coding-generate
 ---
 
 # Code generation

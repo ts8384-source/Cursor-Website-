@@ -140,46 +140,66 @@ html.is-site body {
   color: #8a1f11;
 }
 
-/* 6:8 fluid well; user override of 6:12 short columns — article ~80vw. 7:5 nav overlays, does not take 40%. */
+/*
+ * 6:10 long content page; 7:5 nav overlays the margin. The column grows to 72rem but never past
+ * `100vw - 34rem`, which is the space the two 15rem rails plus their gaps need to stay clear.
+ */
 .site-body {
   display: block;
-  width: min(80vw, 88rem);
+  width: min(72rem, calc(100vw - 34rem));
   max-width: 100%;
   margin: 0 auto;
   padding: 24px 0 64px;
   box-sizing: border-box;
 }
 
+/* Rails are quiet margin notes, not boxed panels — the article is the only card on the page. */
 .site-toc,
 .site-rail {
   position: fixed;
   top: 64px;
   z-index: 3;
-  width: min(168px, 11vw);
-  padding: 8px;
-  background: #f3efe6;
-  border: 1px solid #d4cfc4;
-  font: 14px/1.4 system-ui, sans-serif;
+  width: 15rem;
+  padding: 10px 0 12px;
+  background: transparent;
+  border: 0;
+  font: 14px/1.5 system-ui, sans-serif;
   max-height: calc(100dvh - 88px);
   overflow: auto;
 }
 
 .site-toc {
-  left: 8px;
+  left: 16px;
 }
 
 .site-rail {
-  right: 8px;
-  width: min(220px, 13vw);
+  right: 16px;
 }
 
 .site-toc h2,
 .site-rail h2 {
-  margin: 16px 0 8px;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #4a453c;
+  color: #6a6358;
+  font-weight: 650;
+}
+
+.toc-block {
+  margin: 0 0 14px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #ddd6c8;
+}
+
+.toc-block:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.toc-block-article h2 {
+  margin-top: 2px;
 }
 
 .site-toc ol,
@@ -198,18 +218,35 @@ html.is-site body {
 .toc-pages a,
 .site-toc .toc-l1 a,
 .site-toc .toc-l2 a,
-.site-toc .toc-l3 a {
+.site-toc .toc-l3 a,
+.toc-article a {
   display: flex;
   align-items: center;
-  min-height: 44px;
-  padding: 6px 8px;
+  min-height: 40px;
+  padding: 5px 8px;
   text-decoration: none;
   border-left: 2px solid transparent;
+  border-radius: 0 3px 3px 0;
+}
+
+.toc-article a {
+  color: #4a453c;
+  font-size: 0.92rem;
+  min-height: 36px;
+}
+
+.toc-article .toc-l2 a,
+.toc-article .toc-l3 a {
+  padding-left: 14px;
+  color: #6a6358;
+  font-size: 0.86rem;
+  min-height: 32px;
 }
 
 .wiki-row {
   display: flex;
   align-items: stretch;
+  gap: 0;
 }
 
 .wiki-row a {
@@ -219,11 +256,18 @@ html.is-site body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  min-height: 44px;
-  padding: 6px 8px;
+  min-height: 40px;
+  padding: 5px 8px;
   text-decoration: none;
   border-left: 2px solid transparent;
-  color: #0b3d8c;
+  border-radius: 0 3px 3px 0;
+  color: #3d4f6f;
+  font-weight: 500;
+}
+
+.wiki-row a:hover {
+  background: rgba(236, 231, 219, 0.7);
+  color: #1a1814;
 }
 
 .wiki-row a.is-active,
@@ -234,35 +278,71 @@ html.is-site body {
   color: #1a1814;
 }
 
+.wiki-nav-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+  width: 100%;
+}
+
+.wiki-nav-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .wiki-twist {
-  flex: 0 0 44px;
-  width: 44px;
-  min-height: 44px;
+  flex: 0 0 36px;
+  width: 36px;
+  min-height: 40px;
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #1a1814;
-  font: 16px/1 system-ui, sans-serif;
+  color: #6a6358;
+  font: 14px/1 system-ui, sans-serif;
   cursor: pointer;
 }
 
+.wiki-twist:hover {
+  color: #1a1814;
+}
+
 .wiki-twist:focus-visible,
-.wiki-row a:focus-visible {
+.wiki-row a:focus-visible,
+.toc-article a:focus-visible {
   outline: 2px solid #1a1814;
   outline-offset: 2px;
 }
 
 .wiki-twist-spacer {
-  flex: 0 0 12px;
-  width: 12px;
+  flex: 0 0 10px;
+  width: 10px;
 }
 
 .wiki-kids {
   list-style: none;
-  margin: 0 0 0 12px;
-  padding: 0 0 0 8px;
-  border-left: 2px solid #c4bfb4;
+  margin: 2px 0 6px 14px;
+  padding: 0 0 0 10px;
+  border-left: 1px solid #cfc8b6;
+}
+
+.wiki-row.is-page a {
+  font-weight: 600;
+  color: #2a3344;
+}
+
+.wiki-row.is-sub a {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #5a6578;
+}
+
+.wiki-row.is-sub.is-current a,
+.wiki-row.is-sub a.is-active {
+  font-weight: 700;
+  color: #1a1814;
 }
 
 .wiki-map {
@@ -290,7 +370,8 @@ html.is-site body {
 }
 
 .wiki-map-tree .wiki-kids {
-  margin-left: 20px;
+  margin-left: 28px;
+  padding-left: 16px;
 }
 
 .wiki-map-gist {
@@ -301,22 +382,31 @@ html.is-site body {
   color: #3d3932;
 }
 
-.wiki-nav-label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-}
-
 .wiki-badge {
   display: inline-flex;
   align-items: center;
-  min-height: 22px;
-  padding: 0 7px;
+  min-height: 18px;
+  padding: 0 5px;
   border-radius: 3px;
-  font: 600 11px/1.1 system-ui, sans-serif;
+  font: 650 10px/1.1 system-ui, sans-serif;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+
+.toc-pages .wiki-badge {
+  opacity: 0.92;
+}
+
+.toc-pages .wiki-badge-flagged {
+  min-width: 0;
+  padding: 0 4px;
+  font-size: 14px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+  background: transparent;
+  color: #8a6a28;
+  border: 0;
 }
 
 .wiki-badge-start {
@@ -342,6 +432,18 @@ html.is-site body {
   color: #1a1520;
   background: #e4d4f0;
   border: 1px solid #5a3d72;
+}
+
+.wiki-badge-page {
+  color: #1a1814;
+  background: #d8d3c8;
+  border: 1px solid #5c574e;
+}
+
+.wiki-badge-sub {
+  color: #2a2824;
+  background: #f4f0e6;
+  border: 1px solid #8a8478;
 }
 
 .wiki-hl-start {
@@ -443,6 +545,128 @@ html.is-site body {
 }
 .toc-l3 {
   padding-left: 16px;
+}
+
+/* Anchor targets clear the sticky header instead of hiding under it. */
+.site-article :is(h1, h2, h3, h4),
+.topic-section {
+  scroll-margin-top: 72px;
+}
+
+.toc-topics {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-topics a {
+  display: block;
+  min-height: 36px;
+  padding: 7px 8px;
+  color: #4a453c;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.toc-topics a:hover {
+  color: #0b3d8c;
+  text-decoration: underline;
+}
+
+.toc-article a.is-current,
+.toc-topics a.is-current {
+  color: #1a1814;
+  font-weight: 650;
+  box-shadow: inset 2px 0 0 #1a1814;
+}
+
+/* A child page rendered as a section of its topic. */
+.topic-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2dccd;
+}
+
+.paper-shelf-count {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border: 1px solid #d4cfc4;
+  border-radius: 999px;
+  background: #f4f1e8;
+  color: #4a453c;
+  font: 12px/1.6 system-ui, sans-serif;
+  vertical-align: middle;
+}
+
+/* Appendix-style children that asked to keep their own route. */
+.topic-subpages {
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e2dccd;
+  font: 15px/1.5 system-ui, sans-serif;
+}
+
+.topic-subpages h2 {
+  margin: 0 0 0.25rem;
+  font: 650 1.05rem/1.3 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+.topic-subpages-note {
+  margin: 0 0 0.75rem;
+  color: #4a453c;
+}
+
+.topic-subpages ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topic-subpages li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ece7db;
+}
+
+.topic-subpage-gist {
+  display: block;
+  color: #4a453c;
+  font-size: 13px;
+}
+
+.topic-move {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 3rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid #c9c2b3;
+  font: 15px/1.3 system-ui, sans-serif;
+}
+
+.topic-move a {
+  max-width: 48%;
+  padding: 8px 12px;
+  border: 1px solid #d4cfc4;
+  background: #f7f4ec;
+  color: #0b3d8c;
+  text-decoration: none;
+}
+
+.topic-move a:hover {
+  border-color: #1a1814;
+}
+
+.topic-move-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.topic-move a span {
+  display: block;
+  color: #6a6358;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .site-article {
@@ -809,8 +1033,98 @@ abbr.gloss {
 }
 
 .math-term {
-  font: 13px/1.3 ui-monospace, Consolas, monospace;
-  margin-right: 8px;
+  display: inline-flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: inherit;
+  margin: 0 0.1em;
+  border-bottom: 1px dotted #0b3d8c;
+}
+
+.math-term .katex {
+  font-size: 1.05em;
+}
+
+.eq-formula .katex-display {
+  margin: 0.35rem 0;
+}
+
+.eq-callout-term .katex {
+  font-size: 1em;
+}
+
+.jsxgraph-lab {
+  margin: 1.5rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #cfc8b6;
+}
+
+.jsxgraph-lab h2 {
+  margin: 0 0 0.35rem;
+  font: 650 1.2rem/1.3 system-ui, sans-serif;
+}
+
+.jsxgraph-lab-note {
+  margin: 0 0 0.75rem;
+  font: 14px/1.45 system-ui, sans-serif;
+  color: #4a453c;
+}
+
+.jsxgraph-plot {
+  background: #f7f4ec;
+  border: 1px solid #cfc8b6;
+}
+
+.eq-annotate {
+  margin: 1.4rem 0 1.8rem;
+  padding: 16px 16px 8px;
+  background: #f7f4ec;
+  border: 1px solid #cfc8b6;
+  border-radius: 6px;
+}
+
+.eq-formula {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.15rem 0.2rem;
+  padding: 0.85rem 0.4rem 0.55rem;
+  font: 600 1.28rem/1.35 "Cambria Math", "Times New Roman", serif;
+}
+
+.eq-plain {
+  white-space: pre-wrap;
+}
+
+.eq-term {
+  padding: 0 0.12rem 0.12rem;
+  border-bottom: 2px solid #0b3d8c;
+}
+
+.eq-callouts {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0.6rem 0 0;
+  border-top: 1px dashed #cfc8b6;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.eq-callout {
+  display: grid;
+  gap: 0.15rem;
+  font: 15px/1.45 system-ui, sans-serif;
+}
+
+.eq-callout strong {
+  font: 650 15px/1.3 ui-monospace, Consolas, monospace;
+  border-bottom: 2px solid #0b3d8c;
+  justify-self: start;
+}
+
+.eq-callout strong + span {
+  color: #333;
 }
 
 .loop-board {
@@ -1014,6 +1328,20 @@ abbr.gloss {
   border-color: #0b3d8c;
 }
 
+.rf-loop-node.g-core {
+  min-width: 168px;
+  min-height: 58px;
+  background: #dce8d4;
+  border: 2.5px solid #1f4d2a;
+  border-radius: 18px;
+  font-weight: 700;
+}
+
+.rf-loop-node.g-loss {
+  background: #f3efe3;
+  border-style: dotted;
+}
+
 .rf-loop-node.g-store {
   border-style: dashed;
 }
@@ -1125,9 +1453,10 @@ abbr.gloss {
   opacity: 0.55;
 }
 
-@media (max-width: 1100px) {
+/* Too narrow for floating rails: they stack above the column instead. */
+@media (max-width: 1320px) {
   .site-body {
-    width: min(94vw, 100% - 24px);
+    width: min(94vw, 48rem);
   }
   .site-toc,
   .site-rail {
@@ -1141,7 +1470,7 @@ abbr.gloss {
   }
 }
 
-@media (min-width: 1101px) {
+@media (min-width: 1321px) {
   .site-toc .rail-fold > summary,
   .site-rail .rail-fold > summary {
     position: absolute;
@@ -1654,4 +1983,343 @@ abbr.gloss {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
+}
+
+/* Math render compare lab (handbook 9:1 labels, 7:3 TOC, 16:6 scan) */
+.math-lab {
+  margin: 2rem 0 2.5rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid #cfc8b6;
+}
+
+.math-lab-head h2 {
+  margin: 0 0 0.4rem;
+  font: 650 1.35rem/1.25 "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+}
+
+.math-lab-head p,
+.math-lab-note,
+.math-lab-role,
+.math-lab-hint,
+.math-lab-next,
+.math-lab-status {
+  font: 15px/1.45 system-ui, sans-serif;
+  color: #2a2620;
+}
+
+.math-lab-samples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.85rem 0 0.75rem;
+}
+
+.math-lab-samples button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  font: 600 14px/1.2 system-ui, sans-serif;
+  color: #1a1814;
+  background: #f7f4ec;
+  border: 1px solid #b7af9c;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.math-lab-samples button.is-active {
+  background: #1a1814;
+  color: #f7f4ec;
+  border-color: #1a1814;
+}
+
+.math-lab-source {
+  margin: 0.5rem 0 1rem;
+  padding: 10px 12px;
+  overflow-x: auto;
+  background: #ece7db;
+  border: 1px solid #cfc8b6;
+  font: 13px/1.4 ui-monospace, Consolas, monospace;
+}
+
+.math-lab-toc {
+  margin: 0 0 1rem 1.1rem;
+  font: 14px/1.5 system-ui, sans-serif;
+}
+
+.math-lab-grid {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 900px) {
+  .math-lab-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.math-lab-panel {
+  padding: 12px 14px 14px;
+  border: 1px solid #cfc8b6;
+  background: #fffef8;
+}
+
+.math-lab-panel h3 {
+  margin: 0 0 0.25rem;
+  font: 650 1.05rem/1.3 system-ui, sans-serif;
+}
+
+.math-lab-role {
+  margin: 0 0 0.75rem;
+  color: #5a5348;
+}
+
+.math-lab-render {
+  min-height: 3.5rem;
+  overflow-x: auto;
+}
+
+.math-lab-err {
+  color: #8a1f1a;
+  font: 14px/1.4 system-ui, sans-serif;
+}
+
+.math-lab-jxg {
+  width: 100%;
+  height: 220px;
+  background: #f7f4ec;
+}
+
+.math-lab-next {
+  margin: 1.25rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px dashed #cfc8b6;
+}
+
+.math-lab-live math-field {
+  display: block;
+  border: 1px solid #b7af9c;
+  border-radius: 4px;
+  padding: 8px;
+  background: #fff;
+}
+
+/* Radix site menus (handbook 7:1 / 7:2 / 9:1 — labeled, grouped) */
+.site-menus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+.site-nav {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav-link,
+.site-nav-trigger,
+.site-menu-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  font: 15px/1.2 system-ui, sans-serif;
+  color: #0b3d8c;
+  background: #ece7db;
+  border: 1px solid #b7b09f;
+  cursor: pointer;
+}
+
+.site-nav-trigger[data-state='open'],
+.site-menu-more[data-state='open'],
+.site-nav-link[aria-current='page'] {
+  background: #1a1814;
+  color: #f7f4ec;
+  border-color: #1a1814;
+}
+
+.site-nav-caret {
+  font-size: 12px;
+}
+
+.site-nav-viewport-wrap {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  perspective: 1200px;
+}
+
+.site-nav-viewport {
+  position: relative;
+  margin-top: 6px;
+  width: var(--radix-navigation-menu-viewport-width);
+  height: var(--radix-navigation-menu-viewport-height);
+  background: #fffef8;
+  border: 1px solid #c9c2b3;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(26, 24, 20, 0.12);
+  overflow: hidden;
+}
+
+.site-nav-content {
+  width: min(360px, 92vw);
+  padding: 8px;
+}
+
+.site-nav-panel {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.site-nav-item {
+  display: grid;
+  gap: 2px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1a1814;
+}
+
+.site-nav-item:hover,
+.site-nav-item:focus-visible {
+  background: #ece7db;
+  outline: none;
+}
+
+.site-nav-item-label {
+  font: 600 14px/1.3 system-ui, sans-serif;
+}
+
+.site-nav-item-gist {
+  font: 12px/1.35 system-ui, sans-serif;
+  color: #5a5348;
+}
+
+.site-nav-indicator {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 8px;
+  z-index: 1;
+  transition: width, transform 200ms ease;
+}
+
+.site-nav-arrow {
+  width: 10px;
+  height: 10px;
+  background: #fffef8;
+  border-left: 1px solid #c9c2b3;
+  border-top: 1px solid #c9c2b3;
+  transform: rotate(45deg);
+  margin-bottom: -5px;
+}
+
+.site-menu-dropdown {
+  z-index: 40;
+  min-width: 220px;
+  padding: 6px;
+  background: #fffef8;
+  border: 1px solid #c9c2b3;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(26, 24, 20, 0.12);
+}
+
+.site-menu-label {
+  padding: 8px 10px 4px;
+  font: 600 12px/1.2 system-ui, sans-serif;
+  color: #5a5348;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.site-menu-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #1a1814;
+  font: 14px/1.3 system-ui, sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+
+.site-menu-dropdown-item[data-highlighted],
+.site-menu-dropdown-item:hover {
+  background: #ece7db;
+}
+
+.site-menu-dropdown-item[data-disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.site-menu-sep {
+  height: 1px;
+  margin: 6px 4px;
+  background: #cfc8b6;
+  border: 0;
+}
+
+.site-menu-arrow {
+  fill: #fffef8;
+  stroke: #c9c2b3;
+  stroke-width: 1px;
+}
+
+.rail-fold-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: 600 14px/1.2 system-ui, sans-serif;
+  color: #1a1814;
+}
+
+.rail-fold-panel {
+  padding-top: 6px;
+}
+
+.rail-fold-panel[data-state='closed'] {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .site-nav-viewport-wrap {
+    position: static;
+  }
 }

@@ -92,6 +92,53 @@ This repo is a **framework**. Forkers get two decoupled sites:
 
 Do not dump the house encyclopedia onto a fork as if it were their project. Workbench is **removed** — “worker bench” in speech means Lab bench + To-implement + papers fetch.
 
+## Metadata is the index (standing law)
+
+**Every grouping in this framework is metadata, read at runtime. Never a list of ids kept by hand.**
+
+When you need to categorize anything — pages, papers, code chunks, diagrams, notes — the answer is a
+field on the object, not a constant in a component and not a heading in prose. A hand-kept list is a
+second source of truth: it goes stale the moment someone adds an object without editing it, and an
+agent cannot discover it through `GET /api/*`.
+
+| Surface | Metadata lives in | Read it with |
+| --- | --- | --- |
+| Page (boot / doc) | YAML frontmatter in `data/md/`, `data/docs/` | `GET /api/pages`, `GET /api/meta` |
+| Paper | `- **key:** value` header in `data/papers/<id>.md` | `GET /api/papers`, `GET /api/papers/db` |
+| Code chunk | `# @chunk` comment fence | `GET /api/meta?type=code` |
+| Diagram node | `data/diagrams/*.json` | `GET /api/diagrams` |
+
+**Adding a category — the four steps.**
+
+1. **Add a field**, do not overload an existing one past its meaning. Name it for the question it
+   answers (`collection:` = which shelf, `subpage:` = own route or not).
+2. **Give it a derivation default** so every object already on disk classifies with no migration and
+   no rewrite of old files. `collectionOf` derives from `list`; `subpage` defaults false. An explicit
+   field only overrules the default.
+3. **Parse it** into the record type (`parsePaperHeader`, `pages.ts`) so it reaches the API. A header
+   key that nothing parses is decoration — `local_pdf` sat unparsed for exactly this reason.
+4. **Group by reading the field** in the UI. The component may hold labels and display order; it must
+   not hold membership.
+
+**Standing fields that already follow this.** Pages: `parent`, `children`, `highlight`, `sandbox`,
+`sandboxLane`, `sandboxFor`, `bin`, `project`, `depth`, `tags`, `related`, `citations`, `hidden`,
+`subpage`, `embeds`. Papers: `list`, `collection`. Diagrams: `note`. Extend this set rather than
+inventing a parallel scheme.
+
+**A page mounts widgets with `embeds:`, never with its slug.** A live board — the diagram canvas, the
+paper catalog, the implement queue — is named in the page's own frontmatter:
+
+```yaml
+embeds:
+  - diagrams:wiki-memory
+  - math-compare
+```
+
+`frontend/src/site/embeds.tsx` maps a name to a renderer and knows nothing about which page asked.
+Adding a board to a page is a Markdown edit. If you catch yourself writing `slug === 'something'` in a
+component to decide what to show, you are rebuilding the ladder this rule exists to forbid.
+
+
 ## How to run
 
 Node is `C:\Program Files\nodejs`. From the repo root:

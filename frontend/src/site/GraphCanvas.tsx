@@ -170,6 +170,7 @@ function toFlow(
       data: {
         route: step ? 'step' : 'straight',
         flow: feedback ? 'feedback' : 'forward',
+        learnable: e.learnable,
       },
     }
   })

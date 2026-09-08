@@ -1,6 +1,7 @@
 {
   "id": "flagged-schemes-loop",
   "title": "Index: three isolated agents",
+  "note": "GET /api/diagrams and GET /api/meta. Three isolated agent boards (fetch, coding, generate) plus an index and the jump-to-graph design. Regions here are per-agent (wiki / retrieve / write-cite, and so on) — not the hybrid-loop iPad / local PC / website split. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.",
   "updatedAt": "2026-09-06T19:20:00.000Z",
   "source": "Chat correction 2026-09-06 — index only; open each graph",
   "animatedEdges": false,
@@ -9,7 +10,11 @@
       "id": "index",
       "label": "Open each graph (not an org chart)",
       "source": "user",
-      "nodeIds": ["fetch-alone", "coding-alone", "generate-alone"]
+      "nodeIds": [
+        "fetch-alone",
+        "coding-alone",
+        "generate-alone"
+      ]
     }
   ],
   "nodes": [
@@ -23,8 +28,14 @@
         "summaryShort": "Open Fetch agent (isolated)",
         "summaryLong": "Isolated fetching research agent. Backbone: Lantern as wiki verb + cite-or-fetch. IntrAgent sufficiency, RA–FSM session cites, isolated grounds, one wiki graph. A4 injects. No coding PED, no MGM, no generate. Open the Fetch agent (isolated) tab.",
         "pageId": "page:agents",
-        "paperIds": ["hm-rag-2025", "graphrag-2024", "swe-agent-2024"],
-        "related": ["diagram:flagged-schemes-fetch"]
+        "paperIds": [
+          "hm-rag-2025",
+          "graphrag-2024",
+          "swe-agent-2024"
+        ],
+        "related": [
+          "diagram:flagged-schemes-fetch"
+        ]
       }
     },
     {
@@ -37,8 +48,12 @@
         "summaryShort": "Open Coding agent (isolated)",
         "summaryLong": "Isolated coding agent. A3 turn-control is the PED. Implement against wiki text already on the page. A4 lazy skills. MGM is an on-demand hired bouncer after a stuck/hard tripwire — not on the everyday path. Open the Coding agent (isolated) tab.",
         "pageId": "page:agents",
-        "paperIds": ["swe-agent-2024"],
-        "related": ["diagram:flagged-schemes-coding"]
+        "paperIds": [
+          "swe-agent-2024"
+        ],
+        "related": [
+          "diagram:flagged-schemes-coding"
+        ]
       }
     },
     {
@@ -51,8 +66,12 @@
         "summaryShort": "Open Generate agent (isolated)",
         "summaryLong": "Isolated generation research agent. Force an in-DB paperId, draft to MD, different judge. Clarify if entered via do the research. No Caesar crawl, no cite invention. Open the Generate agent (isolated) tab.",
         "pageId": "page:agents",
-        "paperIds": ["arxiv-2605-18661"],
-        "related": ["diagram:flagged-schemes-generate"]
+        "paperIds": [
+          "arxiv-2605-18661"
+        ],
+        "related": [
+          "diagram:flagged-schemes-generate"
+        ]
       }
     }
   ],

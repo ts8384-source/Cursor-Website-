@@ -1,0 +1,25 @@
+---
+description: Categorize with metadata, never a hand-kept list of ids
+alwaysApply: true
+---
+
+# Metadata is the index
+
+When you need to group, categorize, filter, or order anything in this repo — pages, papers, code
+chunks, diagrams, notes — the answer is **a field on the object**, read at runtime. Never a constant
+list of ids inside a component, and never a category that exists only as a heading in prose.
+
+Before writing a grouping, read `content/CONTROL.md` → "Metadata is the index (standing law)" and
+`data/docs/metadata-law.md` (`/docs/metadata-law`).
+
+The four steps:
+
+1. Add a field named for the question it answers.
+2. Give it a derivation default so objects already on disk classify with no migration.
+3. Parse it into the record type so it reaches `GET /api/*`. An unparsed key is decoration.
+4. Group by reading the field. A component may own labels and display order, never membership.
+
+Metadata surfaces: page YAML frontmatter (`data/md/`, `data/docs/`), paper headers
+(`data/papers/<id>.md`), `# @chunk` comment fences, `data/diagrams/*.json`.
+
+If you catch yourself typing an array of ids to make a section appear, stop and add the field.

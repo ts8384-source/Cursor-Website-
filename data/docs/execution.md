@@ -18,6 +18,8 @@ citations:
   - gorilla-2023
   - agent-workflow-memory-2024
   - vidorag-2025
+embeds:
+  - execution
 ---
 
 # How paper ideas are executed

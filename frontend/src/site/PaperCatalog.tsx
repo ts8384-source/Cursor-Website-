@@ -4,11 +4,37 @@ import { FetchPaperForm } from './FetchPaperForm'
 import { OpenOnIpad } from './OpenOnIpad'
 import type { PaperRecord, SearchHit } from './types'
 
-const GROUPS = [
-  { key: 'frontend', label: 'Frontend / visual IA' },
-  { key: 'backend', label: 'Backend / agent-connect' },
-  { key: 'fetched', label: 'Fetched on demand' },
-]
+/**
+ * Two shelves from the `collection` metadata, each split by the older `list` field. Nothing here
+ * is a hand-kept list of ids: a paper lands in a shelf because of what its own header says.
+ */
+const SHELVES = [
+  {
+    key: 'framework',
+    label: 'Framework papers',
+    note: 'Read to build the framework itself — the interface and agent-connect ground.',
+  },
+  {
+    key: 'project',
+    label: 'Project papers',
+    note: 'Fetched while working on a project built on the framework.',
+  },
+] as const
+
+const LIST_LABELS: Record<string, string> = {
+  frontend: 'Frontend / visual IA',
+  backend: 'Backend / agent-connect',
+  fetched: 'Fetched on demand',
+}
+
+const listLabel = (list: string) => LIST_LABELS[list] || (list ? `List: ${list}` : 'Unfiled')
+
+/** Lists in a shelf, known ones first, then whatever else turned up. */
+function listsIn(rows: PaperRecord[]): string[] {
+  const seen = [...new Set(rows.map((p) => p.list))]
+  const known = Object.keys(LIST_LABELS).filter((k) => seen.includes(k))
+  return [...known, ...seen.filter((s) => !LIST_LABELS[s]).sort()]
+}
 
 export function PaperCatalog({
   papers,
@@ -25,8 +51,10 @@ export function PaperCatalog({
 
   const visible = useMemo(() => {
     const q = filter.trim().toLowerCase()
+    const [kind, key] = group.split(':')
     return papers.filter((p) => {
-      if (group !== 'all' && p.list !== group) return false
+      if (kind === 'shelf' && p.collection !== key) return false
+      if (kind === 'list' && p.list !== key) return false
       if (!q) return true
       return [p.title, p.authors, p.venue, p.year, p.id].join(' ').toLowerCase().includes(q)
     })
@@ -61,14 +89,23 @@ export function PaperCatalog({
           placeholder="Living Papers, TreeReader, hybrid RAG"
           autoCapitalize="none"
         />
-        <label htmlFor="paper-group">List</label>
+        <label htmlFor="paper-group">Show</label>
         <select id="paper-group" value={group} onChange={(e) => setGroup(e.target.value)}>
-          <option value="all">All lists</option>
-          {GROUPS.map((g) => (
-            <option key={g.key} value={g.key}>
-              {g.label}
-            </option>
-          ))}
+          <option value="all">All papers</option>
+          <optgroup label="Shelf">
+            {SHELVES.map((s) => (
+              <option key={s.key} value={`shelf:${s.key}`}>
+                {s.label}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="List">
+            {Object.entries(LIST_LABELS).map(([key, label]) => (
+              <option key={key} value={`list:${key}`}>
+                {label}
+              </option>
+            ))}
+          </optgroup>
         </select>
         <button type="submit">Search index</button>
       </form>
@@ -88,58 +125,52 @@ export function PaperCatalog({
         </div>
       ) : null}
       <FetchPaperForm onDone={onRefresh} />
-      {GROUPS.map((g) => {
-        const rows = visible.filter((p) => p.list === g.key)
-        if (!rows.length) return null
+      {SHELVES.map((shelf) => {
+        const shelfRows = visible.filter((p) => p.collection === shelf.key)
+        if (!shelfRows.length) return null
         return (
-          <div key={g.key}>
-            <h3>{g.label}</h3>
-            <ol className="paper-list">
-              {rows.map((paper) => (
-                <li key={paper.id} id={paper.id}>
-                  <strong>{paper.title}</strong>
-                  <div className="paper-meta">
-                    {paper.authors}. {paper.year}. {paper.venue}.
-                  </div>
-                  <div className="paper-links">
-                    <code>{paper.id}</code>
-                    {paper.oa_url ? (
-                      <a href={paper.oa_url} rel="noreferrer">
-                        OA
-                      </a>
-                    ) : null}
-                    <OpenOnIpad
-                      sourceType="paper"
-                      sourceId={paper.id}
-                      title={paper.title}
-                      paperIds={[paper.id]}
-                      citations={[paper.id]}
-                      gist={`${paper.authors}. ${paper.year}. ${paper.venue}.`}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ol>
+          <div className="paper-shelf" key={shelf.key}>
+            <h3 id={`shelf-${shelf.key}`}>
+              {shelf.label} <span className="paper-shelf-count">{shelfRows.length}</span>
+            </h3>
+            <p className="rail-note">{shelf.note}</p>
+            {listsIn(shelfRows).map((list) => (
+              <div key={list}>
+                <h4>{listLabel(list)}</h4>
+                <ol className="paper-list">
+                  {shelfRows
+                    .filter((p) => p.list === list)
+                    .map((paper) => (
+                      <li key={paper.id} id={paper.id}>
+                        <strong>{paper.title}</strong>
+                        <div className="paper-meta">
+                          {paper.authors}. {paper.year}. {paper.venue}.
+                        </div>
+                        <div className="paper-links">
+                          <code>{paper.id}</code>
+                          {paper.oa_url ? (
+                            <a href={paper.oa_url} rel="noreferrer">
+                              OA
+                            </a>
+                          ) : null}
+                          <OpenOnIpad
+                            sourceType="paper"
+                            sourceId={paper.id}
+                            title={paper.title}
+                            paperIds={[paper.id]}
+                            citations={[paper.id]}
+                            gist={`${paper.authors}. ${paper.year}. ${paper.venue}.`}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            ))}
           </div>
         )
       })}
-      {visible.some((p) => !GROUPS.some((g) => g.key === p.list)) ? (
-        <div>
-          <h3>Other</h3>
-          <ol className="paper-list">
-            {visible
-              .filter((p) => !GROUPS.some((g) => g.key === p.list))
-              .map((paper) => (
-                <li key={paper.id} id={paper.id}>
-                  <strong>{paper.title}</strong>
-                  <div className="paper-meta">
-                    {paper.year} {paper.venue}
-                  </div>
-                </li>
-              ))}
-          </ol>
-        </div>
-      ) : null}
+      {visible.length ? null : <p className="rail-note">No paper matches that filter.</p>}
     </section>
   )
 }

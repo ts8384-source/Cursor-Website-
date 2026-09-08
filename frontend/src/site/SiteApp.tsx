@@ -1,24 +1,19 @@
 import { useEffect, useMemo, useState, type FormEvent, type MouseEvent } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import { apiUrl } from '../api'
 import { renderMarkdown } from './markdown'
-import { DiagramsBoard } from './DiagramsBoard'
-import { ExecutionBoard } from './ExecutionBoard'
-import { MapsBoard } from './MapsBoard'
-import { MemoryBoard } from './MemoryBoard'
-import { PaperCatalog } from './PaperCatalog'
 import { OpenOnIpad } from './OpenOnIpad'
 import { SearchRail } from './SearchRail'
-import { SummariesBoard } from './SummariesBoard'
-import { JumpToGraph, KnowledgeGraphBoard } from './KnowledgeGraphBoard'
-import { OverviewStructure } from './OverviewStructure'
-import { ImplementBoard } from './ImplementBoard'
+import { JumpToGraph } from './KnowledgeGraphBoard'
 import { RemoveDocWiki } from './RemoveDocWiki'
+import { SiteMenus } from './SiteMenus'
+import { SiteRailFold } from './SiteRailFold'
 import { SandboxBoard } from './SandboxBoard'
 import { SandboxFlagControl } from './SandboxFlagControl'
 import { SandboxTrashControl, TrashBinBoard } from './SandboxTrashControl'
+import { PageEmbeds } from './embeds'
 import { buildPageTree, crumbTrail } from './pageTree'
-import { WikiPageTree } from './WikiPageTree'
+import { allTopics, owningTopic, sectionId, topicChildren, topicRootFor, topicSubpages } from './topic'
 import type { PageDoc, PageMeta, PageTreeNode, PaperRecord, SearchHit } from './types'
 
 export function SiteRedirect() {
@@ -31,6 +26,7 @@ export function DocsRedirect() {
 
 export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
   const { slug = bin === 'doc' ? 'docs-home' : 'overview' } = useParams()
+  const { hash } = useLocation()
   const [docsOn, setDocsOn] = useState(false)
   const [pages, setPages] = useState<PageMeta[]>([])
   const [tree, setTree] = useState<PageTreeNode[]>([])
@@ -42,6 +38,7 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
   const [err, setErr] = useState('')
   const [activeStep, setActiveStep] = useState(0)
   const [activeHeading, setActiveHeading] = useState('')
+  const [childDocs, setChildDocs] = useState<PageDoc[]>([])
 
   const loadPapers = () => {
     void fetch(apiUrl('/api/papers'))
@@ -101,24 +98,109 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
     [page],
   )
 
+  // A topic renders its children as sections of the same page, so reading a subject is one scroll.
+  const childSlugs = useMemo(() => topicChildren(page, pages).map((c) => c.slug), [page, pages])
+  const childKey = childSlugs.join(',')
+
   useEffect(() => {
-    const nodes = [...document.querySelectorAll('.site-article h1, .site-article h2, .site-article h3')]
-    if (!nodes.length) return
-    const io = new IntersectionObserver(
-      (entries) => {
-        const vis = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (!vis?.target.id) return
-        setActiveHeading(vis.target.id)
-        if (!page?.scrolly) return
-        const h3s = [...document.querySelectorAll('.site-article h3')]
-        const idx = h3s.findIndex((n) => n.id === vis.target.id)
-        if (idx >= 0) setActiveStep(idx)
-      },
-      { rootMargin: '-18% 0px -62% 0px', threshold: [0.15, 0.5] },
-    )
-    for (const node of nodes) io.observe(node)
-    return () => io.disconnect()
-  }, [page, html])
+    if (!childKey) {
+      setChildDocs([])
+      return
+    }
+    let cancelled = false
+    void Promise.all(
+      childKey.split(',').map((s) =>
+        fetch(apiUrl(`/api/pages/${encodeURIComponent(s)}`))
+          .then((r) => (r.ok ? (r.json() as Promise<PageDoc>) : null))
+          .catch(() => null),
+      ),
+    ).then((docs) => {
+      if (!cancelled) setChildDocs(docs.filter((d): d is PageDoc => Boolean(d)))
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [childKey])
+
+  // Children shift one heading level down, so their own `# Title` becomes the section head (handbook 9:7).
+  const sections = useMemo(
+    () => childDocs.map((doc) => ({ doc, ...renderMarkdown(doc.body, doc.glossary, doc.slug, 1) })),
+    [childDocs],
+  )
+
+  /**
+   * The rail is an index, not the text (handbook 7:3). A topic page is stitched from several MD
+   * docs, so the docs are its seams — one line each, no headings from inside them. A page with no
+   * children has no seams, so its own H2s are the coarsest unit available.
+   */
+  const railToc = useMemo(() => {
+    if (!sections.length) {
+      return toc.filter((t) => t.level === 2).map((t) => ({ id: t.id, text: t.text, level: 2 }))
+    }
+    const lead = toc.find((t) => t.level === 1)
+    const items = lead ? [{ id: lead.id, text: lead.text, level: 2 }] : []
+    for (const s of sections) {
+      const head = s.toc.find((t) => t.level === 2)
+      items.push({ id: head?.id ?? sectionId(s.doc.slug), text: s.doc.nav || s.doc.title, level: 2 })
+    }
+    return items
+  }, [toc, sections])
+
+  /**
+   * Mark the seam being read: the last one whose heading has passed under the sticky header.
+   * Measured on scroll rather than observed, so the mark holds steady through a long section and
+   * cannot be left stale by content that mounts late (diagrams, boards).
+   */
+  const scrolly = page?.scrolly ?? false
+  useEffect(() => {
+    const ids = railToc.map((t) => t.id)
+    if (!ids.length) return
+    let frame = 0
+    const lastPassed = (nodes: (Element | null)[]) => {
+      let idx = -1
+      nodes.forEach((n, i) => {
+        if (n && n.getBoundingClientRect().top <= 80) idx = i
+      })
+      return idx
+    }
+    const measure = () => {
+      frame = 0
+      const idx = lastPassed(ids.map((id) => document.getElementById(id)))
+      setActiveHeading(ids[idx >= 0 ? idx : 0])
+      if (!scrolly) return
+      const step = lastPassed([...document.querySelectorAll('.site-article h3')])
+      if (step >= 0) setActiveStep(step)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure)
+    }
+    measure()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [railToc, scrolly, html, sections])
+
+  // The article arrives after the browser has already tried the hash, and boards keep loading under it,
+  // so re-aim at the anchor for a beat until the page stops moving.
+  useEffect(() => {
+    if (!hash) return
+    const id = decodeURIComponent(hash.slice(1))
+    let tries = 0
+    let timer = 0
+    const settle = () => {
+      const target = document.getElementById(id)
+      if (target && Math.abs(target.getBoundingClientRect().top - 72) > 4) {
+        target.scrollIntoView({ block: 'start' })
+      }
+      if (++tries < 10) timer = window.setTimeout(settle, 120)
+    }
+    settle()
+    return () => window.clearTimeout(timer)
+  }, [hash, html, sections])
 
   const onSearch = async (event: FormEvent) => {
     event.preventDefault()
@@ -163,6 +245,13 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
     : citeIds.map((id) => ({ id, title: id, list: '', authors: '', year: '', venue: '', oa_url: '', arxiv: '', file: '' }))
 
   const scrollySteps = page?.scrolly ? toc.filter((t) => t.level === 3) : []
+  const subpages = topicSubpages(page, pages)
+  const topics = allTopics(pages)
+  const openTopic = owningTopic(page, pages)
+  const here = topics.findIndex((t) => t.slug === openTopic?.slug)
+  const nextTopic = here >= 0 ? topics[here + 1] : undefined
+  const prevTopic = here > 0 ? topics[here - 1] : undefined
+  const embedCtx = { slug, tree, papers, reloadPapers: loadPapers }
   const crumbs = crumbTrail(pages, slug)
   const home = bin === 'doc' ? '/docs/docs-home' : '/site/overview'
   const papersHref = docsOn ? '/docs/papers' : '/site/papers'
@@ -171,24 +260,20 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
     return <Navigate to={page.href} replace />
   }
 
+  // A child now lives inside its topic. Old /site/<child> links resolve to that section.
+  const owner = pages.length ? topicRootFor(slug, pages) : null
+  if (owner) {
+    return <Navigate to={`${owner.href || `/site/${owner.slug}`}#${sectionId(slug)}`} replace />
+  }
+
   return (
     <div className="site-shell">
       <a className="skip-link" href="#article">
         Skip navigation
       </a>
       <header className="site-top">
-        <span className="site-brand">{bin === 'doc' ? 'Framework docs' : 'Boot wiki'}</span>
-        <Link className="site-home" to="/site/overview">
-          Boot wiki
-        </Link>
-        {docsOn ? (
-          <Link className="site-home" to="/docs/docs-home">
-            Framework docs
-          </Link>
-        ) : null}
-        <Link className="site-canvas" to="/">
-          Canvas
-        </Link>
+        {bin === 'doc' ? <span className="site-brand">Framework docs</span> : null}
+        <SiteMenus bin={bin} docsOn={docsOn} pages={pages} />
         <p className="crumb">
           <Link className="wiki-hl wiki-hl-start crumb-hl" to={home}>
             {bin === 'doc' ? 'Framework docs' : 'Overview'} <span className="wiki-badge wiki-badge-start">Start</span>
@@ -236,22 +321,40 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
         </p>
       ) : null}
       <div className="site-body">
-        <nav className="site-toc" aria-label="Site and page contents">
-          <details className="rail-fold" open>
-            <summary>Contents</summary>
-            <h2>Pages</h2>
-            <WikiPageTree tree={tree} slug={slug} variant="nav" />
-            <h2>On this page</h2>
-            <ol>
-              {toc.map((item) => (
-                <li key={item.id} className={`toc-l${item.level}`}>
-                  <a className={item.id === activeHeading ? 'is-current' : undefined} href={`#${item.id}`}>
-                    {item.text}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </details>
+        <nav className="site-toc" aria-label="Sections and topics">
+          <SiteRailFold title="Contents">
+            {railToc.length ? (
+              <section className="toc-block toc-block-article" aria-labelledby="toc-article-heading">
+                <h2 id="toc-article-heading">On this page</h2>
+                <ol className="toc-article">
+                  {railToc.map((item) => (
+                    <li key={item.id} className={`toc-l${item.level}`}>
+                      <a className={item.id === activeHeading ? 'is-current' : undefined} href={`#${item.id}`}>
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+            {topics.length ? (
+              <section className="toc-block toc-block-topics" aria-labelledby="toc-topics-heading">
+                <h2 id="toc-topics-heading">Topics</h2>
+                <ul className="toc-topics">
+                  {topics.map((t) => (
+                    <li key={t.slug}>
+                      <Link
+                        className={t.slug === openTopic?.slug ? 'is-current' : undefined}
+                        to={t.href || `/site/${t.slug}`}
+                      >
+                        {t.nav || t.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+          </SiteRailFold>
         </nav>
         <main id="article" className="site-article" tabIndex={-1} onClick={onArticleClick}>
           {page ? <SandboxTrashControl slug={page.slug} title={page.title} sandbox={page.sandbox} /> : null}
@@ -299,32 +402,53 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
             </>
           ) : null}
           <div className="site-article-body" data-ipad-export="page" dangerouslySetInnerHTML={{ __html: html }} />
-          {slug === 'overview' || slug === 'docs-home' ? <OverviewStructure tree={tree} slug={slug} /> : null}
-          {slug === 'overview' ? <DiagramsBoard compact /> : null}
-          {slug === 'implement' ? <ImplementBoard /> : null}
-          {slug === 'wiki-memory' ? <DiagramsBoard onlyPrefix="wiki-memory" /> : null}
-          {slug === 'knowledge-graph' ? <KnowledgeGraphBoard /> : null}
-          {slug === 'knowledge-graph' ? <DiagramsBoard onlyPrefix="flagged-schemes-graph" /> : null}
-          {slug === 'agents' ? <DiagramsBoard onlyPrefix="flagged-schemes-loop" /> : null}
-          {slug === 'agents-fetch' ? <DiagramsBoard onlyPrefix="flagged-schemes-fetch" /> : null}
-          {slug === 'agents-coding' ? <DiagramsBoard onlyPrefix="flagged-schemes-coding" /> : null}
-          {slug === 'agents-coding-generate' ? <DiagramsBoard onlyPrefix="agents-coding-generate" /> : null}
-          {slug === 'agents-coding-debug' ? <DiagramsBoard onlyPrefix="agents-coding-debug" /> : null}
-          {slug === 'agents-generate' ? <DiagramsBoard onlyPrefix="flagged-schemes-generate" /> : null}
-          {slug === 'metadata' ? <DiagramsBoard onlyPrefix="metadata" /> : null}
-          {slug === 'papers' ? <PaperCatalog papers={papers} onRefresh={loadPapers} /> : null}
-          {slug === 'summaries' ? <SummariesBoard /> : null}
-          {slug === 'diagrams' ? <DiagramsBoard /> : null}
-          {slug === 'maps' ? <MapsBoard /> : null}
-          {slug === 'memory' ? <MemoryBoard /> : null}
-          {slug === 'execution' ? <ExecutionBoard /> : null}
+          {sections.map((s) => (
+            <section key={s.doc.slug} id={sectionId(s.doc.slug)} className="topic-section">
+              <div className="site-article-body" dangerouslySetInnerHTML={{ __html: s.html }} />
+              <PageEmbeds names={s.doc.embeds} ctx={{ ...embedCtx, slug: s.doc.slug }} />
+            </section>
+          ))}
+          <PageEmbeds names={page?.embeds} ctx={embedCtx} />
+          {subpages.length ? (
+            <section className="topic-subpages" aria-labelledby="topic-subpages-h">
+              <h2 id="topic-subpages-h">Deep dives</h2>
+              <p className="topic-subpages-note">
+                Longer studies kept off this page — a single paper, an experiment log, an appendix.
+              </p>
+              <ul>
+                {subpages.map((p) => (
+                  <li key={p.slug}>
+                    <Link to={p.href || `/site/${p.slug}`}>{p.nav || p.title}</Link>
+                    {p.gist ? <span className="topic-subpage-gist">{p.gist}</span> : null}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+          {prevTopic || nextTopic ? (
+            <nav className="topic-move" aria-label="Previous and next topic">
+              {prevTopic ? (
+                <Link className="topic-move-prev" to={prevTopic.href || `/site/${prevTopic.slug}`}>
+                  <span>Previous</span>
+                  {prevTopic.nav || prevTopic.title}
+                </Link>
+              ) : (
+                <span />
+              )}
+              {nextTopic ? (
+                <Link className="topic-move-next" to={nextTopic.href || `/site/${nextTopic.slug}`}>
+                  <span>Next</span>
+                  {nextTopic.nav || nextTopic.title}
+                </Link>
+              ) : null}
+            </nav>
+          ) : null}
           {page ? <SandboxFlagControl slug={page.slug} sandbox={page.sandbox} /> : null}
           <TrashBinBoard hostSlug={page?.slug || slug} />
           <SandboxBoard hostId={page?.id || (page ? `page:${page.slug}` : undefined)} hostSlug={page?.slug || slug} />
         </main>
         <aside className="site-rail" aria-label="Reading aids">
-          <details className="rail-fold" open>
-            <summary>Reading aids</summary>
+          <SiteRailFold title="Reading aids">
           {page?.questions.length ? (
             <section>
               <h2>Key questions</h2>
@@ -388,7 +512,7 @@ export function SiteApp({ bin = 'boot' }: { bin?: 'boot' | 'doc' }) {
             onSearch={(e) => void onSearch(e)}
             onAsk={() => void onAsk()}
           />
-          </details>
+          </SiteRailFold>
         </aside>
       </div>
     </div>

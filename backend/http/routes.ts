@@ -7,6 +7,7 @@ import { writeInboxSnapshot, type SnapshotPayload } from '../ingest/snapshot.ts'
 import { inboxDir, padPort } from '../paths.ts'
 import { bookkeep, readBookkeep } from '../persist/bookkeep.ts'
 import { docsStatus, removeDocWiki } from '../persist/docs.ts'
+import { dialectTree, pastWorksCatalog, pastWorksFacts, pastWorksStatus, readPastWorkFile } from '../persist/past-works.ts'
 import { siteOverview } from '../persist/overview.ts'
 import { groupSandboxPages, listPages, loadPage, pageTree, pagesForBin, pagesForProject, type PageBin } from '../persist/pages.ts'
 import { promoteSandboxPage } from '../persist/sandbox-pages.ts'
@@ -640,6 +641,33 @@ export async function handleApi(req: IncomingMessage, res: Res): Promise<boolean
     } catch (error) {
       json(res, 400, { ok: false, error: error instanceof Error ? error.message : 'bad docs remove' })
     }
+    return true
+  }
+
+  if (req.method === 'GET' && path === '/api/past-works') {
+    json(res, 200, { ok: true, ...pastWorksStatus(), catalog: pastWorksCatalog() })
+    return true
+  }
+
+  if (req.method === 'GET' && path === '/api/past-works/facts') {
+    json(res, 200, { ok: true, ...pastWorksFacts() })
+    return true
+  }
+
+  if (req.method === 'GET' && path === '/api/past-works/dialect-tree') {
+    json(res, 200, { ok: true, ...dialectTree() })
+    return true
+  }
+
+  if (req.method === 'GET' && path === '/api/past-works/file') {
+    const url = new URL(req.url ?? '/', 'http://127.0.0.1')
+    const rel = url.searchParams.get('path') ?? ''
+    const file = readPastWorkFile(rel)
+    if (!file) {
+      json(res, 404, { ok: false, error: 'past-work file not found' })
+      return true
+    }
+    json(res, 200, { ok: true, ...file })
     return true
   }
 

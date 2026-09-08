@@ -153,12 +153,10 @@ export function DiagramsBoard({
           capture='[data-ipad-export="diagram"]'
         />
       ) : null}
+      {/* Caption travels with the diagram (`note` in its JSON), not with this component. */}
       <p className="rail-note">
-        {graph?.id.startsWith('flagged-schemes')
-          ? 'GET /api/diagrams and GET /api/meta. Three isolated agent boards (fetch, coding, generate) plus an index and the jump-to-graph design. Regions here are per-agent (wiki / retrieve / write-cite, and so on) — not the hybrid-loop iPad / local PC / website split. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.'
-          : graph?.id.startsWith('wiki-memory')
-            ? 'GET /api/diagrams and GET /api/meta. Wiki-memory think-through graphs. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange.'
-            : 'GET /api/diagrams and GET /api/meta. On this loop, three dotted regions — iPad, local PC, website — and every node sits in one of them. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange. Animation is off until Animate flow.'}
+        {graph?.note ||
+          'GET /api/diagrams and GET /api/meta. On this loop, three dotted regions — iPad, local PC, website — and every node sits in one of them. Nodes stay small. Click a node for the full summary below. Forward edges are teal; feedback edges are orange. Animation is off until Animate flow.'}
       </p>
       {err ? (
         <p className="site-error" role="alert">

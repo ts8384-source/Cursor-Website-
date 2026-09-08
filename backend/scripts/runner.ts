@@ -1,12 +1,25 @@
-import { spawn } from 'node:child_process'
+import { execFileSync, spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
+import { platform } from 'node:os'
 import { join } from 'node:path'
 import { root } from '../paths.ts'
 
-const PY_CANDIDATES = ['python', 'py', 'python3']
+// Windows usually has `py` / `python`; Linux cloud / Ubuntu often only `python3`.
+const PY_CANDIDATES =
+  platform() === 'win32' ? ['py', 'python', 'python3'] : ['python3', 'python', 'py']
 
 function pickPython() {
-  return process.env.RAG_PYTHON?.trim() || PY_CANDIDATES[0]
+  const forced = process.env.RAG_PYTHON?.trim()
+  if (forced) return forced
+  for (const name of PY_CANDIDATES) {
+    try {
+      execFileSync(name, ['-c', 'pass'], { stdio: 'ignore', windowsHide: true })
+      return name
+    } catch {
+      // try next candidate
+    }
+  }
+  return PY_CANDIDATES[0]
 }
 
 export type RagResult = {

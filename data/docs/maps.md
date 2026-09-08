@@ -18,6 +18,8 @@ citations:
   - hm-rag-2025
   - living-papers-heer-2023
   - paper-plain-august-2023
+embeds:
+  - maps
 ---
 
 # Math and diagram to code

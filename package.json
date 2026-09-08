@@ -10,6 +10,9 @@
     "build": "npm run build -w frontend"
   },
   "description": "Pad :5174 (/ canvas, /site MD reader). API :5175. RAG: python -m rag.cli seed|rebuild. ACI: content/CONTROL.md",
+  "engines": {
+    "node": ">=20.19"
+  },
   "devDependencies": {
     "concurrently": "^9.2.1"
   }

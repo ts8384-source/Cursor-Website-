@@ -30,6 +30,8 @@ citations:
   - arxiv-2605-18661
   - arxiv-2603-15914
   - swe-agent-2024
+embeds:
+  - diagrams:flagged-schemes-generate
 ---
 
 # Generation agent

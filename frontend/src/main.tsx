@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { App } from './canvas/App'
 import { DocsRedirect, SiteApp, SiteRedirect } from './site/SiteApp'
+import 'katex/dist/katex.min.css'
 import './styles.css'
 import './site/site.css'
 

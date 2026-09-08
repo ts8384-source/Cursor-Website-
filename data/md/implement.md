@@ -33,6 +33,8 @@ glossary:
     def: The write/erase work queue. Not the Overview page-structure tree.
 citations:
   - living-papers-heer-2023
+embeds:
+  - implement-board
 ---
 
 # To-implement

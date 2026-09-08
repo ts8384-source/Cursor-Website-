@@ -28,13 +28,16 @@ function siteSpa(): Plugin {
   }
 }
 
-const apiTarget = process.env.VITE_API_ORIGIN || 'http://127.0.0.1:5175'
+// PAD_PORT / BACKEND_PORT let a second checkout run beside the main one.
+const padPort = Number(process.env.PAD_PORT ?? 5174)
+const backendPort = Number(process.env.BACKEND_PORT ?? 5175)
+const apiTarget = process.env.VITE_API_ORIGIN || `http://127.0.0.1:${backendPort}`
 
 export default defineConfig({
   plugins: [react(), siteSpa()],
   server: {
     host: '0.0.0.0',
-    port: 5174,
+    port: padPort,
     strictPort: true,
     // Do not watch board rasters / PDFs — they are disk, not HMR sources.
     watch: {

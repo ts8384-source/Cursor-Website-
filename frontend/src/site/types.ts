@@ -24,6 +24,10 @@ export type PageMeta = {
   hidden?: boolean
   parent?: string
   children?: string[]
+  /** Child keeps its own route instead of folding into the parent topic page. */
+  subpage?: boolean
+  /** Live widgets this page mounts, by registry name. See `embeds.tsx`. */
+  embeds?: string[]
   highlight?: 'start' | 'queue' | 'lab' | ''
   project?: string
   bin?: 'boot' | 'doc'
@@ -125,6 +129,8 @@ export type PaperRecord = {
   id: string
   title: string
   list: string
+  /** 'framework' = read to build the tool; 'project' = fetched while using it. */
+  collection: 'framework' | 'project'
   authors: string
   year: string
   venue: string
@@ -207,6 +213,7 @@ export type DiagramEdge = {
   direction?: string
   reversed?: boolean
   animated?: boolean
+  learnable?: boolean
 }
 export type DiagramRegion = {
   id: string
@@ -219,6 +226,8 @@ export type DiagramGraph = {
   title: string
   updatedAt?: string
   source?: string
+  /** Caption shown under the board. Absent = the generic hybrid-loop wording. */
+  note?: string
   animatedEdges?: boolean
   nodes: DiagramNode[]
   edges: DiagramEdge[]
